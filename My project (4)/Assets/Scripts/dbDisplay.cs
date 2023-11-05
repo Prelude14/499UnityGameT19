@@ -25,6 +25,7 @@ public class dbDisplay : MonoBehaviour
     public Text powText;
     public Text hpText;
 
+
     public bool cardBack;
     public static bool staticCardBack;
 
@@ -53,6 +54,7 @@ public class dbDisplay : MonoBehaviour
         staticCardBack = cardBack;
         cloneDraw();
         
+        
     }
     private void displayCard() {
         
@@ -69,6 +71,8 @@ public class dbDisplay : MonoBehaviour
         costText.text = " " + this.cost.ToString();
         powText.text = " " + this.pow.ToString();
         hpText.text = " " + this.hp.ToString();
+
+
     }
     private void cloneDraw() {
         //clone cards for draw
