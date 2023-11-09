@@ -37,35 +37,36 @@ public class dbDisplay : MonoBehaviour
     void Start()
     {
         deckCount = playerDeck.deckSize;
-        displayCard();
+        displayList[0] = cardDatabase.cardList[displayId];
+        this.id = displayList[0].id;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
         displayCard();
         hand = GameObject.Find("hand");
         //if this parent is the same as the hands parent 
-        if(this.transform.parent == hand.transform.parent){
+        if (this.transform.parent == hand.transform.parent)
+        {
             cardBack = false;
         }
         staticCardBack = cardBack;
         cloneDraw();
-        
-        
+
+
     }
-    private void displayCard() {
-        
-        displayList[0] = cardDatabase.cardList[displayId];
-        this.id = displayList[0].id;
+    private void displayCard()
+    {
+
         this.cardName = displayList[0].cardName;
         this.pow = displayList[0].pow;
         this.hp = displayList[0].hp;
         this.txt = displayList[0].txt;
         this.cost = displayList[0].cost;
-        
+
         nameText.text = " " + this.cardName.ToString();
         descriptionText.text = " " + this.txt.ToString();
         costText.text = " " + this.cost.ToString();
@@ -74,9 +75,11 @@ public class dbDisplay : MonoBehaviour
 
 
     }
-    private void cloneDraw() {
+    private void cloneDraw()
+    {
         //clone cards for draw
-        if(this.tag == "clone") {
+        if (this.tag == "clone")
+        {
             //
             displayList[0] = playerDeck.staticDeck[deckCount - 1];
             //
