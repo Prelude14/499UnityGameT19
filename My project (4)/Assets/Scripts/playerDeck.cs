@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems; 
+using UnityEngine.EventSystems;
 public class playerDeck : MonoBehaviour
 {
     public List<Card1> container = new List<Card1>();
@@ -15,7 +15,7 @@ public class playerDeck : MonoBehaviour
     public GameObject cardInDeck1;
     public GameObject cardInDeck2;
     public GameObject cardInDeck3;
-    
+
     public GameObject[] clones;
     public GameObject hand;
     public GameObject cardInHand;
@@ -38,33 +38,50 @@ public class playerDeck : MonoBehaviour
     {
         //reduce number of "visible" cards on the -deck- stack
         staticDeck = deck;
-        if(deckSize < 20){
-            cardInDeck1.SetActive(false);
-        }
-        if(deckSize<10) {
-            cardInDeck2.SetActive(false);
-        }
-        if(deckSize<1) {
-            cardInDeck3.SetActive(false);
-        }
+
+        changeSize();
 
         //display deck card count;
-        deckCountText.text = "" + deckSize; 
-        
+        deckCountText.text = "" + deckSize;
+        if (turnScript.turnStart == true)
+        {
+            StartCoroutine(Draw(1));
+            turnScript.turnStart = false;
+        }
     }
-    IEnumerator StartGame() {
+    IEnumerator StartGame()
+    {
         //coroutine: way to count down
-        
-        for(int i = 0; i < 5; i++){ // number of starting hand
-            yield return new  WaitForSeconds(1);
+
+        for (int i = 0; i < 5; i++)
+        { // number of starting hand
+            yield return new WaitForSeconds(1);
             //each second it draws a card
             //spawns new object using instantiate duplicating it as a clone
             Instantiate(cardInHand, transform.position, transform.rotation);
         }
 
     }
-    public void shuffle(){
-        for(int i =0; i < deckSize ; i++) {
+
+    public void changeSize()
+    {
+        if (deckSize < 20)
+        {
+            cardInDeck1.SetActive(false);
+        }
+        if (deckSize < 10)
+        {
+            cardInDeck2.SetActive(false);
+        }
+        if (deckSize < 1)
+        {
+            cardInDeck3.SetActive(false);
+        }
+    }
+    public void shuffle()
+    {
+        for (int i = 0; i < deckSize; i++)
+        {
             container[0] = deck[i];
             int randomIndex = Random.Range(i, deckSize);
             deck[i] = deck[randomIndex];
@@ -76,25 +93,38 @@ public class playerDeck : MonoBehaviour
         // }
         // Debug.Log(result);
     }
-     public void shuffle(int deckSize, List<Card1> container){
-        for(int i = 0; i < deckSize ; i++) {
-            container[0] = deck[i];
-            int randomIndex = Random.Range(i, deckSize);
-            deck[i] = deck[randomIndex];
-            deck[randomIndex] = container[0];
+    IEnumerator Draw(int drawSize)
+    {
+        if (deckSize > 0) //check if there's other cards. do not draw if no more cards do smth else;
+        {
+            //draw cards repeat until drawSize
+            for (int x = 0; x < drawSize; x++)
+            {
+                //slow down code so we don't draw too fast
+                yield return new WaitForSeconds(1);
+                Instantiate(cardInHand, transform.position, transform.rotation);
+            }
         }
-        
+        else
+        {
+            //lose game
+        }
     }
-    public void populateDeck(){
-        for (int i = 0; i < 20; i++){
+    public void populateDeck()
+    {
+        for (int i = 0; i < 20; i++)
+        {
             deck[i] = cardDatabase.cardList[i];
         }
     }
-    public void populateDeck(List<Card1> listA){
-        int listSize = listA.Count;
-        for (int i = 0; i < listSize; i++){
-            deck.Add(listA[i]);
-        }
+
+    public int getDeckSize()
+    {
+        return deckSize;
+    }
+    public string getDeckTop()
+    {
+        return deck[0].ToString();
     }
 
 }

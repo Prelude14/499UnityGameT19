@@ -15,6 +15,7 @@ public class turnScript : MonoBehaviour
     public int currentMana;
     public Text manaText;
 
+    public static bool turnStart;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +27,7 @@ public class turnScript : MonoBehaviour
 
         maxMana = 1;
         currentMana = 1;
-
+        turnStart = false;
 
     }
 
@@ -57,6 +58,6 @@ public class turnScript : MonoBehaviour
         myTurn = 1;
         maxMana += 1;
         currentMana = maxMana;
-
+        turnStart = true;
     }
 }
