@@ -2,83 +2,68 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     //need public variable that will track if the user logged in or not
     public GameObject guestbackground;
     public GameObject usersMMbackground;
-    public bool logged_In = false; //set player to guest as default
+    public GameObject loginmenu;
+    public GameObject createandloginmenu;
 
-    //public DateTime dateCreated;
-    //public DateTime dateCurrent; //gets current time and stores it 
+    //public display of user's email in middle of menus
+    public Text userDisplay;
 
-    //Need public string to store the user's input when it is entered into the login page
-    //public Text username;
-    public string username_email = "Here the user can see the email associated with their account.";
-    public string user_pass = "This will display how old the account is.";
-    //public Text password;
-    //PlayerPrefs.SetString("uname", 0);
-    //PlayerPrefs.SetString("upass", 0);
+    //public display of user's stats for account info page as well as stats page
+    public Text userEmail;
+    public Text userDateCreated;
+    public Text userGamesPlayed;
+    public Text userGamesWon;
+    public Text userWLRatio;
+    public Text userDamageDealt;
 
 
-    // Start is called before the first frame update
+    /*// Start is called before the first frame update
     public void ExitButton() {
         Application.Quit();
         Debug.Log("Game closed by button.");
 
-    }
+    }*/
 
-    public void resetPassButton()
-    {
-        Debug.Log("Reset Password Token sent.");
-
-    }
-
+    // Start is called before the first frame update
     public void StartGame() {
         SceneManager.LoadScene("SampleScene");
 
     }
 
-    public void LoginButt()
-    {
-        logged_In = true;
-        PlayerPrefs.SetInt("logged_In", 1);
-
-       // username_email = username;
-        //user_pass = password;
-
-        Debug.Log(username_email);
-        Debug.Log(user_pass);
-        Debug.Log(logged_In);
-    }
-
-   /* public void CreateAccButt()
-    {
-        dateCurrent = DateTime.Now; //gets current time and stores it
-        PlayerPrefs.SetString("createDate", dateCurrent.toString());
-
-        logged_In = true;
-        PlayerPrefs.SetInt("logged_In", 1);
-
-        username_email.text = PlayerPrefs.GetString("uname", 0);
-        user_pass.text = PlayerPrefs.GetString("upass", 0);
-
-        Debug.Log(logged_In);
-    }
-   */
     public void ActiveMainMenu()
     {
-        if (logged_In == false)
+        if (!DBManager.LoggedIn) //if not logged in display guest menu
         {
             //set guest main menu to show up
-            guestbackground.SetActive(!logged_In);
+            guestbackground.SetActive(true);
+            
         }
-        else if (logged_In == true)
+        else if (DBManager.LoggedIn) //if LOGGED IN, display user menu and minimize either the create or login mennu the user was on when they clicked login or create
         {
             //set logged in main menu to show up from here on out
-            usersMMbackground.SetActive(logged_In);
+            guestbackground.SetActive(false); //turn off guest menu
+            usersMMbackground.SetActive(true); //set user menu active
+            //minimize the login or create menus upon successful login
+            createandloginmenu.SetActive(false);
+            loginmenu.SetActive(false);
+
+            //display user email in top right of screen
+            userDisplay.text = "Welcome, " + DBManager.username;
+
+            //assign values from DBManager to all of the account info and stat page's text items
+            userEmail.text = "" + DBManager.username;
+            userDateCreated.text = "" + DBManager.datecreated;
+            userGamesPlayed.text = "" + DBManager.gamesplayed;
+            userGamesWon.text = "" + DBManager.gameswon;
+            userWLRatio.text = "" + DBManager.wlratio;
+            userDamageDealt.text = "" + DBManager.damagedealt;
         }
     }
 }
