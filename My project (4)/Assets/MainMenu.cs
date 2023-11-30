@@ -24,12 +24,19 @@ public class MainMenu : MonoBehaviour
     public Text userDamageDealt;
 
 
-    /*// Start is called before the first frame update
-    public void ExitButton() {
-        Application.Quit();
-        Debug.Log("Game closed by button.");
+    // logout button of the user menu background calls this to log out the user and go back to the guest menu background
+    public void LogOutButton()
+    {
+        DBManager.username = null; //set dmanager's username object to null, which should trigger its boolean variable "LoggedIn" to now return false
 
-    }*/
+        //set guest main menu to show up
+        guestbackground.SetActive(true);
+        usersMMbackground.SetActive(false); //DEACTIVATE USER MENU IF LOGGED OUT
+        //userDisplay.SetActive(false);//get rid of user specific name display, don't need this, the userbackground being deactivated gets rid of it for us.
+
+        Debug.Log("User logged out by button.");
+
+    }
 
     // Start is called before the first frame update
     public void StartGame() {
@@ -37,15 +44,17 @@ public class MainMenu : MonoBehaviour
 
     }
 
+
+    // login menu background or the create user and login menu background calls this to display the user menu background and minimize the guest menu background when the user clicks login or create
     public void ActiveMainMenu()
     {
-        if (!DBManager.LoggedIn) //if not logged in display guest menu
+        if (!DBManager.LoggedIn) //if not logged in display guest menu by default
         {
             //set guest main menu to show up
             guestbackground.SetActive(true);
             
         }
-        else if (DBManager.LoggedIn) //if LOGGED IN, display user menu and minimize either the create or login mennu the user was on when they clicked login or create
+        else if (DBManager.LoggedIn) //if LOGGED IN, display user menu and minimize either the create or login menu the user was on when they clicked login or create
         {
             //set logged in main menu to show up from here on out
             guestbackground.SetActive(false); //turn off guest menu
