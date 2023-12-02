@@ -61,8 +61,8 @@ public class playerDeck : MonoBehaviour
         { // number of starting hand
             yield return new WaitForSeconds(1);
             //each second it draws a card
-            //spawns new object using instantiate duplicating it as a clone
-            Instantiate(cardInHand, transform.position, transform.rotation);
+            //spawns new object using instantiate duplicating it as a clone of cardInHand
+            GameObject card = Instantiate(cardInHand, new Vector2(0, 0), Quaternion.identity);
         }
 
     }
@@ -122,7 +122,8 @@ public class playerDeck : MonoBehaviour
             {
                 //slow down code so we don't draw too fast
                 yield return new WaitForSeconds(.25F);
-                Instantiate(cardInHand, transform.position, transform.rotation);
+                //Instantiate(cardInHand, transform.position, transform.rotation);
+                GameObject card = Instantiate(cardInHand, new Vector2(0, 0), Quaternion.identity);
             }
         }
         else
