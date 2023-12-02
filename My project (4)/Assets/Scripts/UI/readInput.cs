@@ -25,10 +25,10 @@ public class readInput : MonoBehaviour
         form.AddField("password", user_pass.text);
 
         //connect to url of our database's php file, PASS FORM TO URL
-        WWW www = new WWW("http://localhost/sqlconnect/login.php", form);
+        WWW www = new WWW("http://localhost/login.php", form);
         yield return www; //tell Unity to yield running the rest of the game till it gets this info from the url
 
-        //Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
+        // Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
         if (www.text[0] == '0')
         {
             Debug.Log("User logged in successfully.");
@@ -51,8 +51,7 @@ public class readInput : MonoBehaviour
                 DBManager.wlratio = 0; //win loss ratio might need to be caluclated (not stored in table?)
             }
 
-
-            //NEED to add something to change menu display back to main menu when they log in******************
+            // NEED to add something to change menu display back to main menu when they log in******************
         }
         else
         {
