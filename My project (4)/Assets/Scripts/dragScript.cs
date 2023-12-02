@@ -5,32 +5,38 @@ using UnityEngine.EventSystems;
 
 public class dragScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler //
 {
-    public void OnBeginDrag(PointerEventData eventData)
-    { //pointereventdata are cursor actions 
-        //Ibegindraghandler requires this method
-        Debug.Log("Begin Drag");
-    }
-    public void OnDrag(PointerEventData eventData)
-    { //pointereventdata are cursor actions 
-      //Ibegindraghandler requires this method
-        Debug.Log("dragging");
-        this.transform.position = eventData.position;
+  Transform parentReturn = null;
 
-    }
-    public void OnEndDrag(PointerEventData eventData)
-    { //pointereventdata are cursor actions 
-      //Ibegindraghandler requires this method
+  public void OnBeginDrag(PointerEventData eventData)
+  { //pointereventdata are cursor actions 
+    //Ibegindraghandler requires this method
+    parentReturn = this.transform.parent; //where to return to if bounce
+    this.transform.SetParent(this.transform.parent.parent); //set current card to parent of location
+    Debug.Log(parentReturn);
+    // GetComponent<CanvasGroup>().blocksRaycasts = false; //stop raycast momentarily
+  }
+  public void OnDrag(PointerEventData eventData)
+  { //pointereventdata are cursor actions 
+    //Ibegindraghandler requires this method
 
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
+    this.transform.position = eventData.position;
 
-    }
+  }
+  public void OnEndDrag(PointerEventData eventData)
+  { //pointereventdata are cursor actions 
+    //Ibegindraghandler requires this method
+    this.transform.SetParent(parentReturn);
+    // GetComponent<CanvasGroup>().blocksRaycasts = true;
+  }
+  // Start is called before the first frame update
+  void Start()
+  {
 
-    // Update is called once per frame
-    void Update()
-    {
+  }
 
-    }
+  // Update is called once per frame
+  void Update()
+  {
+
+  }
 }
