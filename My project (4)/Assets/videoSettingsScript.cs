@@ -23,14 +23,8 @@ public class videoSettingsScript : MonoBehaviour
     {
         myText.text = "Bightness: " + (int) (mySlider.value*100);
         brightnessValue = mySlider.value;
-        foreach(SpriteRenderer spriteRenderer in spriteRenderers){
-            spriteRenderer.color = new Color(brightnessValue,brightnessValue,brightnessValue, spriteRenderer.color.a);
-        }
+        // foreach(SpriteRenderer spriteRenderer in spriteRenderers){
+        //     spriteRenderer.color = new Color(brightnessValue,brightnessValue,brightnessValue, spriteRenderer.color.a);
+        // }
     }
-
-    // public void AdjustBrightness(float brightnessValue){
-    //     foreach(SpriteRenderer spriteRenderer in spriteRenderers){
-    //         spriteRenderer.color = new Color(brightnessValue,brightnessValue,brightnessValue, spriteRenderer.color.a);
-    //     }
-    // }
 }
