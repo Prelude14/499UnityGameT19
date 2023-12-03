@@ -30,6 +30,19 @@ public class numberTest
         }
         Assert.AreEqual(true, success);
     }
+    [UnityTest]
+    public IEnumerator healthTest()
+    {
+        int testHp = 25;
+        GameObject.Find("circleBar").GetComponent<playerHealth>().setHealth(testHp);
+        float result = 25f / 30f;
+        Debug.Log(result);
+        yield return null;
+        float y = GameObject.Find("circleBar").GetComponent<playerHealth>().getFillAmount();
+        Debug.Log(y);
+        Assert.AreEqual(result, y);
+
+    }
     // [UnityTest]
     // public IEnumerator turn_test()
     // {

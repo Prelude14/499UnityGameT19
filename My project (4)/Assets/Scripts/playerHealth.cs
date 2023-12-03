@@ -11,6 +11,7 @@ public class playerHealth : MonoBehaviour
     public float hp;
     public Image health;
     public Text hpText;
+    public float fillAmount;
     void Start()
     {
         maxHp = 30;
@@ -22,14 +23,18 @@ public class playerHealth : MonoBehaviour
     void Update()
     {
         //Fill health bar to this much
-        hp = HPStatic;
-        health.fillAmount = hp / maxHp; //percentage of fill amount
+        if (hp < 0)
+        {
+            hp = 0;
+        }
+        fillAmount = fillHealth(hp);
+        health.fillAmount = fillAmount; //percentage of fill amount
         if (hp >= maxHp)
         {
             hp = maxHp;
         }
         hpText.text = hp.ToString();
-        fillHealth();
+
 
     }
     public float getHealth()
@@ -37,8 +42,16 @@ public class playerHealth : MonoBehaviour
         //return current hp
         return hp;
     }
-    public void fillHealth()
+    public float fillHealth(float x)
     {
-
+        return x / maxHp;
+    }
+    public void setHealth(float x)
+    {
+        this.hp = x;
+    }
+    public float getFillAmount()
+    {
+        return fillAmount;
     }
 }
