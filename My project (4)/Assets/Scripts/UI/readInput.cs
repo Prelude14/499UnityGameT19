@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+
 public class readInput : MonoBehaviour
 {
     //======================================================================================================  LOGIN INPUT  =====================================================================================================
     //Need public string to store the user's input when it is entered into the login page's input fields
     public InputField username_email;
     public InputField user_pass;
+    private bool loginFinished = false; //for test purposes
 
     public Button loginButton;
 
@@ -32,7 +33,7 @@ public class readInput : MonoBehaviour
         //Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
         if (www.text[0] == '0')
         {
-            Debug.Log("User logged in successfully.");
+            Debug.Log("User logged in successfully. Account Values: " + www.text);
 
             //Store user info in DBManager so Unity can display all the user info
             DBManager.username = username_email.text;
@@ -55,18 +56,25 @@ public class readInput : MonoBehaviour
 
             //NEED to add something to change menu display back to main menu when they log in******************
             //MainMenu.loginmenu.SetActive(false);
+
         }
         else
         {
             Debug.Log("User logged FAILED. Error Code: " + www.text);
         }
+        //for test purposes:
+        loginFinished = true;
     }
 
-    public void VerifyInputsL() //login button won't even be clickable until all three input fields have at least 10 characters in each
+    public void VerifyInputsL() //login button won't even be clickable until each input field has at least 10 characters in each
     {
         loginButton.interactable = (username_email.text.Length >= 10 && user_pass.text.Length >= 10);
     }
-
+    // Method to check if the login coroutine has completed FOR TESTING
+    public bool IsLoginCoroutineCompleted()
+    {
+        return loginFinished;
+    }
 
 
 
@@ -74,6 +82,7 @@ public class readInput : MonoBehaviour
     public InputField c_username_email;
     public InputField c_user_pass;
     public InputField c_user_pass2;//confirm pass input field from create page
+    private bool createFinished = false; //for test purposes
 
     public Button createButton; //create page button
 
@@ -97,7 +106,7 @@ public class readInput : MonoBehaviour
         //Error check what our PHP file returned
         if (wwwC.text[0] == '0')
         {
-            Debug.Log("User created and logged in successfully.");
+            Debug.Log("User created and logged in successfully. Account Values: " + wwwC.text);
 
             //Store user info in DBManager so Unity can display all the user info
             DBManager.username = c_username_email.text;
@@ -115,6 +124,8 @@ public class readInput : MonoBehaviour
         {
             Debug.Log("User create FAILED. Error Code: " + wwwC.text);
         }
+        //for test purposes:
+        createFinished = true;
     }
     public void VerifyInputsC() //create button won't even be clickable until all three input fields have at least 10 characters in each, AND passwords match
     {
@@ -122,42 +133,11 @@ public class readInput : MonoBehaviour
         bool matchingPasswords = string.Equals(c_user_pass.text, c_user_pass2.text.Length); //true means the passes match, false means they are different.
         createButton.interactable = (longEnoughInputs && matchingPasswords);
     }
+    // Method to check if the create coroutine has completed FOR TESTING
+    public bool IsCreateCoroutineCompleted()
+    {
+        return createFinished;
+    }
 
-
-    /* //LOGIN INPUTS
-     public void ReadStringUsernameL(string usernameInputString)
-     {
-         username.text = usernameInputString; //store the entered text as the user's username
-         //PlayerPrefs.SetString("uname", username.text);
-         Debug.Log(username);
-     }
-     public void ReadStringPasswordL(string passwordInputString)
-     {
-         password.text = passwordInputString; //store the entered text as the user's password
-         //PlayerPrefs.SetString("upass", password.text);
-         Debug.Log(password);
-     }
-
-     //Need public string to store the user's input when it is entered into the Create Account page
-     public Text usernameCA;
-     public Text passwordCA_1;
-     public Text passwordCA_2;
-
-     //CREATE ACCOUNTS INPUTS
-     public void ReadStringUsernameCA(string usernameInputStringCA)
-     {
-         usernameCA.text = usernameInputStringCA; //store the entered text as the user's username
-         Debug.Log(usernameCA);
-     }
-     public void ReadStringPasswordCA_1(string passwordInputStringCA1)
-     {
-         passwordCA_1.text = passwordInputStringCA1; //store the entered text as the user's password they want to use
-         Debug.Log(passwordCA_1);
-     }
-     public void ReadStringPasswordCA_2(string passwordInputStringCA2)
-     {
-         passwordCA_2.text = passwordInputStringCA2; //store the entered text as the "confirm password" password
-         Debug.Log(passwordCA_2);
-     }*/
 
 }
