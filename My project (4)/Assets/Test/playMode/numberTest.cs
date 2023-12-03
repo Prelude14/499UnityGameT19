@@ -6,6 +6,8 @@ using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 public class numberTest
 {
+
+
     [SetUp]
     public void SetUp()
     {
@@ -30,6 +32,74 @@ public class numberTest
         }
         Assert.AreEqual(true, success);
     }
+
+    [UnityTest]
+    public IEnumerator Initial_Draw_test()
+    {
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return new WaitForSeconds(7);
+
+        GameObject x = GameObject.Find("hand");
+        bool y = false;
+        Debug.Log(x.transform.childCount);
+        if (x.transform.childCount == 5)
+        {
+            y = true;
+        }
+        Assert.AreEqual(true, y);
+    }
+
+    [UnityTest]
+
+    public IEnumerator turn_test()
+    {
+        GameObject gameObject = new GameObject();
+        turnScript turnScriptComponent = gameObject.AddComponent<turnScript>();
+
+        // Ensure initial values are set correctly
+        Assert.IsTrue(turnScriptComponent.isMyTurn);
+        Assert.AreEqual(1, turnScriptComponent.myTurn);
+        Assert.AreEqual(0, turnScriptComponent.isTheirTurn);
+        Assert.AreEqual(1, turnScriptComponent.maxMana);
+        Assert.AreEqual(1, turnScriptComponent.currentMana);
+        Assert.IsFalse(turnScript.turnStart);
+
+        // Simulate ending player's turn
+        turnScriptComponent.endTurn();
+
+        // Ensure it's now opponent's turn
+        Assert.IsFalse(turnScriptComponent.isMyTurn);
+        Assert.AreEqual(1, turnScriptComponent.isTheirTurn);
+
+        // Simulate ending opponent's turn
+        turnScriptComponent.endOpponentTurn();
+
+        // Wait for one frame update to ensure changes take effect
+        yield return null;
+
+        // Ensure it's back to player's turn, and mana is updated
+        Assert.IsTrue(turnScriptComponent.isMyTurn);
+        Assert.AreEqual(1, turnScriptComponent.myTurn);
+        Assert.AreEqual(2, turnScriptComponent.maxMana);
+        Assert.AreEqual(2, turnScriptComponent.currentMana);
+        Assert.IsTrue(turnScript.turnStart);
+    }
+
+    [UnityTest]
+    public IEnumerator CardDatabase_PopulationTest()
+    {
+        cardDatabase database = new GameObject().AddComponent<cardDatabase>();
+
+        database.populateList();
+
+        yield return null;
+        Assert.NotNull(cardDatabase.cardList);
+        Assert.Greater(cardDatabase.cardList.Count, 0);
+        Assert.AreEqual("Training dummy", cardDatabase.cardList[1].cardName);
+        Assert.AreEqual(5, cardDatabase.cardList[2].cost);
+        yield return null;
+    }
     [UnityTest]
     public IEnumerator healthTest()
     {
@@ -43,6 +113,7 @@ public class numberTest
         Assert.AreEqual(result, y);
 
     }
+
     // [UnityTest]
     // public IEnumerator turn_test()
     // {

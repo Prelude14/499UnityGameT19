@@ -63,6 +63,7 @@ public class playerDeck : MonoBehaviour
             //each second it draws a card
             //spawns new object using instantiate duplicating it as a clone of cardInHand
             GameObject card = Instantiate(cardInHand, new Vector2(0, 0), Quaternion.identity);
+
         }
 
     }

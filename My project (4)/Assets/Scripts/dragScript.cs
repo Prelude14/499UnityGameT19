@@ -5,45 +5,61 @@ using UnityEngine.EventSystems;
 
 public class dragScript : MonoBehaviour
 {
-  //, IBeginDragHandler, IDragHandler, IEndDragHandler //
-
-  // Transform parentReturn = null;
-
-  // public void OnBeginDrag(PointerEventData eventData)
-  // { //pointereventdata are cursor actions 
-  //   //Ibegindraghandler requires this method
-  //   parentReturn = this.transform.parent; //where to return to if bounce
-  //   this.transform.SetParent(this.transform.parent.parent); //set current card to parent of location
-  //   Debug.Log(parentReturn);
-  //   // GetComponent<CanvasGroup>().blocksRaycasts = false; //stop raycast momentarily
-  // }
-  // public void OnDrag(PointerEventData eventData)
-  // { //pointereventdata are cursor actions 
-  //   //Ibegindraghandler requires this method
-
-  //   this.transform.position = eventData.position;
-
-  // }
-  // public void OnEndDrag(PointerEventData eventData)
-  // { //pointereventdata are cursor actions 
-  //   //Ibegindraghandler requires this method
-  //   this.transform.SetParent(parentReturn);
-  //   // GetComponent<CanvasGroup>().blocksRaycasts = true;
-  // }
-  // // Start is called before the first frame update
-  private bool isDragging;
+  public GameObject Canvas;
+  public GameObject dropZone;
+  public GameObject DropZone;
+  private GameObject startParent;
+  private Vector2 startPos;
+  private bool isOverDropZone = false;
+  private bool isDragging = false;
+  private bool isDraggable = true;
   void Start()
   {
-
+    Canvas = GameObject.Find("Canvas");
+    DropZone = GameObject.Find("playPanel");
   }
 
+  private void OnCollisionEnter2D(Collision2D collision)
+  {
+    Debug.Log("Colliding");
+    isOverDropZone = true;
+    dropZone = collision.gameObject;
+
+  }
+  private void OnCollisionExit2D(Collision2D collision)
+  {
+    Debug.Log("Not colliding");
+    isOverDropZone = false;
+    dropZone = null;
+  }
   public void StartDrag()
   {
+    if (!isDraggable)
+    {
+      return;
+    }
+    startParent = transform.parent.gameObject; //find the parent of this transform and find that game object so it should be hand
+    startPos = transform.position;
     isDragging = true;
   }
   public void EndDrag()
   {
+    if (!isDraggable)
+    {
+      return;
+    }
     isDragging = false;
+    if (isOverDropZone)
+    {
+      transform.SetParent(dropZone.transform, false);
+      isDraggable = false;
+    }
+    else
+    {
+      transform.position = startPos;
+      transform.SetParent(startParent.transform, false);
+
+    }
   }
 
   // Update is called once per frame
@@ -52,6 +68,7 @@ public class dragScript : MonoBehaviour
     if (isDragging)
     {
       transform.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+      transform.SetParent(Canvas.transform, true);
     }
   }
 }
