@@ -17,7 +17,7 @@ public class guestPassReset : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+    
     }
 
     public void CallResetToken()
@@ -36,6 +36,7 @@ public class guestPassReset : MonoBehaviour
         if (www.result != UnityWebRequest.Result.Success)
         {
             Debug.Log(www.error);
+            // print error message
         }
         else 
         {
