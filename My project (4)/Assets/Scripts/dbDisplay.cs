@@ -65,10 +65,18 @@ public class dbDisplay : MonoBehaviour
         staticCardBack = cardBack;
         cloneDraw();
 
+        playZone = GameObject.Find("playPanel");
+        currentZone = this.transform.parent.gameObject;
 
         if (turnScript.currentMana >= cost && isSummoned == false)
+
         {
             canBeSummoned = true;
+            Debug.Log(cardName + " Is now playable");
+            if (currentZone == hand)
+            {
+                Debug.Log(cardName + " Is now playable");
+            }
         }
         else
         {
@@ -78,13 +86,13 @@ public class dbDisplay : MonoBehaviour
         if (canBeSummoned)
         {
             dragScript.isDraggable = true;
+            Debug.Log(cardName + " is now dragable");
         }
         else
         {
             dragScript.isDraggable = false;
         }
-        playZone = GameObject.Find("playPanel");
-        currentZone = this.transform.parent.gameObject;
+
 
         if (isSummoned == false && currentZone == playZone)
         {
