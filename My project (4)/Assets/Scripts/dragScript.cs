@@ -12,7 +12,7 @@ public class dragScript : MonoBehaviour
   private Vector2 startPos;
   private bool isOverDropZone = false;
   private bool isDragging = false;
-  private bool isDraggable = true;
+  public static bool isDraggable = true;
   void Start()
   {
     Canvas = GameObject.Find("Canvas");
@@ -53,6 +53,7 @@ public class dragScript : MonoBehaviour
     {
       transform.SetParent(dropZone.transform, false);
       isDraggable = false;
+
     }
     else
     {
@@ -60,15 +61,20 @@ public class dragScript : MonoBehaviour
       transform.SetParent(startParent.transform, false);
 
     }
+
   }
 
   // Update is called once per frame
   void Update()
   {
+
+
     if (isDragging)
     {
       transform.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
       transform.SetParent(Canvas.transform, true);
     }
   }
+
+
 }

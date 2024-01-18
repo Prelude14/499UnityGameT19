@@ -12,7 +12,7 @@ public class turnScript : MonoBehaviour
 
     public int maxMana;
 
-    public int currentMana;
+    public static int currentMana;
     public Text manaText;
 
     public static bool turnStart;
@@ -60,4 +60,6 @@ public class turnScript : MonoBehaviour
         currentMana = maxMana;
         turnStart = true;
     }
+
+
 }

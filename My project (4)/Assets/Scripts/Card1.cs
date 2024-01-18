@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
-public class Card1 
+public class Card1
 {
 
     public string cardName;
@@ -15,11 +15,14 @@ public class Card1
     public int hp;
     public string txt;
 
-    public Card1() {
 
-    } 
-    public Card1(int id, string cardName, int cost, int pow, int hp, string txt) {
-        
+    public Card1()
+    {
+
+    }
+    public Card1(int id, string cardName, int cost, int pow, int hp, string txt)
+    {
+
         this.cardName = cardName;
         this.id = id;
         this.cost = cost;
@@ -29,9 +32,10 @@ public class Card1
 
     }
 
-    public string print(){
-        return (cardName  + " " + cost + " " + pow + " " + hp + " " + txt);
+    public string print()
+    {
+        return (cardName + " " + cost + " " + pow + " " + hp + " " + txt);
     }
-    
+
 }
 

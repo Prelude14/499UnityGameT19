@@ -30,7 +30,13 @@ public class dbDisplay : MonoBehaviour
     public static bool staticCardBack;
 
     public GameObject hand;
+    public GameObject playZone;
+    public GameObject currentZone;
     public static int deckCount;
+
+    public bool canBeSummoned;
+    public bool isSummoned;
+
 
 
     // Start is called before the first frame update
@@ -39,6 +45,9 @@ public class dbDisplay : MonoBehaviour
         deckCount = playerDeck.deckSize;
         displayList[0] = cardDatabase.cardList[displayId];
         this.id = displayList[0].id;
+
+        canBeSummoned = false;
+        isSummoned = false;
 
     }
 
@@ -57,7 +66,38 @@ public class dbDisplay : MonoBehaviour
         cloneDraw();
 
 
+        if (turnScript.currentMana >= cost && isSummoned == false)
+        {
+            canBeSummoned = true;
+        }
+        else
+        {
+            canBeSummoned = false;
+        }
+
+        if (canBeSummoned)
+        {
+            dragScript.isDraggable = true;
+        }
+        else
+        {
+            dragScript.isDraggable = false;
+        }
+        playZone = GameObject.Find("playPanel");
+        currentZone = this.transform.parent.gameObject;
+
+        if (isSummoned == false && currentZone == playZone)
+        {
+            isSummoned = true;
+            Debug.Log(cardName + " Summoned sucess | Cost: " + this.cost + " | Current zone: " + currentZone + " | play zone: " + playZone + " | Is summoned? " + isSummoned);
+
+            turnScript.currentMana = turnScript.currentMana - this.cost;
+            Debug.Log("Mana left: " + turnScript.currentMana);
+        }
+
+
     }
+
     private void displayCard()
     {
 

@@ -65,15 +65,12 @@ public class playerDeck : MonoBehaviour
             GameObject card = Instantiate(cardInHand, new Vector2(0, 0), Quaternion.identity);
 
         }
+        Debug.Log(turnScript.currentMana);
 
     }
 
     public void changeSize()
     {
-        switch (deckSize)
-        {
-
-        }
         if (deckSize < 20)
         {
             cardInDeck6.SetActive(false);
@@ -122,7 +119,7 @@ public class playerDeck : MonoBehaviour
             for (int x = 0; x < drawSize; x++)
             {
                 //slow down code so we don't draw too fast
-                yield return new WaitForSeconds(.25F);
+                yield return new WaitForSeconds(.15F);
                 //Instantiate(cardInHand, transform.position, transform.rotation);
                 GameObject card = Instantiate(cardInHand, new Vector2(0, 0), Quaternion.identity);
             }

@@ -35,7 +35,6 @@ public class playerHealth : MonoBehaviour
         }
         hpText.text = hp.ToString();
 
-
     }
     public float getHealth()
     {

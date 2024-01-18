@@ -62,7 +62,7 @@ public class numberTest
         Assert.AreEqual(1, turnScriptComponent.myTurn);
         Assert.AreEqual(0, turnScriptComponent.isTheirTurn);
         Assert.AreEqual(1, turnScriptComponent.maxMana);
-        Assert.AreEqual(1, turnScriptComponent.currentMana);
+        Assert.AreEqual(1, turnScript.currentMana);
         Assert.IsFalse(turnScript.turnStart);
 
         // Simulate ending player's turn
@@ -82,7 +82,7 @@ public class numberTest
         Assert.IsTrue(turnScriptComponent.isMyTurn);
         Assert.AreEqual(1, turnScriptComponent.myTurn);
         Assert.AreEqual(2, turnScriptComponent.maxMana);
-        Assert.AreEqual(2, turnScriptComponent.currentMana);
+        Assert.AreEqual(2, turnScript.currentMana);
         Assert.IsTrue(turnScript.turnStart);
     }
 
@@ -111,6 +111,35 @@ public class numberTest
         float y = GameObject.Find("circleBar").GetComponent<playerHealth>().getFillAmount();
         Debug.Log(y);
         Assert.AreEqual(result, y);
+        yield return new WaitForSeconds(2);
+
+    }
+    [UnityTest]
+    public IEnumerator healthTestUnder0()
+    {
+        int testHp2 = -50;
+        GameObject.Find("circleBar").GetComponent<playerHealth>().setHealth(testHp2);
+        float result2 = 0f / 30f;
+        Debug.Log(result2);
+        yield return null;
+        float z = GameObject.Find("circleBar").GetComponent<playerHealth>().getFillAmount();
+        Debug.Log(z);
+        Assert.AreEqual(result2, z);
+        yield return new WaitForSeconds(2);
+
+    }
+    [UnityTest]
+    public IEnumerator healthTestOver30()
+    {
+        int testHp2 = 50;
+        GameObject.Find("circleBar").GetComponent<playerHealth>().setHealth(testHp2);
+        float result2 = 50f / 30f;
+        Debug.Log(result2);
+        yield return null;
+        float z = GameObject.Find("circleBar").GetComponent<playerHealth>().getFillAmount();
+        Debug.Log(z);
+        Assert.AreEqual(result2, z);
+        yield return new WaitForSeconds(2);
 
     }
 
