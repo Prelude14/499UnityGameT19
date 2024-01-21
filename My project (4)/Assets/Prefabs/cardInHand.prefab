@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2076385865824479224}
   - component: {fileID: 1280702088223432329}
   - component: {fileID: 2129486602799592294}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: costText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 8253872634364717287}
   - component: {fileID: 2527264119360117154}
   - component: {fileID: 3964222207571201615}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 1539818088336856121}
   - component: {fileID: 4172355255004437566}
   - component: {fileID: 8267126339260105256}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Card_Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 1007086145558258351}
   - component: {fileID: 885668134530559123}
   - component: {fileID: 1239801173873476298}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: cardBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 1784638259008859674}
   - component: {fileID: 8945241308178499030}
   - component: {fileID: 6208189301617849383}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: descText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,7 +403,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.9, y: -47.7}
+  m_AnchoredPosition: {x: -0.9, y: -35.7}
   m_SizeDelta: {x: 76.2908, y: 39.373}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8945241308178499030
@@ -459,7 +459,7 @@ GameObject:
   - component: {fileID: 7139941947399203301}
   - component: {fileID: 3655751902734700438}
   - component: {fileID: 6875661499673311101}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: powText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -541,7 +541,7 @@ GameObject:
   - component: {fileID: 4038253155698772594}
   - component: {fileID: 4221445135216537647}
   - component: {fileID: 1516554824212037466}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: name_bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -556,7 +556,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4381883254769967057}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0000033379}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -566,8 +566,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000011444, y: -7}
-  m_SizeDelta: {x: 55, y: 15}
+  m_AnchoredPosition: {x: -0.89999, y: 69.284}
+  m_SizeDelta: {x: 61.9574, y: 18.29}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4221445135216537647
 CanvasRenderer:
@@ -618,7 +618,7 @@ GameObject:
   - component: {fileID: 124704871513141429}
   - component: {fileID: 3011373601755341345}
   - component: {fileID: 2570437509423911699}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: pow_border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -644,7 +644,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0.026, z: 0.056}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -34.9, y: -61.7}
+  m_AnchoredPosition: {x: -40.6, y: 15.2}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3011373601755341345
@@ -696,7 +696,7 @@ GameObject:
   - component: {fileID: 8571380274014424503}
   - component: {fileID: 3876772736972077599}
   - component: {fileID: 5619403894189000748}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -772,7 +772,7 @@ GameObject:
   - component: {fileID: 8357907205102357400}
   - component: {fileID: 487177781730779928}
   - component: {fileID: 7485126937228477733}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: nameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -852,7 +852,7 @@ GameObject:
   - component: {fileID: 3067519686041187519}
   - component: {fileID: 8596342285952156372}
   - component: {fileID: 4275766787814616484}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: hpText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -934,7 +934,7 @@ GameObject:
   - component: {fileID: 7698242346842349855}
   - component: {fileID: 8665652501607155230}
   - component: {fileID: 7377551707873452410}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: health_border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -959,7 +959,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 38.8, y: -62.5}
+  m_AnchoredPosition: {x: -41.4, y: -11.7}
   m_SizeDelta: {x: 21.6819, y: 22.5076}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8665652501607155230
@@ -1011,7 +1011,7 @@ GameObject:
   - component: {fileID: 1946734028715956868}
   - component: {fileID: 7953278203834189626}
   - component: {fileID: 7050449463723859819}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: backdrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1090,7 +1090,13 @@ GameObject:
   - component: {fileID: 467141001557397880}
   - component: {fileID: 8507879098216517373}
   - component: {fileID: 3673208908680210543}
-  m_Layer: 5
+  - component: {fileID: 5993375699930521061}
+  - component: {fileID: 6326981270343975611}
+  - component: {fileID: 15133638781149851}
+  - component: {fileID: 2581155786288991711}
+  - component: {fileID: 5036313305057053722}
+  - component: {fileID: 3641112693097529420}
+  m_Layer: 6
   m_Name: cardInHand
   m_TagString: clone
   m_Icon: {fileID: 0}
@@ -1198,6 +1204,17 @@ MonoBehaviour:
   hpText: {fileID: 4275766787814616484}
   cardBack: 0
   hand: {fileID: 0}
+  playZone: {fileID: 0}
+  currentZone: {fileID: 0}
+  canBeSummoned: 0
+  isSummoned: 0
+  canAttack: 0
+  hasAttacked: 0
+  targeting: 0
+  targetingEnemy: 0
+  onlyThisCardAttack: 0
+  Target: {fileID: 0}
+  Enemy: {fileID: 0}
 --- !u!114 &8507879098216517373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1225,6 +1242,218 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hand: {fileID: 0}
   handCard: {fileID: 7236696608810499412}
+--- !u!114 &5993375699930521061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7236696608810499412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88a9925730feb942bc55eafe2c69ae7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Canvas: {fileID: 0}
+  dropZone: {fileID: 0}
+  DropZone: {fileID: 0}
+--- !u!114 &6326981270343975611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7236696608810499412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 100
+  m_PreferredHeight: 150
+  m_FlexibleWidth: 0
+  m_FlexibleHeight: 0
+  m_LayoutPriority: 1
+--- !u!114 &15133638781149851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7236696608810499412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 13
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5993375699930521061}
+          m_TargetAssemblyTypeName: dragScript, Scripts
+          m_MethodName: StartDrag
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 6
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5993375699930521061}
+          m_TargetAssemblyTypeName: dragScript, Scripts
+          m_MethodName: EndDrag
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!61 &2581155786288991711
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7236696608810499412}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 50, y: 50}
+  m_EdgeRadius: 0
+--- !u!50 &5036313305057053722
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7236696608810499412}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 7
+--- !u!114 &3641112693097529420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7236696608810499412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 12
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 467141001557397880}
+          m_TargetAssemblyTypeName: dbDisplay, Scripts
+          m_MethodName: StartAttack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 14
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 467141001557397880}
+          m_TargetAssemblyTypeName: dbDisplay, Scripts
+          m_MethodName: StopAttack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 467141001557397880}
+          m_TargetAssemblyTypeName: dbDisplay, Scripts
+          m_MethodName: OneCardAttackStop
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 13
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 467141001557397880}
+          m_TargetAssemblyTypeName: dbDisplay, Scripts
+          m_MethodName: StartAttack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 467141001557397880}
+          m_TargetAssemblyTypeName: dbDisplay, Scripts
+          m_MethodName: OneCardAttack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &7386926366361011351
 GameObject:
   m_ObjectHideFlags: 0
@@ -1236,7 +1465,7 @@ GameObject:
   - component: {fileID: 7601788228138096090}
   - component: {fileID: 7530516935887153722}
   - component: {fileID: 2642849361342241847}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: cost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1314,7 +1543,7 @@ GameObject:
   - component: {fileID: 7996127509047519092}
   - component: {fileID: 9089908054461174808}
   - component: {fileID: 4802137660434430949}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: img
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1389,7 +1618,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7534447112949406447}
   - component: {fileID: 2867151817447504311}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
