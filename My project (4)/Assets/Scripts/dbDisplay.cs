@@ -37,7 +37,19 @@ public class dbDisplay : MonoBehaviour
     public bool canBeSummoned;
     public bool isSummoned;
 
+    public bool canAttack;
+    public bool cantAttack;
+    public static bool hasAttacked;
 
+    public bool targeting;
+    public bool targetingEnemy;
+    public static bool staticTargeting;
+    public static bool staticTargetingEnemy;
+    public bool onlyThisCardAttack;
+    public GameObject Target;
+    public GameObject Enemy;
+
+    public bool currentlyDraggable;
 
     // Start is called before the first frame update
     void Start()
@@ -46,9 +58,12 @@ public class dbDisplay : MonoBehaviour
         displayList[0] = cardDatabase.cardList[displayId];
         this.id = displayList[0].id;
 
-        canBeSummoned = false;
-        isSummoned = false;
 
+        isSummoned = false;
+        Enemy = GameObject.Find("enemyHealth");
+        canAttack = false;
+        targeting = false;
+        targetingEnemy = false;
     }
 
     // Update is called once per frame
@@ -68,44 +83,130 @@ public class dbDisplay : MonoBehaviour
         playZone = GameObject.Find("playPanel");
         currentZone = this.transform.parent.gameObject;
 
-        if (turnScript.currentMana >= cost && isSummoned == false)
-
+        //summoning logic and cost logic
+        if (isSummoned == false)
         {
-            canBeSummoned = true;
-            Debug.Log(cardName + " Is now playable");
-            if (currentZone == hand)
+            if (turnScript.currentMana >= cost && isSummoned == false)
             {
+                canBeSummoned = true;
                 Debug.Log(cardName + " Is now playable");
+                if (currentZone == hand)
+                {
+                    Debug.Log(cardName + " Is now playable");
+                }
             }
-        }
-        else
-        {
-            canBeSummoned = false;
-        }
+            else
+            {
+                canBeSummoned = false;
+            }
 
-        if (canBeSummoned)
-        {
-            dragScript.isDraggable = true;
-            Debug.Log(cardName + " is now dragable");
+            if (canBeSummoned)
+            {
+                dragScript.isDraggable = true;
+                Debug.Log(cardName + " is now " + currentlyDraggable);
+            }
+            else
+            {
+                dragScript.isDraggable = false;
+            }
+
+
+            if (isSummoned == false && currentZone == playZone)
+            {
+                isSummoned = true;
+                Debug.Log(cardName + " Summoned sucess | Cost: " + this.cost + " | Current zone: " + currentZone + " | play zone: " + playZone + " | Is summoned? " + isSummoned);
+
+                turnScript.currentMana = turnScript.currentMana - this.cost;
+                Debug.Log("Mana left: " + turnScript.currentMana);
+            }
         }
         else
         {
             dragScript.isDraggable = false;
         }
+        currentlyDraggable = dragScript.isDraggable;
 
-
-        if (isSummoned == false && currentZone == playZone)
+        //decide attackers
+        if (turnScript.isMyTurn == true && isSummoned == true && hasAttacked == false)
         {
-            isSummoned = true;
-            Debug.Log(cardName + " Summoned sucess | Cost: " + this.cost + " | Current zone: " + currentZone + " | play zone: " + playZone + " | Is summoned? " + isSummoned);
-
-            turnScript.currentMana = turnScript.currentMana - this.cost;
-            Debug.Log("Mana left: " + turnScript.currentMana);
+            cantAttack = false;
+            Debug.Log(cardName + " ready to attack");
         }
 
+        if (turnScript.isMyTurn == true && cantAttack == false)
+        {
+            canAttack = true;
+        }
+        else
+        {
+            cantAttack = true;
+            canAttack = false;
+        }
+        targeting = staticTargeting;
+        targetingEnemy = staticTargetingEnemy;
+
+        if (targetingEnemy == true)
+        {
+            Target = Enemy;
+        }
+        else
+        {
+            Target = null;
+        }
+
+        if (targeting == true && targetingEnemy == true && onlyThisCardAttack == true)
+        {
+            Attack();
+        }
 
     }
 
+    private void Attack()
+    {
+        if (canAttack == true && isSummoned)
+        {
+            if (Target != null)
+            {
+                if (Target == Enemy)
+                {
+                    enemyHealth.HPStatic -= pow;
+                    targeting = false;
+                    cantAttack = true;
+                    hasAttacked = true;
+                }
+
+                if (Target.name == "cardInHand(Clone)")
+                {
+                    canAttack = true;
+                }
+            }
+        }
+    }
+
+    public void UntargetEnemy()
+    {
+        staticTargetingEnemy = false;
+    }
+    public void TargetEnemy()
+    {
+        staticTargetingEnemy = true;
+    }
+    public void StartAttack()
+    {
+        staticTargeting = true;
+    }
+    public void StopAttack()
+    {
+        staticTargeting = false;
+    }
+    public void OneCardAttack()
+    {
+        onlyThisCardAttack = true;
+    }
+    public void OneCardAttackStop()
+    {
+        onlyThisCardAttack = false;
+    }
     private void displayCard()
     {
 

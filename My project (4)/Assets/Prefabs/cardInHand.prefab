@@ -1095,6 +1095,7 @@ GameObject:
   - component: {fileID: 15133638781149851}
   - component: {fileID: 2581155786288991711}
   - component: {fileID: 5036313305057053722}
+  - component: {fileID: 3641112693097529420}
   m_Layer: 6
   m_Name: cardInHand
   m_TagString: clone
@@ -1188,9 +1189,6 @@ MonoBehaviour:
     pow: 0
     hp: 0
     txt: 
-    targeting: 0
-    targetingEnemy: 0
-    onlyThisCardAttacks: 0
   displayId: 3
   id: 0
   hp: 0
@@ -1206,8 +1204,17 @@ MonoBehaviour:
   hpText: {fileID: 4275766787814616484}
   cardBack: 0
   hand: {fileID: 0}
+  playZone: {fileID: 0}
+  currentZone: {fileID: 0}
   canBeSummoned: 0
   isSummoned: 0
+  canAttack: 0
+  hasAttacked: 0
+  targeting: 0
+  targetingEnemy: 0
+  onlyThisCardAttack: 0
+  Target: {fileID: 0}
+  Enemy: {fileID: 0}
 --- !u!114 &8507879098216517373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1250,7 +1257,6 @@ MonoBehaviour:
   Canvas: {fileID: 0}
   dropZone: {fileID: 0}
   DropZone: {fileID: 0}
-  isDraggable: 1
 --- !u!114 &6326981270343975611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1363,6 +1369,91 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
+--- !u!114 &3641112693097529420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7236696608810499412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 12
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 467141001557397880}
+          m_TargetAssemblyTypeName: dbDisplay, Scripts
+          m_MethodName: StartAttack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 14
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 467141001557397880}
+          m_TargetAssemblyTypeName: dbDisplay, Scripts
+          m_MethodName: StopAttack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 467141001557397880}
+          m_TargetAssemblyTypeName: dbDisplay, Scripts
+          m_MethodName: OneCardAttackStop
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 13
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 467141001557397880}
+          m_TargetAssemblyTypeName: dbDisplay, Scripts
+          m_MethodName: StartAttack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 467141001557397880}
+          m_TargetAssemblyTypeName: dbDisplay, Scripts
+          m_MethodName: OneCardAttack
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &7386926366361011351
 GameObject:
   m_ObjectHideFlags: 0

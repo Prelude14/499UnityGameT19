@@ -58,7 +58,7 @@ public class numberTest
         turnScript turnScriptComponent = gameObject.AddComponent<turnScript>();
 
         // Ensure initial values are set correctly
-        Assert.IsTrue(turnScriptComponent.isMyTurn);
+        Assert.IsTrue(turnScript.isMyTurn);
         Assert.AreEqual(1, turnScriptComponent.myTurn);
         Assert.AreEqual(0, turnScriptComponent.isTheirTurn);
         Assert.AreEqual(1, turnScriptComponent.maxMana);
@@ -69,7 +69,7 @@ public class numberTest
         turnScriptComponent.endTurn();
 
         // Ensure it's now opponent's turn
-        Assert.IsFalse(turnScriptComponent.isMyTurn);
+        Assert.IsFalse(turnScript.isMyTurn);
         Assert.AreEqual(1, turnScriptComponent.isTheirTurn);
 
         // Simulate ending opponent's turn
@@ -79,7 +79,7 @@ public class numberTest
         yield return null;
 
         // Ensure it's back to player's turn, and mana is updated
-        Assert.IsTrue(turnScriptComponent.isMyTurn);
+        Assert.IsTrue(turnScript.isMyTurn);
         Assert.AreEqual(1, turnScriptComponent.myTurn);
         Assert.AreEqual(2, turnScriptComponent.maxMana);
         Assert.AreEqual(2, turnScript.currentMana);

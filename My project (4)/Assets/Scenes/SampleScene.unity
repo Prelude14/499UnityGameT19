@@ -1943,6 +1943,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1008387419}
+  - component: {fileID: 1008387420}
   m_Layer: 5
   m_Name: enemyHealth
   m_TagString: Untagged
@@ -1975,6 +1976,51 @@ RectTransform:
   m_AnchoredPosition: {x: 1079, y: 488}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1008387420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008387418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 467141001557397880, guid: bb6f8b4d47ed90a418b3e9b36dbd9aef, type: 3}
+          m_TargetAssemblyTypeName: dbDisplay, Scripts
+          m_MethodName: TargetEnemy
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 467141001557397880, guid: bb6f8b4d47ed90a418b3e9b36dbd9aef, type: 3}
+          m_TargetAssemblyTypeName: dbDisplay, Scripts
+          m_MethodName: UntargetEnemy
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1050262122
 GameObject:
   m_ObjectHideFlags: 0
@@ -3380,7 +3426,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c480f1785a0317a4ca38d4320ea56a9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMyTurn: 0
   myTurn: 0
   isTheirTurn: 0
   turnText: {fileID: 1831272628}
