@@ -28,7 +28,7 @@ public class createTests
     string validPassword = "johndoe123"; //--NEED VALID PASSWORD in order to produce proper error code.
 
     //supply TOO LONG string for the username (>30 characters),
-    string toolongU = "john@doe.comisnotlongenoughsoimadeitlonger";
+    //string toolongU = "john@doe.comisnotlongenoughsoimadeitlonger";
     //supply TOO LONG pass now (>30 characters), which are ALSO INVALID
     string toolongP = "johndoe123isnotlongenoughsoimadeitlonger";
 

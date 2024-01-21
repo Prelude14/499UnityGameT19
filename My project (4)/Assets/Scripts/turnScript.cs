@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class turnScript : MonoBehaviour
 {
-    public bool isMyTurn;
+    public static bool isMyTurn;
     public int myTurn;
     public int isTheirTurn;
     public Text turnText;
 
     public int maxMana;
 
-    public int currentMana;
+    public static int currentMana;
     public Text manaText;
 
     public static bool turnStart;
@@ -42,7 +42,6 @@ public class turnScript : MonoBehaviour
         {
             turnText.text = "Opponent's turn";
         }
-
         manaText.text = currentMana + "/" + maxMana;
 
     }
@@ -50,7 +49,6 @@ public class turnScript : MonoBehaviour
     {
         isMyTurn = false;
         isTheirTurn = 1;
-
     }
     public void endOpponentTurn()
     {
@@ -59,5 +57,8 @@ public class turnScript : MonoBehaviour
         maxMana += 1;
         currentMana = maxMana;
         turnStart = true;
+        dbDisplay.hasAttacked = false;
     }
+
+
 }

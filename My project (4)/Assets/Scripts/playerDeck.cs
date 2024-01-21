@@ -16,6 +16,10 @@ public class playerDeck : MonoBehaviour
     public GameObject cardInDeck2;
     public GameObject cardInDeck3;
 
+    public GameObject cardInDeck4;
+    public GameObject cardInDeck5;
+    public GameObject cardInDeck6;
+
     public GameObject[] clones;
     public GameObject hand;
     public GameObject cardInHand;
@@ -24,6 +28,7 @@ public class playerDeck : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         x = 0;
         deckSize = 20;
         //populate card list
@@ -52,14 +57,16 @@ public class playerDeck : MonoBehaviour
     IEnumerator StartGame()
     {
         //coroutine: way to count down
-
-        for (int i = 0; i < 5; i++)
+        //initial draw
+        for (int i = 0; i < 2; i++)
         { // number of starting hand
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(.15f);
             //each second it draws a card
-            //spawns new object using instantiate duplicating it as a clone
-            Instantiate(cardInHand, transform.position, transform.rotation);
+            //spawns new object using instantiate duplicating it as a clone of cardInHand
+            GameObject card = Instantiate(cardInHand, new Vector2(0, 0), Quaternion.identity);
+
         }
+        Debug.Log(turnScript.currentMana);
 
     }
 
@@ -67,15 +74,27 @@ public class playerDeck : MonoBehaviour
     {
         if (deckSize < 20)
         {
-            cardInDeck1.SetActive(false);
+            cardInDeck6.SetActive(false);
+        }
+        if (deckSize < 15)
+        {
+            cardInDeck5.SetActive(false);
         }
         if (deckSize < 10)
+        {
+            cardInDeck4.SetActive(false);
+        }
+        if (deckSize < 5)
+        {
+            cardInDeck3.SetActive(false);
+        }
+        if (deckSize < 3)
         {
             cardInDeck2.SetActive(false);
         }
         if (deckSize < 1)
         {
-            cardInDeck3.SetActive(false);
+            cardInDeck1.SetActive(false);
         }
     }
     public void shuffle()
@@ -101,13 +120,16 @@ public class playerDeck : MonoBehaviour
             for (int x = 0; x < drawSize; x++)
             {
                 //slow down code so we don't draw too fast
-                yield return new WaitForSeconds(1);
-                Instantiate(cardInHand, transform.position, transform.rotation);
+                yield return new WaitForSeconds(.15F);
+                //Instantiate(cardInHand, transform.position, transform.rotation);
+                GameObject card = Instantiate(cardInHand, new Vector2(0, 0), Quaternion.identity);
             }
         }
         else
         {
             //lose game
+            //TODO: Add a lose game
+
         }
     }
     public void populateDeck()
