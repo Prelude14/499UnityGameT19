@@ -13,6 +13,7 @@ public class dragScript : MonoBehaviour
   private bool isOverDropZone = false;
   private bool isDragging = false;
   public static bool isDraggable = true;
+  public GameObject placeholder = null;
   void Start()
   {
     Canvas = GameObject.Find("Canvas");
@@ -21,19 +22,21 @@ public class dragScript : MonoBehaviour
 
   private void OnCollisionEnter2D(Collision2D collision)
   {
+
     Debug.Log("Colliding");
     isOverDropZone = true;
     dropZone = collision.gameObject;
-
   }
   private void OnCollisionExit2D(Collision2D collision)
   {
+
     Debug.Log("Not colliding");
     isOverDropZone = false;
     dropZone = null;
   }
   public void StartDrag()
   {
+
     if (!isDraggable)
     {
       return;
@@ -41,13 +44,12 @@ public class dragScript : MonoBehaviour
     startParent = transform.parent.gameObject; //find the parent of this transform and find that game object so it should be hand
     startPos = transform.position;
     isDragging = true;
+    Debug.Log("DRAGGING!");
   }
   public void EndDrag()
   {
-    if (!isDraggable)
-    {
-      return;
-    }
+
+
     isDragging = false;
     if (isOverDropZone)
     {

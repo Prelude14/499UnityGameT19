@@ -48,8 +48,11 @@ public class dbDisplay : MonoBehaviour
     public bool onlyThisCardAttack;
     public GameObject Target;
     public GameObject Enemy;
-
+    public static bool staticSummoned;
     public bool currentlyDraggable;
+
+    public static GameObject currentLoc;
+    public static GameObject pz;
 
     // Start is called before the first frame update
     void Start()
@@ -58,18 +61,19 @@ public class dbDisplay : MonoBehaviour
         displayList[0] = cardDatabase.cardList[displayId];
         this.id = displayList[0].id;
 
-
         isSummoned = false;
         Enemy = GameObject.Find("enemyHealth");
         canAttack = false;
         targeting = false;
         targetingEnemy = false;
+        canBeSummoned = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        staticSummoned = isSummoned;
+        Debug.Log(staticSummoned + " " + cardName);
         displayCard();
         hand = GameObject.Find("hand");
         //if this parent is the same as the hands parent 
@@ -82,10 +86,12 @@ public class dbDisplay : MonoBehaviour
 
         playZone = GameObject.Find("playPanel");
         currentZone = this.transform.parent.gameObject;
-
+        currentLoc = currentZone;
+        pz = playZone;
         //summoning logic and cost logic
         if (isSummoned == false)
         {
+            Debug.Log(cardName + " Is summoned false");
             if (turnScript.currentMana >= cost && isSummoned == false)
             {
                 canBeSummoned = true;
@@ -115,7 +121,7 @@ public class dbDisplay : MonoBehaviour
             {
                 isSummoned = true;
                 Debug.Log(cardName + " Summoned sucess | Cost: " + this.cost + " | Current zone: " + currentZone + " | play zone: " + playZone + " | Is summoned? " + isSummoned);
-
+                GetComponent<dragScript>().enabled = false;
                 turnScript.currentMana = turnScript.currentMana - this.cost;
                 Debug.Log("Mana left: " + turnScript.currentMana);
             }
@@ -127,7 +133,7 @@ public class dbDisplay : MonoBehaviour
         currentlyDraggable = dragScript.isDraggable;
 
         //decide attackers
-        if (turnScript.isMyTurn == true && isSummoned == true && hasAttacked == false)
+        if (turnScript.isMyTurn == true && isSummoned == true && hasAttacked == false && currentZone == playZone)
         {
             cantAttack = false;
             Debug.Log(cardName + " ready to attack");
