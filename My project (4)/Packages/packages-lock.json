@@ -188,7 +188,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.multiplayer.samples.coop": {
-      "version": "file:C:/Users/marty/Downloads/Mutiplayer helpers (ClientNetworkTransform)",
+      "version": "file:Mutiplayer helpers (ClientNetworkTransform)/Mutiplayer helpers (ClientNetworkTransform)",
       "depth": 0,
       "source": "local",
       "dependencies": {
@@ -366,7 +366,7 @@
       "url": "https://packages.unity.com"
     },
     "com.veriorpies.parrelsync": {
-      "version": "file:C:/Users/marty/Downloads/ParrelSync-1.5.1/ParrelSync-1.5.1/ParrelSync",
+      "version": "file:ParrelSync-1.5.1/ParrelSync-1.5.1/ParrelSync",
       "depth": 0,
       "source": "local",
       "dependencies": {}
