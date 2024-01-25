@@ -5,6 +5,10 @@ using UnityEngine;
 public class cardDatabase : MonoBehaviour
 {
    public static List<Card1> cardList = new List<Card1>();
+   // public static List<Card1> cardList_b = new List<Card1>();
+   // public static List<Card1> cardList_r = new List<Card1>();
+   // public static List<Card1> cardList_b = new List<Card1>();
+   // public static List<Card1> cardList_w = new List<Card1>();
 
    void Awake(){
     //insert card using format: Card(int id, string cardName, int cost, int pow, int hp, string txt)
@@ -32,4 +36,31 @@ public class cardDatabase : MonoBehaviour
     cardList.Add(new Card1(19, "Goblin", 2, 1, 1, ""));
     cardList.Add(new Card1(20, "Goblin Lord", 2, 1, 1, "Other goblins have +1/+1"));
    }
+
+   // public void populateListBlue(){
+   //  cardList_b.Add(new Card1(0, "None", 5, 1, 5, "None"));
+   //  cardList_b.Add(new Card1(1, "Training dummy", 1, 1, 1, "Taunt"));
+   //  cardList_b.Add(new Card1(20, "Goblin Lord", 2, 1, 1, "Other goblins have +1/+1"));
+   // }
+
+   // public void populateListRed(){
+   //  cardList_r.Add(new Card1(0, "None", 5, 1, 5, "None"));
+   //  cardList_r.Add(new Card1(1, "Training dummy", 1, 1, 1, "Taunt"));
+   //  cardList_r.Add(new Card1(2, "Kobold charger", 5, 1, 5, "Haste"));
+   //  cardList_r.Add(new Card1(20, "Goblin Lord", 2, 1, 1, "Other goblins have +1/+1"));
+   // }
+
+   //  public void populateListBlack(){
+   //  cardList_b.Add(new Card1(0, "None", 5, 1, 5, "None"));
+   //  cardList_b.Add(new Card1(1, "Training dummy", 1, 1, 1, "Taunt"));
+   //  cardList_b.Add(new Card1(2, "Kobold charger", 5, 1, 5, "Haste"));
+   //  cardList_b.Add(new Card1(20, "Goblin Lord", 2, 1, 1, "Other goblins have +1/+1"));
+   // }
+
+   //  public void populateListWhite(){
+   //  cardList_w.Add(new Card1(0, "None", 5, 1, 5, "None"));
+   //  cardList_w.Add(new Card1(1, "Training dummy", 1, 1, 1, "Taunt"));
+   //  cardList_w.Add(new Card1(2, "Kobold charger", 5, 1, 5, "Haste"));
+   //  cardList_w.Add(new Card1(20, "Goblin Lord", 2, 1, 1, "Other goblins have +1/+1"));
+   // }
 }
