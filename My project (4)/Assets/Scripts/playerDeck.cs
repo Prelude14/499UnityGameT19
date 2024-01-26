@@ -25,14 +25,18 @@ public class playerDeck : MonoBehaviour
     public GameObject cardInHand;
     public Text deckCountText;
 
+    public static int playerColour;
+
     // Start is called before the first frame update
     void Start()
     {
 
         x = 0;
         deckSize = 20;
-        //populate card list
+
+        //populate card list depending on decks selected. Done inside the function
         populateDeck();
+
         shuffle();
         StartCoroutine(StartGame());
 
@@ -65,6 +69,7 @@ public class playerDeck : MonoBehaviour
             //spawns new object using instantiate duplicating it as a clone of cardInHand
             GameObject card = Instantiate(cardInHand, new Vector2(0, 0), Quaternion.identity);
 
+            //renderCardColour(card);
         }
         Debug.Log(turnScript.currentMana);
 
@@ -123,6 +128,8 @@ public class playerDeck : MonoBehaviour
                 yield return new WaitForSeconds(.15F);
                 //Instantiate(cardInHand, transform.position, transform.rotation);
                 GameObject card = Instantiate(cardInHand, new Vector2(0, 0), Quaternion.identity);
+
+                //renderCardColour(card);
             }
         }
         else
@@ -132,13 +139,55 @@ public class playerDeck : MonoBehaviour
 
         }
     }
-    public void populateDeck()
+    //add 20 cards from the cardDatabase using a neutral deck plus one colour (which gets selected by player)
+    public void populateDeck() 
     {
-        for (int i = 0; i < 20; i++)
+        //every deck gets the same 8 neutral cards added to it first
+        for (int i = 0; i < 8; i++)                                     
         {
-            deck[i] = cardDatabase.cardList[i];
+            deck[i] = cardDatabase.neutralCardList[i];
+        } //ADD 8 Neutral cards first
+
+        int j = 8;//start adding the other 12 cards from each deck at index 8 because of neutral cards
+        if (playerColour == 1)          // 1 == BLACK DECK
+        {
+            for (int i = 0; i < 12; i++)                //ADD 12 BLACK cards after first 8
+            {
+                deck[j] = cardDatabase.blackCardList[i];
+                j++;
+            }
+            j = 8; //reset j to 8 after loop is done
         }
+        else if (playerColour == 2)          // 2 == RED DECK
+        {
+            for (int i = 0; i < 12; i++)                //ADD 12 RED cards after first 8
+            {
+                deck[j] = cardDatabase.redCardList[i];
+                j++;
+            }
+            //reset j to 8 after loop is done
+        }
+        else if (playerColour == 3)          // 3 == WHITE DECK
+        {
+            for (int i = 0; i < 12; i++)                //ADD 12 WHITE cards after first 8
+            {
+                deck[j] = cardDatabase.whiteCardList[i];
+                j++;
+            }
+            //reset j to 8 after loop is done
+        }
+        else if (playerColour == 4)          // 4 == BLUE DECK
+        {
+            for (int i = 0; i < 12; i++)                //ADD 12 BLUE cards after first 8
+            {
+                deck[j] = cardDatabase.blueCardList[i];
+                j++;
+            }
+            //reset j to 8 after loop is done
+        }
+
     }
+    
 
     public int getDeckSize()
     {

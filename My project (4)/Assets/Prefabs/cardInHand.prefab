@@ -1184,12 +1184,14 @@ MonoBehaviour:
   displayList:
   - cardName: 
     artwork: {fileID: 0}
+    colour: 0
     id: 0
     cost: 0
     pow: 0
     hp: 0
     txt: 
   displayId: 3
+  colour: 0
   id: 0
   hp: 0
   pow: 0
@@ -1203,6 +1205,7 @@ MonoBehaviour:
   powText: {fileID: 6875661499673311101}
   hpText: {fileID: 4275766787814616484}
   cardBack: 0
+  cardInHand: {fileID: 7236696608810499412}
   hand: {fileID: 0}
   playZone: {fileID: 0}
   currentZone: {fileID: 0}

@@ -9,6 +9,7 @@ public class Card1
 
     public Sprite artwork;
 
+    public int colour;
     public int id;
     public int cost;
     public int pow;
@@ -20,10 +21,11 @@ public class Card1
     {
 
     }
-    public Card1(int id, string cardName, int cost, int pow, int hp, string txt)
+    public Card1(int colour, int id, string cardName, int cost, int pow, int hp, string txt)
     {
 
         this.cardName = cardName;
+        this.colour = colour;
         this.id = id;
         this.cost = cost;
         this.pow = pow;

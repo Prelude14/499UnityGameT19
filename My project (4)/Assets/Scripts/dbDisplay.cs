@@ -9,6 +9,7 @@ public class dbDisplay : MonoBehaviour
     public List<Card1> displayList = new List<Card1>();
     public int displayId;
 
+    public int colour; //for each card's colour
     public int id;
     public int hp;
     public int pow;
@@ -29,6 +30,7 @@ public class dbDisplay : MonoBehaviour
     public bool cardBack;
     public static bool staticCardBack;
 
+    public GameObject cardInHand;
     public GameObject hand;
     public GameObject playZone;
     public GameObject currentZone;
@@ -217,6 +219,7 @@ public class dbDisplay : MonoBehaviour
     {
 
         this.cardName = displayList[0].cardName;
+        this.colour = displayList[0].colour;//new
         this.pow = displayList[0].pow;
         this.hp = displayList[0].hp;
         this.txt = displayList[0].txt;
@@ -228,6 +231,9 @@ public class dbDisplay : MonoBehaviour
         powText.text = " " + this.pow.ToString();
         hpText.text = " " + this.hp.ToString();
 
+        //trying to get the border of the card drwan to change colour to match the card's colour int
+        Color border = renderCardColour(colour);//get what colour the border should be
+        cardInHand.GetComponent<Image>().color = border; //then render the correct colour
 
     }
     private void cloneDraw()
@@ -244,4 +250,37 @@ public class dbDisplay : MonoBehaviour
             this.tag = "Untagged";
         }
     }
+
+    public Color renderCardColour(int cardColour)
+    {
+        //need to check card1's colour int to see what colour to make the border of the card
+        if (cardColour == 1)          // 1 == BLACK DECK
+        {
+            return Color.black;
+        }
+        else if (cardColour == 2)          // 2 == RED DECK
+        {
+            return Color.red;
+        }
+        else if (cardColour == 3)          // 3 == WHITE DECK
+        {
+            return Color.white;
+        }
+        else if (cardColour == 4)          // 4 == BLUE DECK
+        {
+            return Color.blue;
+        }
+        else
+        {
+            return Color.yellow;
+        }
+    }
+
+
+
+
+
+
+
+
 }
