@@ -25,13 +25,10 @@ public class MainMenu : MonoBehaviour
     public Text userWLRatio;
     public Text userDamageDealt;
 
-<<<<<<< Updated upstream
-=======
     //public variable to tell game scene what colour the user wants to play the game with.
     public playerDeck mainmenusPlayDeckScript;
     public string pickedColour = ""; //set empty to start
 
->>>>>>> Stashed changes
 
     // logout button of the user menu background calls this to log out the user and go back to the guest menu background
     public void LogOutButton()
@@ -47,10 +44,6 @@ public class MainMenu : MonoBehaviour
 
     }
 
-<<<<<<< Updated upstream
-    // Start is called before the first frame update
-    public void StartGame() {
-=======
     // Start games with specific colour deck choosen by selecting a colour after clicking quick match
     
     //BLACK start button ======================================================         B  1
@@ -105,7 +98,6 @@ public class MainMenu : MonoBehaviour
         //change variable inside playerDeck script so the other scene can change it
         playerDeck.playerColour = pickedColour;
         //now load scene
->>>>>>> Stashed changes
         SceneManager.LoadScene("SampleScene");
 
     }
