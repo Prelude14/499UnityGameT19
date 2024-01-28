@@ -30,7 +30,7 @@ public class playerDeck : MonoBehaviour
     {
 
         x = 0;
-        deckSize = 20;
+        deckSize = selectDeck.deckSize;
         //populate card list
         populateDeck();
         shuffle();
@@ -134,10 +134,7 @@ public class playerDeck : MonoBehaviour
     }
     public void populateDeck()
     {
-        for (int i = 0; i < 20; i++)
-        {
-            deck[i] = cardDatabase.cardList[i];
-        }
+        deck = selectDeck.displayList;
     }
 
     public int getDeckSize()

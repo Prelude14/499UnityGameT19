@@ -9,6 +9,10 @@ public class cardDatabase : MonoBehaviour
    void Awake(){
     //insert card using format: Card(int id, string cardName, int cost, int pow, int hp, string txt)
       populateList();
+      populateBlackList();
+      populateRedList();
+      populateWhiteList();
+      populateBlueList();
    }
    public void populateList(){
     cardList.Add(new Card1(0, "None", 5, 1, 5, "None"));

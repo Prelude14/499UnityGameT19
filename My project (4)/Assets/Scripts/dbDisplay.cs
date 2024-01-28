@@ -57,8 +57,8 @@ public class dbDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        deckCount = playerDeck.deckSize;
-        displayList[0] = cardDatabase.cardList[displayId];
+        deckCount = selectDeck.deckSize;
+        displayList[0] = selectDeck.displayList[displayId];
         this.id = displayList[0].id;
 
         isSummoned = false;
@@ -235,13 +235,15 @@ public class dbDisplay : MonoBehaviour
         //clone cards for draw
         if (this.tag == "clone")
         {
-            //
-            displayList[0] = playerDeck.staticDeck[deckCount - 1];
-            //
-            deckCount -= 1;
-            playerDeck.deckSize -= 1;
-            cardBack = false;
-            this.tag = "Untagged";
+            if (deckCount > 0){
+                //
+                displayList[0] = playerDeck.staticDeck[deckCount - 1];
+                //
+                deckCount -= 1;
+                playerDeck.deckSize -= 1;
+                cardBack = false;
+                this.tag = "Untagged";
+            }
         }
     }
 }
