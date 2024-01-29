@@ -63,11 +63,7 @@ public class playerManager : NetworkBehaviour
 
         //once 2 clients have connected and they have a valid combo, the server can populate the combinedDeck using the proper combo
         //WANT SERVER TO CREATE DECK, AND THEN DEAL CARDS TO CLIENT USING RPC
-<<<<<<< Updated upstream
-        CmdCreateDeck();//attempt to create deck
-=======
         //CmdCreateDeck();//attempt to create deck
->>>>>>> Stashed changes
 
     }
 
@@ -75,16 +71,10 @@ public class playerManager : NetworkBehaviour
     [Command]
     public void CmdGetPlayerColours(string clientColour)
     {
-<<<<<<< Updated upstream
-        clientDecks += clientColour;
-        //each client should have its own private playerDeck colour, and the server will mix them
-
-=======
         servercheckchangecombo(clientColour); //client runs command, and then gets sent to servcheck method, which checks to see if the server is the one actually running the method, and then lets the server actually update 
         //the sync var
 
         Debug.Log("cmdplayerColour: "+ clientDecks);
->>>>>>> Stashed changes
         /*
         while (!validDeckShuffled)
         {
@@ -92,10 +82,6 @@ public class playerManager : NetworkBehaviour
         }
         //CmdDraw(2);//after telling the server what colour deck to mix, it asks server to deal out 2 cards
         */
-<<<<<<< Updated upstream
-        RpcShowCombo(clientDecks); //send result of this back to client so they can check if there is two players in game before asking server to deal cards
-    }
-=======
         //RpcShowCombo(clientDecks); //send result of this back to client so they can check if there is two players in game before asking server to deal cards
     }
     public void servercheckchangecombo(string clientColour)
@@ -115,7 +101,6 @@ public class playerManager : NetworkBehaviour
         //Debug.Log("serverside: " + clientDecks);
     }
 
->>>>>>> Stashed changes
     [ClientRpc]
     void RpcShowCombo(string clientscombo)
     {
@@ -196,11 +181,7 @@ public class playerManager : NetworkBehaviour
         string combo = checkFor2PlayersAndTheirCombo(); //now that while loop stopped, store method string as one variable so we don't need to call method every time
         if (combo.Equals("Error 1: Not enough players/strings."))       //IF first error code
         {
-<<<<<<< Updated upstream
-            Debug.Log("The is not enough players.");
-=======
             Debug.Log("There is not enough players.");
->>>>>>> Stashed changes
         }
         //============================ BLACK COMBOS =====================================================================           ***BLACK == 1
         else if (combo.Equals("BLACKBLACK"))       //IF both players chose BLACK deck, combinedDeck becomes 2 black decks
@@ -231,11 +212,7 @@ public class playerManager : NetworkBehaviour
 
             shuffleCombinedDeck();
         } //============================ RED COMBOS =====================================================================            ***RED == 2
-<<<<<<< Updated upstream
-        if (combo.Equals("REDRED"))       //IF both players chose RED deck, combinedDeck becomes 2 red decks
-=======
         else if (combo.Equals("REDRED"))       //IF both players chose RED deck, combinedDeck becomes 2 red decks
->>>>>>> Stashed changes
         {
             //deal and shuffle 2 red decks together to be dealt to clients Done inside the functions below
             populateCombinedDeck(22);
@@ -475,13 +452,6 @@ public class playerManager : NetworkBehaviour
     [Command]                                       //clients request the server to deal them their cards
     public void CmdDraw(int drawSize)
     {
-<<<<<<< Updated upstream
-        //want clients to wait here until server has created and shuffled a VALID deck
-        while (!validDeckShuffled)
-        {
-            //if server hasn't shuffled a valid deck yet, stay inside while loop, doing nothing
-        }
-=======
         Debug.Log("made it to draw command.");
         
         /*
@@ -492,7 +462,6 @@ public class playerManager : NetworkBehaviour
             CmdCreateDeck();
         }
         */
->>>>>>> Stashed changes
         //Double check enough players have joined and the server has recieved a valid combo of colours from the clients to deal decks, go ahead and deal the client their two cards
         if (!checkFor2PlayersAndTheirCombo().Equals("Error 1: Not enough players/strings.") && !checkFor2PlayersAndTheirCombo().Equals("Error 2: Too many players/strings."))
         {
@@ -515,13 +484,8 @@ public class playerManager : NetworkBehaviour
                 //lose game
                 //TODO: Add a lose game
 
-<<<<<<< Updated upstream
-            }
-        }
-=======
             } 
         } 
->>>>>>> Stashed changes
     }
     //this method is requested by the Server to run on all Clients, and it decides how to display the cards being dealt or played in the game
     [ClientRpc]
