@@ -7,21 +7,15 @@ using UnityEngine.UI;
 
 public class loginFieldsUpdate : MonoBehaviour
 {
-
     public Text email;
     public Text pass;
     public TMPro.TextMeshProUGUI loginText;
-    // Start is called before the first frame update
-    void Start()
+    
+
+    public void resetFields()
     {
         email.color = Color.black;
         pass.color = Color.black;
         loginText.text = "Log in or sign up";
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
