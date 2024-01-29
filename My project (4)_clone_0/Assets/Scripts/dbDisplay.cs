@@ -60,7 +60,7 @@ public class dbDisplay : MonoBehaviour
     void Start()
     {
         deckCount = playerDeck.deckSize;
-        displayList[0] = cardDatabase.cardList[displayId];
+        displayList[0] = cardDatabase.neutralCardList[displayId];
         this.id = displayList[0].id;
 
         isSummoned = false;
