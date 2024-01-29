@@ -27,7 +27,7 @@ public class MainMenu : MonoBehaviour
 
     //public variable to tell game scene what colour the user wants to play the game with.
     public playerDeck mainmenusPlayDeckScript;
-    public int pickedColour = 0; //set empty to start
+    public string pickedColour = ""; //set empty to start
 
 
     // logout button of the user menu background calls this to log out the user and go back to the guest menu background
@@ -50,7 +50,7 @@ public class MainMenu : MonoBehaviour
     public void StartBlackGame() {
 
         //set picked colour to black, in order for game scene to draw correct cards
-        pickedColour = 1;
+        pickedColour = "BLACK";
         Debug.Log(pickedColour);
 
         //change variable inside playerDeck script so the other scene can change it
@@ -64,7 +64,7 @@ public class MainMenu : MonoBehaviour
     {
 
         //set picked colour to red, in order for game scene to draw correct cards
-        pickedColour = 2;
+        pickedColour = "R";
         Debug.Log(pickedColour);
 
         //change variable inside playerDeck script so the other scene can change it
@@ -78,7 +78,7 @@ public class MainMenu : MonoBehaviour
     {
 
         //set picked colour to white, in order for game scene to draw correct cards
-        pickedColour = 3;
+        pickedColour = "W";
         Debug.Log(pickedColour);
 
         //change variable inside playerDeck script so the other scene can change it
@@ -92,7 +92,7 @@ public class MainMenu : MonoBehaviour
     {
 
         //set picked colour to blue, in order for game scene to draw correct cards
-        pickedColour = 4;
+        pickedColour = "BLUE";
         Debug.Log(pickedColour);
 
         //change variable inside playerDeck script so the other scene can change it

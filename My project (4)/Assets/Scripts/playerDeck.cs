@@ -25,7 +25,7 @@ public class playerDeck : MonoBehaviour
     public GameObject cardInHand;
     public Text deckCountText;
 
-    public static int playerColour;
+    public static string playerColour;
 
     // Start is called before the first frame update
     void Start()
@@ -149,7 +149,7 @@ public class playerDeck : MonoBehaviour
         } //ADD 8 Neutral cards first
 
         int j = 8;//start adding the other 12 cards from each deck at index 8 because of neutral cards
-        if (playerColour == 1)          // 1 == BLACK DECK
+        if (playerColour == "BLACK")          // 1 == BLACK DECK
         {
             for (int i = 0; i < 12; i++)                //ADD 12 BLACK cards after first 8
             {
@@ -158,7 +158,7 @@ public class playerDeck : MonoBehaviour
             }
             j = 8; //reset j to 8 after loop is done
         }
-        else if (playerColour == 2)          // 2 == RED DECK
+        else if (playerColour == "R")          // 2 == RED DECK
         {
             for (int i = 0; i < 12; i++)                //ADD 12 RED cards after first 8
             {
@@ -167,7 +167,7 @@ public class playerDeck : MonoBehaviour
             }
             //reset j to 8 after loop is done
         }
-        else if (playerColour == 3)          // 3 == WHITE DECK
+        else if (playerColour == "W")          // 3 == WHITE DECK
         {
             for (int i = 0; i < 12; i++)                //ADD 12 WHITE cards after first 8
             {
@@ -176,7 +176,7 @@ public class playerDeck : MonoBehaviour
             }
             //reset j to 8 after loop is done
         }
-        else if (playerColour == 4)          // 4 == BLUE DECK
+        else if (playerColour == "BLUE")          // 4 == BLUE DECK
         {
             for (int i = 0; i < 12; i++)                //ADD 12 BLUE cards after first 8
             {
