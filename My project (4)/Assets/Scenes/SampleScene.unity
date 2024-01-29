@@ -2435,6 +2435,10 @@ MonoBehaviour:
   PlayerManager: {fileID: 0}
   gameDeckCombo: 
   gameStarted: 0
+<<<<<<< Updated upstream
+=======
+  sent1: 0
+>>>>>>> Stashed changes
 --- !u!4 &1140826888
 Transform:
   m_ObjectHideFlags: 0

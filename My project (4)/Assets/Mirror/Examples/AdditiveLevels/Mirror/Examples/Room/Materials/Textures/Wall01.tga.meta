@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:My project (4)/Assets/Mirror/Examples/AdditiveLevels/Mirror/Examples/Room/Materials/Textures/Wall01.tga.meta
 guid: 0ce4715b95ec59e4ca799c740a5e144a
+========
+guid: 1ef4aad253cf7e9488305da905643f09
+>>>>>>>> Stashed changes:My project (4)/Assets/Mirror/Examples/Room/Materials/Textures/Wall01_n.tga.meta
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
@@ -17,7 +21,7 @@ TextureImporter:
     mipMapFadeDistanceEnd: 3
   bumpmap:
     convertToNormalMap: 0
-    externalNormalMap: 0
+    externalNormalMap: 1
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
@@ -51,7 +55,11 @@ TextureImporter:
   alphaUsage: 1
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
+<<<<<<<< Updated upstream:My project (4)/Assets/Mirror/Examples/AdditiveLevels/Mirror/Examples/Room/Materials/Textures/Wall01.tga.meta
   textureType: 0
+========
+  textureType: 1
+>>>>>>>> Stashed changes:My project (4)/Assets/Mirror/Examples/Room/Materials/Textures/Wall01_n.tga.meta
   textureShape: 1
   singleChannelComponent: 0
   maxTextureSizeSet: 0
