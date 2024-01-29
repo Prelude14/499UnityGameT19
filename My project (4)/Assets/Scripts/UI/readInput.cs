@@ -18,6 +18,7 @@ public class readInput : MonoBehaviour
     public GameObject guestMMbackground;
     public Text email;
     public Text pass;
+    public TMPro.TextMeshProUGUI loginText;
 
     public void CallLogin()
     {
@@ -61,19 +62,13 @@ public class readInput : MonoBehaviour
             {
                 DBManager.wlratio = 0; //win loss ratio might need to be caluclated (not stored in table?)
             }
-
-
-            //NEED to add something to change menu display back to main menu when they log in******************
-            //MainMenu.loginmenu.SetActive(false);
-
         }
         else
         {
             Debug.Log("User logged FAILED. Error Code: " + www.text);
-            // email.Text = "Invalid email or password!";
             email.color = Color.red;
-            // pass.Text = "Invalid email or password!";
             pass.color = Color.red;
+            loginText.text = "incorrect email or password";
         }
         //for test purposes:
         loginFinished = true;
