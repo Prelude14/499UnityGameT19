@@ -13,6 +13,11 @@ public class readInput : MonoBehaviour
     private bool loginFinished = false; //for test purposes
 
     public Button loginButton;
+    public GameObject loginsButtonBackground;
+    public GameObject usersMMbackground;
+    public GameObject guestMMbackground;
+    public Text email;
+    public Text pass;
 
     public void CallLogin()
     {
@@ -33,6 +38,10 @@ public class readInput : MonoBehaviour
         //Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
         if (www.text[0] == '0')
         {
+            loginsButtonBackground.SetActive(false);
+            usersMMbackground.SetActive(true);
+            guestMMbackground.SetActive(false);
+
             Debug.Log("User logged in successfully. Account Values: " + www.text);
 
             //Store user info in DBManager so Unity can display all the user info
@@ -61,6 +70,10 @@ public class readInput : MonoBehaviour
         else
         {
             Debug.Log("User logged FAILED. Error Code: " + www.text);
+            // email.Text = "Invalid email or password!";
+            email.color = Color.red;
+            // pass.Text = "Invalid email or password!";
+            pass.color = Color.red;
         }
         //for test purposes:
         loginFinished = true;
