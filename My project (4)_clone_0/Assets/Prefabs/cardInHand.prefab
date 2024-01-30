@@ -1244,7 +1244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 334b43863772dd849b133f7a79707fac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hand: {fileID: 0}
+  hand: {fileID: 2088975293111422860, guid: b78b84049c662d34ab0bb9236e40bbee, type: 3}
   handCard: {fileID: 7236696608810499412}
 --- !u!114 &5993375699930521061
 MonoBehaviour:
