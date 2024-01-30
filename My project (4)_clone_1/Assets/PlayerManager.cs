@@ -31,8 +31,7 @@ public class PlayerManager : NetworkBehaviour
     public static int deckSize = 40; //two decks combined should always equal 40 cards
     public List<Card1> combinedDeck = new List<Card1>(); //list of card1 game objects for combined deck
 
-    [SyncVar] //need to sync a string variable between client and servers that will tell server which game decks to use
-    public string clientDecks = "";
+    [SyncVar(hook = "OnMySyncIntChanged")] public string clientDecks = "";//need to sync a string variable between client and servers that will tell server which game decks to use
     [SyncVar] //need to sync a string variable between client and servers that will tell server which game decks to use
     public bool validDeckShuffled = false; //need to track if game deck was made properly
     [SyncVar]
@@ -51,6 +50,13 @@ public class PlayerManager : NetworkBehaviour
         oppPlayPanel = GameObject.Find("oppPlayPanel");
 
         //CmdGetPlayerColours(playerDeck.playerColour); //each client will send their chosen deck colour to server when they connect
+        OnMySyncIntChanged(clientDecks, clientDecks);//attempting to get new clients to load correct version of synced string when they join (otherwise thee second client overwrites the string when they join, and game never starts)
+    }
+
+    void OnMySyncIntChanged(string oldValue, string newValue)
+    {
+        // Do something
+        clientDecks = newValue;
     }
 
 
@@ -75,13 +81,15 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdGetPlayerColours(string clientColour)
     {
+        Debug.Log("Server's clientDecks string at start of cmd call:" + clientDecks);
         //if there is not enough players yet, then update sync var using client's colour
         if (checkFor2PlayersAndTheirCombo().Equals("Error 1: Not enough players/strings.") && validDeckShuffled == false)         
         {
             clientDecks += clientColour;//if empty or only one colour, add one, then check again to start game incase that was the second client colour needed to start
-
+            Debug.Log("Server's clientDecks string after adding a colour:" + clientDecks);
             //if client deck is now full after adding the last CLIENT, then create decks so the game can begin (added redundant check for 2nd error message as well, just to be safe
             string secondCheck = checkFor2PlayersAndTheirCombo();
+            Debug.Log("Server's secondCheck string:" + secondCheck);
             if (!secondCheck.Equals("Error 1: Not enough players/strings.") && !secondCheck.Equals("Error 2: Too many players/strings.")) 
             {
                 serverCreateDeck(); //build deck **2ND CLIENT ALWAYS STARTS GAME
@@ -90,7 +98,7 @@ public class PlayerManager : NetworkBehaviour
             else if (secondCheck.Equals("Error 1: Not enough players/strings.")) //if still not enough after adding itself, then dont do anything, the OTHER CLIENT needs to add its colour
             {
                 //do nothing
-                Debug.Log("The game was not started. Still need one more player.");
+                Debug.Log("The game was not started. Still need one more player. Client Decks equals:"+clientDecks);
             }
 
         }   //each client should have its own private playerDeck colour, and the server will mix them
@@ -110,12 +118,13 @@ public class PlayerManager : NetworkBehaviour
         }
         //CmdDraw(2);//after telling the server what colour deck to mix, it asks server to deal out 2 cards
         */
-        //RpcShowCombo(clientDecks); //send result of this back to client so they can check if there is two players in game before asking server to deal cards
+        RpcShowCombo(clientDecks); //send result of this back to client so they can check if there is two players in game before asking server to deal cards
     }
     [ClientRpc]
     void RpcShowCombo(string clientscombo)
     {
         clientDecks = clientscombo; //send combo string from server to client scripts
+        Debug.Log("Server Called RPC to clients. Client Decks equals:" + clientDecks);
 
     }
 

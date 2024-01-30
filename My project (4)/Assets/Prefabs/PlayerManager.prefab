@@ -100,16 +100,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncDirection: 0
   syncMode: 0
-  syncInterval: 0
+  syncInterval: 0.01
   deckPanel: {fileID: 0}
-  cardInDeck1: {fileID: 0}
-  cardInDeck2: {fileID: 0}
-  cardInDeck3: {fileID: 0}
-  cardInDeck4: {fileID: 0}
-  cardInDeck5: {fileID: 0}
-  cardInDeck6: {fileID: 0}
   deckCountText: {fileID: 0}
-  clones: []
   hand: {fileID: 0}
   oppHand: {fileID: 0}
   playPanel: {fileID: 0}
@@ -117,3 +110,6 @@ MonoBehaviour:
   cardInHand: {fileID: 0}
   container: []
   combinedDeck: []
+  clientDecks: 
+  validDeckShuffled: 0
+  gameStarted: 0

@@ -41,13 +41,13 @@ public class playerDeck : NetworkBehaviour
 
             gameDeckCombo = PlayerManager.clientDecks;//get sync variable from network manager
 
-            Debug.Log("client's gameCombo:"+ gameDeckCombo +"and colour :"+ playerColour);
+            Debug.Log("client's gameCombo: "+ gameDeckCombo +", and colour :"+ playerColour);
 
             //if game isn't started yet, and it doesn't have enough players yet for a valid combo when this button is clicked, then send our colour out to server, 
             if (gameDeckCombo.Equals("") || gameDeckCombo.Equals("BLACK") || gameDeckCombo.Equals("R") || gameDeckCombo.Equals("W") || gameDeckCombo.Equals("BLUE") ) 
             {
                 PlayerManager.CmdGetPlayerColours(playerColour); //send playermanager the deck colour to be used, once 2 clients have run this, the server should deal out car
-                Debug.Log("Sent colour to server. Waiting for response... GameCombo now equals: " + gameDeckCombo);
+                Debug.Log("Sent colour to server. Waiting for response... GameCombo now equals: " + PlayerManager.clientDecks);
 
                 if (PlayerManager.validDeckShuffled) //if after sending our colour to server, the server created and shuffled the deck properly, we can now start the game
                 {
