@@ -54,7 +54,7 @@ public class dbDisplay : MonoBehaviour
     public bool currentlyDraggable;
     public bool attackBorder;
     public static bool staticAttackBorder;
-
+    public GameObject Image;
     public GameObject playableBorder;
     public GameObject unplayableBorder;
     public static GameObject currentLoc;
@@ -276,7 +276,7 @@ public class dbDisplay : MonoBehaviour
 
         //trying to get the border of the card drwan to change colour to match the card's colour int
         Color border = renderCardColour(colour);//get what colour the border should be
-        cardInHand.GetComponent<Image>().color = border; //then render the correct colour
+        Image.GetComponent<Image>().color = border; //then render the correct colour
 
     }
     private void cloneDraw()
