@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class cardBack : MonoBehaviour
+[System.Serializable]
+public class attackBorder : MonoBehaviour
 {
-    public GameObject CardBack;
-
     // Start is called before the first frame update
+    public GameObject AttackBorder;
     void Start()
     {
 
@@ -15,15 +14,16 @@ public class cardBack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (dbDisplay.staticCardBack == true)
+        if (dbDisplay.staticAttackBorder == true)
         {
             //if staticcardback is true we see back of the card
-            CardBack.SetActive(true);
+            AttackBorder.SetActive(true);
+
         }
         else
         {
             //else we see the front
-            CardBack.SetActive(false);
+            AttackBorder.SetActive(false);
         }
     }
 }

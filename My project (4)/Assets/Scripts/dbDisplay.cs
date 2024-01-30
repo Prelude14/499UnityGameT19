@@ -14,7 +14,7 @@ public class dbDisplay : MonoBehaviour
     public int hp;
     public int pow;
     public int cost;
-
+    public static int staticCost;
     public string cardName;
     public string txt;
 
@@ -52,7 +52,11 @@ public class dbDisplay : MonoBehaviour
     public GameObject Enemy;
     public static bool staticSummoned;
     public bool currentlyDraggable;
+    public bool attackBorder;
+    public static bool staticAttackBorder;
 
+    public GameObject playableBorder;
+    public GameObject unplayableBorder;
     public static GameObject currentLoc;
     public static GameObject pz;
 
@@ -68,12 +72,25 @@ public class dbDisplay : MonoBehaviour
         canAttack = false;
         targeting = false;
         targetingEnemy = false;
-        canBeSummoned = true;
+        if (cost <= 1)
+        {
+            canBeSummoned = true;
+        }
+        else
+        {
+            canBeSummoned = false;
+        }
+        staticAttackBorder = false;
+        attackBorder = false;
+        playableBorder.SetActive(false);
+        unplayableBorder.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        staticAttackBorder = false;
+        staticCost = cost;
         staticSummoned = isSummoned;
         Debug.Log(staticSummoned + " " + cardName);
         displayCard();
@@ -91,47 +108,54 @@ public class dbDisplay : MonoBehaviour
         currentLoc = currentZone;
         pz = playZone;
         //summoning logic and cost logic
-        if (isSummoned == false)
+
+        Debug.Log(cardName + " Is summoned false");
+        if (this.cost <= turnScript.currentMana && isSummoned == false)
         {
-            Debug.Log(cardName + " Is summoned false");
-            if (turnScript.currentMana >= cost && isSummoned == false)
+            canBeSummoned = true;
+            Debug.Log(cardName + " Is now playable");
+            if (currentZone == hand)
             {
-                canBeSummoned = true;
                 Debug.Log(cardName + " Is now playable");
-                if (currentZone == hand)
-                {
-                    Debug.Log(cardName + " Is now playable");
-                }
-            }
-            else
-            {
-                canBeSummoned = false;
             }
 
-            if (canBeSummoned)
-            {
-                dragScript.isDraggable = true;
-                Debug.Log(cardName + " is now " + currentlyDraggable);
-            }
-            else
-            {
-                dragScript.isDraggable = false;
-            }
-
-
-            if (isSummoned == false && currentZone == playZone)
-            {
-                isSummoned = true;
-                Debug.Log(cardName + " Summoned sucess | Cost: " + this.cost + " | Current zone: " + currentZone + " | play zone: " + playZone + " | Is summoned? " + isSummoned);
-                GetComponent<dragScript>().enabled = false;
-                turnScript.currentMana = turnScript.currentMana - this.cost;
-                Debug.Log("Mana left: " + turnScript.currentMana);
-            }
         }
         else
         {
-            dragScript.isDraggable = false;
+            canBeSummoned = false;
+            playableBorder.SetActive(false);
+            unplayableBorder.SetActive(true);
         }
+
+        if (canBeSummoned)
+        {
+            dragScript.isDraggable = true;
+            Debug.Log(cardName + " is now " + currentlyDraggable);
+            playableBorder.SetActive(true);
+            unplayableBorder.SetActive(false);
+        }
+
+
+        GameObject startParent = transform.parent.gameObject;
+
+        if (isSummoned == false && currentZone == playZone)
+        {
+            unplayableBorder.SetActive(false);
+            playableBorder.SetActive(false);
+            if (this.cost > turnScript.currentMana)
+            {
+                transform.SetParent(GameObject.Find("hand").transform, true);
+                return;
+            }
+            isSummoned = true;
+            Debug.Log(cardName + " Summoned sucess | Cost: " + this.cost + " | Current zone: " + currentZone + " | play zone: " + playZone + " | Is summoned? " + isSummoned);
+            //disable script component when summoned
+            GetComponent<dragScript>().enabled = false;
+            turnScript.currentMana = turnScript.currentMana - this.cost;
+            Debug.Log("Mana left: " + turnScript.currentMana);
+
+        }
+
         currentlyDraggable = dragScript.isDraggable;
 
         //decide attackers
@@ -139,11 +163,14 @@ public class dbDisplay : MonoBehaviour
         {
             cantAttack = false;
             Debug.Log(cardName + " ready to attack");
+            unplayableBorder.SetActive(false);
+            playableBorder.SetActive(false);
         }
 
         if (turnScript.isMyTurn == true && cantAttack == false)
         {
             canAttack = true;
+
         }
         else
         {
@@ -167,6 +194,17 @@ public class dbDisplay : MonoBehaviour
             Attack();
         }
 
+        if (canAttack == true && currentLoc == playZone)
+        {
+            attackBorder = true;
+            staticAttackBorder = attackBorder;
+        }
+        else
+        {
+            staticAttackBorder = false;
+            attackBorder = false;
+        }
+
     }
 
     private void Attack()
@@ -181,6 +219,9 @@ public class dbDisplay : MonoBehaviour
                     targeting = false;
                     cantAttack = true;
                     hasAttacked = true;
+                    staticAttackBorder = false;
+                    attackBorder = false;
+
                 }
 
                 if (Target.name == "cardInHand(Clone)")
@@ -190,6 +231,8 @@ public class dbDisplay : MonoBehaviour
             }
         }
     }
+
+
 
     public void UntargetEnemy()
     {

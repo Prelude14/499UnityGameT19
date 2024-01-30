@@ -15,7 +15,7 @@ public class playerDeck : MonoBehaviour
     public GameObject cardInDeck1;
     public GameObject cardInDeck2;
     public GameObject cardInDeck3;
-
+    public int burnDamage = 1;
     public GameObject cardInDeck4;
     public GameObject cardInDeck5;
     public GameObject cardInDeck6;
@@ -111,6 +111,7 @@ public class playerDeck : MonoBehaviour
             deck[i] = deck[randomIndex];
             deck[randomIndex] = container[0];
         }
+        //container should show 
         // string result = "";
         // for (int i = 0; i < deck.Count; i++) {
         //     result = result + deck[i].print() + ",";
@@ -135,8 +136,10 @@ public class playerDeck : MonoBehaviour
         else
         {
             //lose game
-            //TODO: Add a lose game
+            //TODO: Add a lose health
 
+            playerHealth.HPStatic -= burnDamage;
+            burnDamage++;
         }
     }
     //add 20 cards from the cardDatabase using a neutral deck plus one colour (which gets selected by player)
