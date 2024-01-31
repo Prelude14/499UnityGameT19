@@ -11,10 +11,12 @@ public class readInput : MonoBehaviour
     public InputField username_email;
     public InputField user_pass;
     private bool loginFinished = false; //for test purposes
-
     public Button loginButton;
-    public GameObject loginsButtonBackground;
-    public GameObject confirmLoginbackground;
+    public GameObject loginsButton;
+    public GameObject confirmLogin;
+    public GameObject createsButton;
+    public GameObject confirmCreate;
+    public GameObject createFailed;
     public Text email;
     public Text pass;
     public TMPro.TextMeshProUGUI loginText;
@@ -50,8 +52,8 @@ public class readInput : MonoBehaviour
             DBManager.gameswon = int.Parse(www.text.Split('\t')[3]); //same for others
             DBManager.damagedealt = int.Parse(www.text.Split('\t')[4]);//get damage dealt
 
-            loginsButtonBackground.SetActive(false);
-            confirmLoginbackground.SetActive(true);
+            loginsButton.SetActive(false);
+            confirmLogin.SetActive(true);
 
             if (DBManager.gamesplayed != 0)
             {
@@ -124,12 +126,14 @@ public class readInput : MonoBehaviour
             DBManager.gameswon = int.Parse(wwwC.text.Split('\t')[3]); //same for others
             DBManager.wlratio = int.Parse(wwwC.text.Split('\t')[4]); //win loss ratio might need to be caluclated (not stored in table?)
 
-            //NEED to add something to change menu display back to main menu when they log in******************
-            //MainMenu.createandloginmenu.SetActive(false);
+            createsButton.SetActive(false);
+            confirmCreate.SetActive(true);
         }
         else
         {
             Debug.Log("User create FAILED. Error Code: " + wwwC.text);
+            createFailed.SetActive(true);
+            createsButton.SetActive(false);
         }
         //for test purposes:
         createFinished = true;
@@ -137,7 +141,7 @@ public class readInput : MonoBehaviour
     public void VerifyInputsC() //create button won't even be clickable until all three input fields have at least 10 characters in each, AND passwords match
     {
         bool longEnoughInputs = c_username_email.text.Length >= 10 && c_user_pass.text.Length >= 10 && c_user_pass2.text.Length >= 10; //true means all the inputs are long enough
-        bool matchingPasswords = string.Equals(c_user_pass.text, c_user_pass2.text.Length); //true means the passes match, false means they are different.
+        bool matchingPasswords = string.Equals(c_user_pass.text, c_user_pass2.text); //true means the passes match, false means they are different.
         createButton.interactable = (longEnoughInputs && matchingPasswords);
     }
     // Method to check if the create coroutine has completed FOR TESTING
