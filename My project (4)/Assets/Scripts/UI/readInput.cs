@@ -14,8 +14,7 @@ public class readInput : MonoBehaviour
 
     public Button loginButton;
     public GameObject loginsButtonBackground;
-    public GameObject usersMMbackground;
-    public GameObject guestMMbackground;
+    public GameObject confirmLoginbackground;
     public Text email;
     public Text pass;
     public TMPro.TextMeshProUGUI loginText;
@@ -39,9 +38,6 @@ public class readInput : MonoBehaviour
         //Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
         if (www.text[0] == '0')
         {
-            loginsButtonBackground.SetActive(false);
-            usersMMbackground.SetActive(true);
-            guestMMbackground.SetActive(false);
 
             Debug.Log("User logged in successfully. Account Values: " + www.text);
 
@@ -53,6 +49,9 @@ public class readInput : MonoBehaviour
             DBManager.gamesplayed = int.Parse(www.text.Split('\t')[2]);
             DBManager.gameswon = int.Parse(www.text.Split('\t')[3]); //same for others
             DBManager.damagedealt = int.Parse(www.text.Split('\t')[4]);//get damage dealt
+
+            loginsButtonBackground.SetActive(false);
+            confirmLoginbackground.SetActive(true);
 
             if (DBManager.gamesplayed != 0)
             {

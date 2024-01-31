@@ -10,7 +10,6 @@ public class loginFieldsUpdate : MonoBehaviour
     public Text email;
     public Text pass;
     public TMPro.TextMeshProUGUI loginText;
-    
 
     public void resetFields()
     {
