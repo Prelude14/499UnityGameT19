@@ -62,7 +62,7 @@ public class playerDeck : MonoBehaviour
     {
         //coroutine: way to count down
         //initial draw
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 7; i++)
         { // number of starting hand
             yield return new WaitForSeconds(.15f);
             //each second it draws a card
