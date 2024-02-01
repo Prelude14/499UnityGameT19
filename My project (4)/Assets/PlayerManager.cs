@@ -31,7 +31,7 @@ public class PlayerManager : NetworkBehaviour
     public static int deckSize = 40; //two decks combined should always equal 40 cards
     public List<Card1> combinedDeck = new List<Card1>(); //list of card1 game objects for combined deck
 
-    [SyncVar(hook = "OnMySyncIntChanged")] public string clientDecks = "";//need to sync a string variable between client and servers that will tell server which game decks to use
+    [SyncVar(hook = nameof(OnMySyncIntChanged))] public string clientDecks;//need to sync a string variable between client and servers that will tell server which game decks to use
     [SyncVar] //need to sync a string variable between client and servers that will tell server which game decks to use
     public bool validDeckShuffled = false; //need to track if game deck was made properly
     [SyncVar]
@@ -43,6 +43,8 @@ public class PlayerManager : NetworkBehaviour
     {
         base.OnStartClient();
 
+        Debug.Log("Client Started and connected.");
+
         //find client side game objects at run time (they are spawned in by player manager)
         hand = GameObject.Find("hand");
         oppHand = GameObject.Find("oppHand");
@@ -50,13 +52,14 @@ public class PlayerManager : NetworkBehaviour
         oppPlayPanel = GameObject.Find("oppPlayPanel");
 
         //CmdGetPlayerColours(playerDeck.playerColour); //each client will send their chosen deck colour to server when they connect
-        OnMySyncIntChanged(clientDecks, clientDecks);//attempting to get new clients to load correct version of synced string when they join (otherwise thee second client overwrites the string when they join, and game never starts)
+        //OnMySyncIntChanged(clientDecks, clientDecks);//attempting to get new clients to load correct version of synced string when they join (otherwise thee second client overwrites the string when they join, and game never starts)
     }
 
     void OnMySyncIntChanged(string oldValue, string newValue)
     {
         // Do something
-        clientDecks = newValue;
+        oldValue = newValue;
+        Debug.Log("Old clientDecks = "+oldValue+", New clientDecks = "+newValue);
     }
 
 
@@ -66,19 +69,26 @@ public class PlayerManager : NetworkBehaviour
     {
         base.OnStartServer();
 
-
+        Debug.Log("Server Started.");
         //start waiting for at least 2 clients to update the sync variable string -- it tells the server what colour decks to mix
         //while (checkFor2PlayersAndTheirCombo().Equals("Error 1: Not enough players/strings.") || checkFor2PlayersAndTheirCombo().Equals("Error 2: Too many players/strings.") ) {}
 
-
+        clientDecks = ""; //start clientdecks as empty string on server
         //once 2 clients have connected and they have a valid combo, the server can populate the combinedDeck using the proper combo
         //WANT SERVER TO CREATE DECK, AND THEN DEAL CARDS TO CLIENT USING RPC
         //CmdCreateDeck();//attempt to create deck
 
     }
 
+    [Server]
+    public override void OnStopServer() //if our playermanager is acting as a server
+    {
+        Debug.Log("Server Stopped.");
+
+    }
+
     //Client CMD to update the combined deck on the server using the sync variable's string (each client passes its unique deck colour on start)
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdGetPlayerColours(string clientColour)
     {
         Debug.Log("Server's clientDecks string at start of cmd call:" + clientDecks);
@@ -146,15 +156,15 @@ public class PlayerManager : NetworkBehaviour
         {         //BLACK & BLACK    
             return "BLACKBLACK";
         }
-        else if (clientDecks.Equals("BLACKR") || clientDecks.Equals("RBLACK")) //clientDecks.Equals("RR") || clientDecks.Equals("RW") || clientDecks.Equals("RBLUE") ) 
+        else if (clientDecks.Equals("BLACKR") || clientDecks.Equals("SRBLACK")) //clientDecks.Equals("RR") || clientDecks.Equals("RW") || clientDecks.Equals("RBLUE") ) 
         {         //BLACK & RED OR RED & BLACK 
             return "BLACKRED";
         }
-        else if (clientDecks.Equals("BLACKW") || clientDecks.Equals("WBLACK"))
+        else if (clientDecks.Equals("BLACKW") || clientDecks.Equals("SWBLACK"))
         {         //BLACK & WHITE OR WHITE & BLACK 
             return "BLACKWHITE";
         }
-        else if (clientDecks.Equals("BLACKBLUE") || clientDecks.Equals("BLUEBLACK"))
+        else if (clientDecks.Equals("BLACKBLUE") || clientDecks.Equals("SBLUEBLACK"))
         {         //BLACK & BLUE OR BLUE & BLACK
             return "BLACKBLUE";
         }
@@ -163,11 +173,11 @@ public class PlayerManager : NetworkBehaviour
         {         //RED & RED   
             return "REDRED";
         }
-        else if (clientDecks.Equals("RW") || clientDecks.Equals("WR"))
+        else if (clientDecks.Equals("RW") || clientDecks.Equals("SWR"))
         {         //RED & WHITE OR WHITE & RED   
             return "REDWHITE";
         }
-        else if (clientDecks.Equals("RBLUE") || clientDecks.Equals("BLUER"))
+        else if (clientDecks.Equals("RBLUE") || clientDecks.Equals("SBLUER"))
         {         //RED & BLUE OR BLUE & RED   
             return "REDBLUE";
         }
@@ -176,7 +186,7 @@ public class PlayerManager : NetworkBehaviour
         {         //WHITE & WHITE  
             return "WHITEWHITE";
         }
-        else if (clientDecks.Equals("WBLUE") || clientDecks.Equals("BLUEW"))
+        else if (clientDecks.Equals("WBLUE") || clientDecks.Equals("SBLUEW"))
         {         //WHITE & BLUE OR BLUE & WHITE   
             return "WHITEBLUE";
         }
