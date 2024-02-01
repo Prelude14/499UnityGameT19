@@ -12,7 +12,8 @@ public class selectDeck : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        changeToBlack();
+        text1.color = Color.black;
+        text2.color = Color.black;
     }
 
     // Update is called once per frame
@@ -21,15 +22,23 @@ public class selectDeck : MonoBehaviour
 
     }
 
-    public void changeToWhite()
+    public void changeToWhite_blue()
     {
         text1.color = Color.white;
+    }
+
+    public void changeToBlack_blue()
+    {
+        text1.color = Color.black;
+    }
+
+      public void changeToWhite_black()
+    {
         text2.color = Color.white;
     }
 
-    public void changeToBlack()
+    public void changeToBlack_black()
     {
-        text1.color = Color.black;
         text2.color = Color.black;
     }
 }
