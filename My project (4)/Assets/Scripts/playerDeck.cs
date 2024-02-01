@@ -62,7 +62,7 @@ public class playerDeck : MonoBehaviour
     {
         //coroutine: way to count down
         //initial draw
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 7; i++)
         { // number of starting hand
             yield return new WaitForSeconds(.15f);
             //each second it draws a card
@@ -143,10 +143,10 @@ public class playerDeck : MonoBehaviour
         }
     }
     //add 20 cards from the cardDatabase using a neutral deck plus one colour (which gets selected by player)
-    public void populateDeck() 
+    public void populateDeck()
     {
         //every deck gets the same 8 neutral cards added to it first
-        for (int i = 0; i < 8; i++)                                     
+        for (int i = 0; i < 8; i++)
         {
             deck[i] = cardDatabase.neutralCardList[i];
         } //ADD 8 Neutral cards first
@@ -190,7 +190,7 @@ public class playerDeck : MonoBehaviour
         }
 
     }
-    
+
 
     public int getDeckSize()
     {
