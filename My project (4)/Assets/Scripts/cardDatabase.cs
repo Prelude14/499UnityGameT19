@@ -106,7 +106,7 @@ public class cardDatabase : MonoBehaviour
       redCardList.Add(new Card1(2, 7, "Dogpiler", 5, 2, 4, "Deal 2 damage for every creature you have attacked with so far, then destroy all other creatures."));
 
       redCardList.Add(new Card1(2, 8, "Revenge Seeker", 3, 2, 2, "Gives all your creatures played a +2/+0 stat buff."));
-      redCardList.Add(new Card1(2, 9, "Revenge Seeker", 3, 2, 2, "Gives all your creatures played a +1/+0 stat buff."));
+      redCardList.Add(new Card1(2, 9, "Revenge Seeker", 3, 2, 2, "Gives all your creatures played a +2/+0 stat buff."));
 
       redCardList.Add(new Card1(2, 10, "Suicide Pact", 8, 4, 4, "Destroy all of your other creatures in play, and for each creature you sacrifice, deal 2 damage to a random enemy target."));
       redCardList.Add(new Card1(2, 11, "Suicide Pact", 8, 4, 4, "Destroy all of your other creatures in play, and for each creature you sacrifice, deal 2 damage to a random enemy target."));

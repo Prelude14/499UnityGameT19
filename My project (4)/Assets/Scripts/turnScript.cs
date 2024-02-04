@@ -17,6 +17,10 @@ public class turnScript : MonoBehaviour
 
     public static bool turnStart;
 
+    public static int turnCount = 0;
+    public GameObject playArrows;
+    public GameObject attackArrows;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,11 +48,24 @@ public class turnScript : MonoBehaviour
         }
         manaText.text = currentMana + "/" + maxMana;
 
+        if (turnCount == 0)
+        {
+            playArrows.active = true;
+            attackArrows.active = true;
+
+        }
+        else
+        {
+            playArrows.active = false;
+            attackArrows.active = false;
+        }
+
     }
     public void endTurn()
     {
         isMyTurn = false;
         isTheirTurn = 1;
+        turnCount++;
     }
     public void endOpponentTurn()
     {
@@ -58,6 +75,7 @@ public class turnScript : MonoBehaviour
         currentMana = maxMana;
         turnStart = true;
         dbDisplay.hasAttacked = false;
+
     }
 
 

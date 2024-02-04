@@ -8,7 +8,7 @@ public class dbDisplay : MonoBehaviour
 {
     public List<Card1> displayList = new List<Card1>();
     public int displayId;
-
+    public static bool attackDragging;
     public int colour; //for each card's colour
     public int id;
     public int hp;
@@ -89,6 +89,7 @@ public class dbDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         staticAttackBorder = false;
         staticCost = cost;
         staticSummoned = isSummoned;
@@ -211,8 +212,10 @@ public class dbDisplay : MonoBehaviour
     {
         if (canAttack == true && isSummoned)
         {
+
             if (Target != null)
             {
+
                 if (Target == Enemy)
                 {
                     enemyHealth.HPStatic -= pow;
@@ -245,10 +248,19 @@ public class dbDisplay : MonoBehaviour
     public void StartAttack()
     {
         staticTargeting = true;
+        if (currentZone == playZone)
+        {
+            attackDragging = true;
+        }
     }
     public void StopAttack()
     {
         staticTargeting = false;
+        if (currentZone == playZone)
+        {
+            attackDragging = false;
+        }
+
     }
     public void OneCardAttack()
     {
@@ -318,11 +330,6 @@ public class dbDisplay : MonoBehaviour
             return Color.yellow;
         }
     }
-
-
-
-
-
 
 
 
