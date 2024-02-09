@@ -20,22 +20,26 @@ public class PlayerManager : NetworkBehaviour
 
     //playermanager will spawn these on the clients when they click join as host or client
     //public GameObject[] clones;
-    public GameObject hand;
-    public GameObject oppHand;
-    public GameObject playPanel;
+    public GameObject hand; //this is the player's hand object
+    public GameObject oppHand; 
+    public GameObject playPanel; //this is where the player can play their cards
     public GameObject oppPlayPanel;
-    public GameObject cardInHand;//need for dealing cards
+    public GameObject cardInHand; //need for dealing cards
 
     //need lists to store and manipulate the different decks
     public List<Card1> container = new List<Card1>(); //temp list for shuffling deck
     public static int deckSize = 40; //two decks combined should always equal 40 cards
     public List<Card1> combinedDeck = new List<Card1>(); //list of card1 game objects for combined deck
 
-    [SyncVar(hook = nameof(OnMySyncIntChanged))] public string clientDecks;//need to sync a string variable between client and servers that will tell server which game decks to use
-    [SyncVar] //need to sync a string variable between client and servers that will tell server which game decks to use
+    //============================= THIS IS THE PROBLEM VARIABLE =====================================================================================================================
+    [SyncVar(hook = nameof(OnMySyncClientDecksChanged))] public string clientDecks;//need to sync a string variable between client and servers that will tell server which game decks to use
+    //hook is for a method specific to the sync var to forcibly change the sync var across everything (at least how I understand it)
+
+    //I ended up also using some sync vars for these 2 bools, but the game hasn't gotten past the first string being synced, so don't worry about it for now.   **********************
+    [SyncVar] 
     public bool validDeckShuffled = false; //need to track if game deck was made properly
     [SyncVar]
-    public bool gameStarted = false;
+    public bool gameStarted = false; //last bool tracking if game started properly
 
 
 
@@ -55,7 +59,8 @@ public class PlayerManager : NetworkBehaviour
         //OnMySyncIntChanged(clientDecks, clientDecks);//attempting to get new clients to load correct version of synced string when they join (otherwise thee second client overwrites the string when they join, and game never starts)
     }
 
-    void OnMySyncIntChanged(string oldValue, string newValue)
+    //this "hook" is a method that gets called automatically whenever the sync var its hooked to is changed, and it is supposed to update the value across all clients.
+    void OnMySyncClientDecksChanged(string oldValue, string newValue)
     {
         // Do something
         oldValue = newValue;
@@ -64,7 +69,7 @@ public class PlayerManager : NetworkBehaviour
 
 
 
-    //[Server]
+    [Server]
     public override void OnStartServer() //if our playermanager is acting as a server
     {
         base.OnStartServer();
@@ -76,29 +81,29 @@ public class PlayerManager : NetworkBehaviour
         clientDecks = ""; //start clientdecks as empty string on server
         //once 2 clients have connected and they have a valid combo, the server can populate the combinedDeck using the proper combo
         //WANT SERVER TO CREATE DECK, AND THEN DEAL CARDS TO CLIENT USING RPC
-        //CmdCreateDeck();//attempt to create deck
+        //CmdCreateDeck();//attempt to create deck //this is done inside the cmdplayercolours command now by the server after the second client's colour is recieceved and stored properly.
 
     }
 
     [Server]
     public override void OnStopServer() //if our playermanager is acting as a server
     {
-        Debug.Log("Server Stopped.");
+        Debug.Log("Server Stopped."); //for some reason if a client disconnects, the host still recieves this debug message saying the server stopped, even though a client stopped, and supposedly, only the server can run this
 
     }
 
     //Client CMD to update the combined deck on the server using the sync variable's string (each client passes its unique deck colour on start)
-    [Command(requiresAuthority = false)]
+    [Command(requiresAuthority = false)] //added the authority bit in the process of debugging, defaults to true, so I think only the owner's version of their clientdecks will be changed unless this is here (but haven't really seen proof yet)
     public void CmdGetPlayerColours(string clientColour)
     {
         Debug.Log("Server's clientDecks string at start of cmd call:" + clientDecks);
         //if there is not enough players yet, then update sync var using client's colour
-        if (checkFor2PlayersAndTheirCombo().Equals("Error 1: Not enough players/strings.") && validDeckShuffled == false)         
+        if (checkFor2PlayersAndTheirCombo().Equals("Error 1: Not enough players/strings.") && validDeckShuffled == false) //call string checker method server side to check current string        
         {
             clientDecks += clientColour;//if empty or only one colour, add one, then check again to start game incase that was the second client colour needed to start
             Debug.Log("Server's clientDecks string after adding a colour:" + clientDecks);
             //if client deck is now full after adding the last CLIENT, then create decks so the game can begin (added redundant check for 2nd error message as well, just to be safe
-            string secondCheck = checkFor2PlayersAndTheirCombo();
+            string secondCheck = checkFor2PlayersAndTheirCombo(); //call check method again after adding
             Debug.Log("Server's secondCheck string:" + secondCheck);
             if (!secondCheck.Equals("Error 1: Not enough players/strings.") && !secondCheck.Equals("Error 2: Too many players/strings.")) 
             {
@@ -131,14 +136,14 @@ public class PlayerManager : NetworkBehaviour
         RpcShowCombo(clientDecks); //send result of this back to client so they can check if there is two players in game before asking server to deal cards
     }
     [ClientRpc]
-    void RpcShowCombo(string clientscombo)
+    void RpcShowCombo(string clientscombo)//trying to force the clients to see the newest version of the string after a client added its colour, but it isn't actually changing the client's understanding of the string.
     {
         clientDecks = clientscombo; //send combo string from server to client scripts
         Debug.Log("Server Called RPC to clients. Client Decks equals:" + clientDecks);
 
     }
 
-    //we will have server check for this until there is enough players  -- ONLY SERVER CAN DO THIS
+    //we will have server check for this until there is enough players  -- ONLY SERVER CAN DO THIS (supposedly)
     [Server]
     public string checkFor2PlayersAndTheirCombo()
     {
