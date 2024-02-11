@@ -290,6 +290,7 @@ public class dbDisplay : MonoBehaviour
         Color border = renderCardColour(colour);//get what colour the border should be
         Image.GetComponent<Image>().color = border; //then render the correct colour
 
+
     }
     private void cloneDraw()
     {
