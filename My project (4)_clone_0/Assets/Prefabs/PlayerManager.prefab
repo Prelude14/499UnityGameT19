@@ -107,9 +107,6 @@ MonoBehaviour:
   oppHand: {fileID: 0}
   playPanel: {fileID: 0}
   oppPlayPanel: {fileID: 0}
-  cardInHand: {fileID: 0}
-  container: []
-  combinedDeck: []
+  cardInHand: {fileID: 7236696608810499412, guid: bb6f8b4d47ed90a418b3e9b36dbd9aef, type: 3}
   clientDecks: 
-  validDeckShuffled: 0
-  gameStarted: 0
+  deckShuffled: 0

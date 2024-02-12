@@ -49,9 +49,9 @@ public class playerDeck : NetworkBehaviour
                 PlayerManager.CmdGetPlayerColours(playerColour); //send playermanager the deck colour to be used, once 2 clients have run this, the server should deal out car
                 Debug.Log("Sent colour to server. Waiting for response... GameCombo now equals: " + PlayerManager.clientDecks);
 
-                if (PlayerManager.validDeckShuffled) //if after sending our colour to server, the server created and shuffled the deck properly, we can now start the game
+                if (PlayerManager.deckShuffled) //if after sending our colour to server, the server created and shuffled the deck properly, we can now start the game
                 {
-                    PlayerManager.CmdDraw(2); //get server to deal out two cards for each client
+                    PlayerManager.CmdDraw(2, PlayerManager.clientDecks); //get server to deal out two cards for each client
 
                     Debug.Log("Game started ");
                     //cmd draw also changed the sync var gamestarted bool, so now that game has started, this whole method shouldn't be able to do anything 
