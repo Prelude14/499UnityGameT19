@@ -149,6 +149,7 @@ public class dbDisplay : MonoBehaviour
                 return;
             }
             isSummoned = true;
+            turnScript.totalSummons++;
             Debug.Log(cardName + " Summoned sucess | Cost: " + this.cost + " | Current zone: " + currentZone + " | play zone: " + playZone + " | Is summoned? " + isSummoned);
             //disable script component when summoned
             GetComponent<dragScript>().enabled = false;

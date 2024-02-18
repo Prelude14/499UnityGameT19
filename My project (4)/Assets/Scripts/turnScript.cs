@@ -9,6 +9,8 @@ public class turnScript : MonoBehaviour
     public int myTurn;
     public int isTheirTurn;
     public Text turnText;
+    public bool disable;
+    public static int totalSummons;
 
     public int maxMana;
 
@@ -32,7 +34,7 @@ public class turnScript : MonoBehaviour
         maxMana = 1;
         currentMana = 1;
         turnStart = false;
-
+        disable = false;
     }
 
     // Update is called once per frame
@@ -51,12 +53,20 @@ public class turnScript : MonoBehaviour
         if (turnCount == 0)
         {
             playArrows.active = true;
-            attackArrows.active = true;
 
         }
         else
         {
             playArrows.active = false;
+            attackArrows.active = false;
+        }
+
+        if (totalSummons == 1 && disable == false)
+        {
+            attackArrows.active = true;
+        }
+        else
+        {
             attackArrows.active = false;
         }
 
@@ -66,6 +76,9 @@ public class turnScript : MonoBehaviour
         isMyTurn = false;
         isTheirTurn = 1;
         turnCount++;
+        playArrows.active = false;
+        attackArrows.active = false;
+        disable = true;
     }
     public void endOpponentTurn()
     {
@@ -75,7 +88,10 @@ public class turnScript : MonoBehaviour
         currentMana = maxMana;
         turnStart = true;
         dbDisplay.hasAttacked = false;
-
+        if (totalSummons < 1)
+        {
+            disable = false;
+        }
     }
 
 
