@@ -111,7 +111,7 @@ public class dbDisplay : MonoBehaviour
         //summoning logic and cost logic
 
         Debug.Log(cardName + " Is summoned false");
-        if (this.cost <= turnScript.currentMana && isSummoned == false)
+        if (this.cost <= turnScript.currentMana && isSummoned == false && turnScript.actionPoints >= 1)
         {
             canBeSummoned = true;
             Debug.Log(cardName + " Is now playable");
@@ -155,13 +155,14 @@ public class dbDisplay : MonoBehaviour
             GetComponent<dragScript>().enabled = false;
             turnScript.currentMana = turnScript.currentMana - this.cost;
             Debug.Log("Mana left: " + turnScript.currentMana);
+            turnScript.actionPoints--;
 
         }
 
         currentlyDraggable = dragScript.isDraggable;
 
         //decide attackers
-        if (turnScript.isMyTurn == true && isSummoned == true && hasAttacked == false && currentZone == playZone)
+        if (turnScript.isMyTurn == true && isSummoned == true && hasAttacked == false && currentZone == playZone && turnScript.actionPoints >= 1)
         {
             cantAttack = false;
             Debug.Log(cardName + " ready to attack");
@@ -169,7 +170,7 @@ public class dbDisplay : MonoBehaviour
             playableBorder.SetActive(false);
         }
 
-        if (turnScript.isMyTurn == true && cantAttack == false)
+        if (turnScript.isMyTurn == true && cantAttack == false && turnScript.actionPoints >= 1)
         {
             canAttack = true;
 
@@ -211,7 +212,7 @@ public class dbDisplay : MonoBehaviour
 
     private void Attack()
     {
-        if (canAttack == true && isSummoned)
+        if (canAttack == true && isSummoned && turnScript.actionPoints >= 1)
         {
 
             if (Target != null)
@@ -225,7 +226,7 @@ public class dbDisplay : MonoBehaviour
                     hasAttacked = true;
                     staticAttackBorder = false;
                     attackBorder = false;
-
+                    turnScript.actionPoints--;
                 }
 
                 if (Target.name == "cardInHand(Clone)")
