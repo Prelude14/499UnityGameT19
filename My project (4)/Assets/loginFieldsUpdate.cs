@@ -20,8 +20,9 @@ public class loginFieldsUpdate : MonoBehaviour
         email.color = Color.black;
         pass.color = Color.black;
         loginText.text = "Log in or sign up";
+        createText.text = "Create your account";
         createEmail.color = Color.black;
         createPass.color = Color.black;
-        createText.text = "Create your account";
+        createPass2.color = Color.black;
     }
 }

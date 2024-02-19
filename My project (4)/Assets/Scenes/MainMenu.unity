@@ -3998,6 +3998,10 @@ MonoBehaviour:
   email: {fileID: 1595788784}
   pass: {fileID: 1215052753}
   loginText: {fileID: 1872686016}
+  createEmail: {fileID: 488128384}
+  createPass: {fileID: 0}
+  createPass2: {fileID: 0}
+  createText: {fileID: 1405473176}
 --- !u!1 &270136224
 GameObject:
   m_ObjectHideFlags: 0
@@ -5676,6 +5680,7 @@ MonoBehaviour:
   createPass: {fileID: 1877017283}
   createPass2: {fileID: 1092598774}
   loginText: {fileID: 1872686016}
+  createText: {fileID: 1405473176}
   c_username_email: {fileID: 1914520949}
   c_user_pass: {fileID: 279433076}
   c_user_pass2: {fileID: 334969432}
@@ -18881,8 +18886,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -732, y: 316}
-  m_SizeDelta: {x: 919.0319, y: 125.7719}
+  m_AnchoredPosition: {x: -675.99, y: 316}
+  m_SizeDelta: {x: 807.02, y: 125.772}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1405473176
 MonoBehaviour:

@@ -16,7 +16,6 @@ public class readInput : MonoBehaviour
     public GameObject confirmLogin;
     public GameObject createsButton;
     public GameObject confirmCreate;
-    public GameObject createFailed;
     public Text email;
     public Text pass;
     public Text createEmail;
@@ -136,12 +135,10 @@ public class readInput : MonoBehaviour
         else
         {
             Debug.Log("User create FAILED. Error Code: " + wwwC.text);
-            createFailed.SetActive(true);
-            createsButton.SetActive(false);
             createEmail.color = Color.red;
             createPass.color = Color.red;
             createPass2.color = Color.red;
-            loginText.text = "Failed to create account";
+            createText.text = "Failed to create account";
         }
         //for test purposes:
         createFinished = true;
