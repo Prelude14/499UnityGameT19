@@ -19,7 +19,11 @@ public class readInput : MonoBehaviour
     public GameObject createFailed;
     public Text email;
     public Text pass;
+    public Text createEmail;
+    public Text createPass;
+    public Text createPass2;
     public TMPro.TextMeshProUGUI loginText;
+    public TMPro.TextMeshProUGUI createText;
 
     public void CallLogin()
     {
@@ -77,7 +81,7 @@ public class readInput : MonoBehaviour
 
     public void VerifyInputsL() //login button won't even be clickable until each input field has at least 10 characters in each
     {
-        loginButton.interactable = (username_email.text.Length >= 10 && user_pass.text.Length >= 10);
+        loginButton.interactable = (username_email.text.Length >= 8 && user_pass.text.Length >= 8);
     }
     // Method to check if the login coroutine has completed FOR TESTING
     public bool IsLoginCoroutineCompleted()
@@ -134,13 +138,17 @@ public class readInput : MonoBehaviour
             Debug.Log("User create FAILED. Error Code: " + wwwC.text);
             createFailed.SetActive(true);
             createsButton.SetActive(false);
+            createEmail.color = Color.red;
+            createPass.color = Color.red;
+            createPass2.color = Color.red;
+            loginText.text = "Failed to create account";
         }
         //for test purposes:
         createFinished = true;
     }
     public void VerifyInputsC() //create button won't even be clickable until all three input fields have at least 10 characters in each, AND passwords match
     {
-        bool longEnoughInputs = c_username_email.text.Length >= 10 && c_user_pass.text.Length >= 10 && c_user_pass2.text.Length >= 10; //true means all the inputs are long enough
+        bool longEnoughInputs = c_username_email.text.Length >= 8 && c_user_pass.text.Length >= 8 && c_user_pass2.text.Length >= 8; //true means all the inputs are long enough
         bool matchingPasswords = string.Equals(c_user_pass.text, c_user_pass2.text); //true means the passes match, false means they are different.
         createButton.interactable = (longEnoughInputs && matchingPasswords);
     }

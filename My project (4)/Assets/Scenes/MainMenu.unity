@@ -5672,6 +5672,9 @@ MonoBehaviour:
   createFailed: {fileID: 1727091223}
   email: {fileID: 1595788784}
   pass: {fileID: 1215052753}
+  createEmail: {fileID: 488128384}
+  createPass: {fileID: 1877017283}
+  createPass2: {fileID: 1092598774}
   loginText: {fileID: 1872686016}
   c_username_email: {fileID: 1914520949}
   c_user_pass: {fileID: 279433076}
@@ -9548,7 +9551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &695478533
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13660,6 +13663,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09e9366c53ff94ada92bc279870a76b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetPassButton: {fileID: 0}
+  reset_token: {fileID: 0}
+  error_message: {fileID: 0}
 --- !u!1 &1042178423
 GameObject:
   m_ObjectHideFlags: 0
@@ -22036,7 +22042,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1669145840
 MonoBehaviour:
   m_ObjectHideFlags: 0
