@@ -4065,6 +4065,7 @@ MonoBehaviour:
   myTurn: 0
   isTheirTurn: 0
   turnText: {fileID: 1831272628}
+  disable: 0
   maxMana: 0
   manaText: {fileID: 468702467}
   playArrows: {fileID: 483352577}
