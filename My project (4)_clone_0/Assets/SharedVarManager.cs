@@ -48,7 +48,7 @@ public class SharedVarManager : NetworkBehaviour
             if (!secondCheck.Equals("Error 1: Not enough players/strings.") && !secondCheck.Equals("Error 2: Too many players/strings."))
             {
                 serverCreateDeck(secondCheck); //build deck
-                RpcStartGame(combo);
+                RpcStartGame(combo, validDeckShuffled, combinedDeck); //send all info inside rpc to all clients
                 //after serverCreateDeck is run, validDeckShuffled becomes TRUE inside the shuffle() function, so the draw cmd can deal cards out
 
             }
@@ -71,7 +71,7 @@ public class SharedVarManager : NetworkBehaviour
     }
     //this will tell the clients that the server has recieved 2 strings, so the game should be ready to start
     [ClientRpc]
-    void RpcStartGame(string combo)
+    void RpcStartGame(string combo, bool deckShuff, List<Card1> gameDeck)
     {
         // Inform the clients of the valid combination and execute necessary logic
         Debug.Log($"Valid combination: {combo}");
@@ -82,9 +82,17 @@ public class SharedVarManager : NetworkBehaviour
 
         PlayerManager.clientDecks = combo; //SET sync variable from network manager
 
-        PlayerManager.deckShuffled = validDeckShuffled; //set playermanager's bool to equal whatever this script's bool is
+        Debug.Log("deckShuffled: " + deckShuff);
 
-        PlayerManager.CmdDraw(2, combo); //get server to deal out two cards for each client
+        PlayerManager.deckShuffled = deckShuff; //set playermanager's bool to equal whatever this script's bool is
+
+        //add game deck to other client
+        combinedDeck.AddRange(gameDeck);//add parameter list to other client's sharedvarmanager instance (will overwrite other to be the same)
+
+        //add the full game deck to the playerDeck script as well
+        playerDeck.staticDeck.AddRange(gameDeck); //add ALL OF GAME DECK to playerDeck's static deck list, so that db display can access the right cards.
+
+        PlayerManager.CmdDraw(1, combo); //get server to deal out two cards for each client
 
         Debug.Log("Game started !");
     }
@@ -381,13 +389,14 @@ public class SharedVarManager : NetworkBehaviour
     {
         //every deck gets 16 neutral cards added to it first (there is only 8 cards per deck regularly, but this is the combination of 2)
         populateNeutralList();
+        Debug.Log("Attempting to add neutral cards...");
         for (int i = 0; i < 2; i++)
         {
             for (int k = 0; k < 8; k++)
             {
-                Debug.Log("Attempting to add neutral cards...");
-                int offset = 8 * i;
-                Debug.Log("offset = " + offset + " and i = " + i + " and k = " + k); //should all be zero to start
+                
+                //int offset = 8 * i;
+                //Debug.Log("offset = " + offset + " and i = " + i + " and k = " + k); //should all be zero to start
                 //combinedDeck[k + offset]
                 //Debug.Log("combinedDeck equals = " + combinedDeck[(k + offset)]);
                 combinedDeck.Add(neutralCardList[k]);
@@ -395,168 +404,178 @@ public class SharedVarManager : NetworkBehaviour
 
         }//16 neutral cards should now be in 1st 16 slots of deck list
          //====================================================== ADD COLOURS =======================================================
-        int j = 16;//start adding the other 24 cards from each deck at index 16 because of neutral cards
+        //int j = 16;//start adding the other 24 cards from each deck at index 16 because of neutral cards
 
         //===================================================== BLACK COMBOS =======================================================
 
         if (selectedcombo == 11)      //== 2 BLACK DECKS *********************************************************
         {
             populateBlackList();
+            Debug.Log("Attempting to add black deck twice...");
             for (int i = 0; i < 2; i++) //need to loop through 12 cards of black deck twice
             {
                 for (int k = 0; k < 12; k++)                //ADD first 12 BLACK cards starting at index 16
                 {
-                    int offset = 1 * i;
-                    combinedDeck[j + offset] = blackCardList[i];
-                    j++;
+                    //int offset = 1 * i;
+                    combinedDeck.Add(blackCardList[k]);
+                    //j++;
                 }
                 //j will hit index 16+12 = 28 after first iteration , then 28+12 =40 for second
             }
-            j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
+            //j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
         }
         else if (selectedcombo == 12)      //== 1 BLACK 1 RED DECK *********************************************************
         {
+            Debug.Log("Attempting to add black and red cards...");
             populateBlackList();
             for (int i = 0; i < 12; i++)                //ADD 12 BLACK cards after first 16 neutral
             {
-                combinedDeck[j] = blackCardList[i];
-                j++; //j should go from 16-28
+                combinedDeck.Add(blackCardList[i]);
+                //j++; //j should go from 16-28
             }
             populateRedList();
             for (int i = 0; i < 12; i++)                //ADD 12 RED cards after 12 black
             {
-                combinedDeck[j] = redCardList[i];
-                j++; //j should go from 28-40
+                combinedDeck.Add(redCardList[i]);
+                //j++; //j should go from 28-40
             }
-            j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
+            //j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
         }
         else if (selectedcombo == 13)      //== 1 BLACK 1 WHITE DECK *********************************************************
         {
             populateBlackList();
+            Debug.Log("Attempting to add black and white cards...");
             for (int i = 0; i < 12; i++)                //ADD 12 BLACK cards after first 16 neutral
             {
-                combinedDeck[j] = blackCardList[i];
-                j++; //j should go from 16-28
+                combinedDeck.Add(blackCardList[i]);
+                //j++; //j should go from 16-28
             }
             populateWhiteList();
             for (int i = 0; i < 12; i++)                //ADD 12 WHITE cards after 12 black
             {
-                combinedDeck[j] = whiteCardList[i];
-                j++; //j should go from 28-40
+                combinedDeck.Add(whiteCardList[i]);
+                //j++; //j should go from 28-40
             }
-            j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
+            //j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
         }
         else if (selectedcombo == 14)      //== 1 BLACK 1 BLUE DECK *********************************************************
         {
             populateBlackList();
+            Debug.Log("Attempting to add black and blue cards...");
             for (int i = 0; i < 12; i++)                //ADD 12 BLACK cards after first 16 neutral
             {
-                combinedDeck[j] = blackCardList[i];
-                j++; //j should go from 16-28
+                combinedDeck.Add(blackCardList[i]);
+                //j++; //j should go from 16-28
             }
             populateBlueList();
             for (int i = 0; i < 12; i++)                //ADD 12 BLUE cards after 12 black
             {
-                combinedDeck[j] = blueCardList[i];
-                j++; //j should go from 28-40
+                combinedDeck.Add(blueCardList[i]);
+                //j++; //j should go from 28-40
             }
-            j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
+            //j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
         }
         //===================================================== RED COMBOS =======================================================
         else if (selectedcombo == 22)      //== 2 RED DECKS *********************************************************
         {
             populateRedList();
+            Debug.Log("Attempting to add red deck twice...");
             for (int i = 0; i < 2; i++) //need to loop through 12 cards of red deck twice
             {
                 for (int k = 0; k < 12; k++)                //ADD first 12 RED cards starting at index 16
                 {
-                    int offset = 1 * i;
-                    combinedDeck[j + offset] = redCardList[i];
-                    j++;
+                    //int offset = 1 * i;
+                    combinedDeck.Add(redCardList[k]);
+                    //j++;
                 }
                 //j will hit index 16+12 = 28 after first iteration , then 28+12 =40 for second
             }
-            j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
+            //j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
         }
         else if (selectedcombo == 23)      //== 1 RED 1 WHITE DECK *********************************************************
         {
             populateRedList();
+            Debug.Log("Attempting to add red and white cards...");
             for (int i = 0; i < 12; i++)                //ADD 12 RED cards after first 16 neutral
             {
-                combinedDeck[j] = redCardList[i];
-                j++; //j should go from 16-28
+                combinedDeck.Add(redCardList[i]);
+                //j++; //j should go from 16-28
             }
             populateWhiteList();
             for (int i = 0; i < 12; i++)                //ADD 12 WHITE cards after 12 red
             {
-                combinedDeck[j] = whiteCardList[i];
-                j++; //j should go from 28-40
+                combinedDeck.Add(whiteCardList[i]);
+                //j++; //j should go from 28-40
             }
-            j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
+            //j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
         }
         else if (selectedcombo == 24)      //== 1 RED 1 BLUE DECK *********************************************************
         {
             populateRedList();
+            Debug.Log("Attempting to add red and blue cards...");
             for (int i = 0; i < 12; i++)                //ADD 12 RED cards after first 16 neutral
             {
                 combinedDeck.Add(redCardList[i]);
-                j++; //j should go from 16-28
+                //j++; //j should go from 16-28
             }
             populateBlueList();
             for (int i = 0; i < 12; i++)                //ADD 12 BLUE cards after 12 red
             {
                 combinedDeck.Add(blueCardList[i]);
-                j++; //j should go from 28-40
+                //j++; //j should go from 28-40
             }
-            j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
+            //j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
         }
         //===================================================== WHITE COMBOS =======================================================
         else if (selectedcombo == 33)      //== 2 WHITE DECKS *********************************************************
         {
             populateWhiteList();
+            Debug.Log("Attempting to add white deck twice...");
             for (int i = 0; i < 2; i++) //need to loop through 12 cards of white deck twice
             {
                 for (int k = 0; k < 12; k++)                //ADD first 12 WHITE cards starting at index 16
                 {
-                    int offset = 1 * i;
-                    combinedDeck[j + offset] = whiteCardList[i];
-                    j++;
+                    //int offset = 1 * i;
+                    combinedDeck.Add(whiteCardList[k]);
+                    //j++;
                 }
                 //j will hit index 16+12 = 28 after first iteration , then 28+12 =40 for second
             }
-            j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
+            //j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
         }
         else if (selectedcombo == 34)      //== 1 WHITE 1 BLUE DECK *********************************************************
         {
             populateWhiteList();
+            Debug.Log("Attempting to add white and blue cards...");
             for (int i = 0; i < 12; i++)                //ADD 12 WHITE cards after first 16 neutral
             {
-                combinedDeck[j] = whiteCardList[i];
-                j++; //j should go from 16-28
+                combinedDeck.Add(whiteCardList[i]);
+                //j++; //j should go from 16-28
             }
             populateBlueList();
             for (int i = 0; i < 12; i++)                //ADD 12 BLUE cards after 12 white
             {
-                combinedDeck[j] = blueCardList[i];
-                j++; //j should go from 28-40
+                combinedDeck.Add(blueCardList[i]);
+                //j++; //j should go from 28-40
             }
-            j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
+            //j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
         }
         //===================================================== BLUE COMBOS =======================================================
         else if (selectedcombo == 44)      //== 2 BLUE DECKS *********************************************************
         {
             populateBlueList();
+            Debug.Log("Attempting to add blue deck twice...");
             for (int i = 0; i < 2; i++) //need to loop through 12 cards of blue deck twice
             {
                 for (int k = 0; k < 12; k++)                //ADD first 12 BLUE cards starting at index 16
                 {
-                    int offset = 1 * i; //second round will add indexes 28-40
-                    combinedDeck[j + offset] = whiteCardList[i];
-                    j++;
+                    //int offset = 1 * i; //second round will add indexes 28-40
+                    combinedDeck.Add(whiteCardList[k]);
+                    //j++;
                 }
                 //j will hit index 16+12 = 28 after first iteration , then 28+12 =40 for second
             }
-            j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
+            //j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
         }
 
     }//end populateCombinedDeck
@@ -566,10 +585,11 @@ public class SharedVarManager : NetworkBehaviour
     {
         for (int i = 0; i < deckSize; i++)
         {
-            container.Add(combinedDeck[i]);
+            container.Add(combinedDeck[i]); //always store current combinedDeck value in first slot of container's list
             int randomIndex = Random.Range(i, deckSize);
             combinedDeck[i] = combinedDeck[randomIndex];
             combinedDeck[randomIndex] = container[0];
+            container.RemoveAt(0); //delete container's first value after use, so next card is shuffled properly
         }
         //now that deck is shuffled, change SYNC VAR bool variable to reflect this
         validDeckShuffled = true;

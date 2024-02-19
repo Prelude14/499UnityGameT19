@@ -56,11 +56,15 @@ public class dbDisplay : MonoBehaviour
     public static GameObject currentLoc;
     public static GameObject pz;
 
-    // Start is called before the first frame update
+    // Start is called before the first frame update (Find each card's info to be displayed)
     void Start()
     {
+        Debug.Log("dbDisplay started...");
         deckCount = playerDeck.deckSize;
-        displayList[0] = cardDatabase.neutralCardList[displayId];
+
+        
+        displayList[0] = playerDeck.staticDeck[displayId]; //get card from playerDeck's static deck PLACEHOLDER********
+
         this.id = displayList[0].id;
 
         isSummoned = false;
@@ -76,19 +80,31 @@ public class dbDisplay : MonoBehaviour
     {
         staticSummoned = isSummoned;
         Debug.Log(staticSummoned + " " + cardName);
-        displayCard();
+        displayCard(); //sets the card's information and colour up to be rendered INTO PLACEHOLDER***
         hand = GameObject.Find("hand");
         //if this parent is the same as the hands parent 
-        if (this.transform.parent == hand.transform.parent)
+        Debug.Log("this.transform.parent = "+ this.transform.parent);
+        //if (this.transform.parent.gameObject == hand) //if this script's parent's gameobject is equal to the hand object, then show face of card to us
+        //{
+        //    cardBack = false;
+        //}
+        staticCardBack = cardBack; //make sure that the card doesn't show the back
+        cloneDraw(); //this updates the card to be the last card in the static deck (which is updated to have one less each time a card is drawn)
+
+        //currentZone = this.transform.parent; //supposed to grab each card's parent game object (hand, oppHand, playPanel, or oppPlayPanel)
+
+        if (this.transform.parent != null)
         {
-            cardBack = false;
+            currentZone = this.transform.parent.gameObject;
         }
-        staticCardBack = cardBack;
-        cloneDraw();
+        else
+        {
+            Debug.Log("Parent transform is null for object: " + this.name);
+        }
+
+        currentLoc = currentZone;
 
         playZone = GameObject.Find("playPanel");
-        currentZone = this.transform.parent.gameObject;
-        currentLoc = currentZone;
         pz = playZone;
         //summoning logic and cost logic
         if (isSummoned == false)
@@ -217,7 +233,7 @@ public class dbDisplay : MonoBehaviour
     }
     private void displayCard()
     {
-
+        this.id = displayList[0].id;//update ids to match real id of card
         this.cardName = displayList[0].cardName;
         this.colour = displayList[0].colour;//new
         this.pow = displayList[0].pow;
@@ -238,11 +254,12 @@ public class dbDisplay : MonoBehaviour
     }
     private void cloneDraw()
     {
+        Debug.Log("Made it to clone draw...");
         //clone cards for draw
-        if (this.tag == "clone")
+        if (this.tag == "clone") //if this dbdisplay's card is a clone, then we draw it from the game deck and update the game deck's information
         {
             //
-            displayList[0] = playerDeck.staticDeck[deckCount - 1];
+            displayList[0] = playerDeck.staticDeck[deckCount - 1]; //add last card of playerDeck's staticDeck to the top of the display list
             //
             deckCount -= 1;
             playerDeck.deckSize -= 1;

@@ -103,10 +103,11 @@ public class PlayerManager : NetworkBehaviour
             // Call the command on the NetworkManager
             sharedVarManager.CmdGetPlayerColor(clientColour); // this calls the SharedVarManager script, which should handle the game logic from here, and deal out cards properly
             //clientDecks = clientColour; //set sync var to your client's colour so that the PlayerManager can now see and track across network what colour the client chose specifically (there is one instance of this per player)
+            //playerDeck.staticDeck = sharedVarManager;
         }
         else
         {
-            Debug.LogError("SharedVarManager GameObject not found!"); //couldn't send colour properly
+            Debug.Log("SharedVarManager GameObject not found!"); //couldn't send colour properly
         }
 
     }
@@ -138,6 +139,7 @@ public class PlayerManager : NetworkBehaviour
                     //slow down code so we don't draw too fast
                     //yield return new WaitForSeconds(.15F);
                     //Instantiate(cardInHand, transform.position, transform.rotation);
+                    Debug.Log("client called draw command, so server is attempting to draw each card into their hand..."); //
                     GameObject card = Instantiate(cardInHand, new Vector2(0, 0), Quaternion.identity); //Server instantiates card object on the client side of client who requested CmdDraw
                     NetworkServer.Spawn(card, connectionToClient); //Server spawns object across network for other clients to use, and gives Client the authority of the object (their card in this case)
                     RpcShowCard(card, "Dealt"); //this gets server to display the card object across both clients (and it displays specificly based on who has authority inside the rpc method)
@@ -157,15 +159,21 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     void RpcShowCard(GameObject card, string type)
     {
+        hand = GameObject.Find("hand");//each client should find its version of hand and opphand to place the card into.
+        oppHand = GameObject.Find("oppHand");
+
         //check type and then the authority of the card to see if the card has been "Dealt" to the client, and display the dealt card according to if the client owns it or not
         if (type.Equals("Dealt"))
         {
+            Debug.Log("isOwned = " + isOwned);
             if (isOwned)
             {
+                Debug.Log("client 'owns' this card, and we are setting its parent to be the hand's transform...");
                 card.transform.SetParent(hand.transform, false); //if its the client's card, put it in the player's hand
             }
             else
             {
+                Debug.Log("client DOESN'T 'own' this card, and we are setting its parent to be the oppHand's transform...");
                 card.transform.SetParent(oppHand.transform, false); //if its not, put it in the enemy's hand object
                                                                     //card.GetComponent<CardFlipper>().Flip(); //show the back of the card 
             }
