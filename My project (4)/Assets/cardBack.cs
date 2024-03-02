@@ -9,16 +9,19 @@ public class cardBack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(dbDisplay.staticCardBack == true ) {
+        if (dbDisplay.staticCardBack == true)
+        {
             //if staticcardback is true we see back of the card
             CardBack.SetActive(true);
-        }else {
+        }
+        else
+        {
             //else we see the front
             CardBack.SetActive(false);
         }

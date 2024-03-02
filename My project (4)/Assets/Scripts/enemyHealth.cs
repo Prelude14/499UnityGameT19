@@ -11,16 +11,17 @@ public class enemyHealth : MonoBehaviour
     public float hp;
     public Image health;
     public Text hpText;
+    public GameObject glow;
     void Start()
     {
         maxHp = 30;
         HPStatic = 30;
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        glow.active = false;
         //Fill health bar to this much
         hp = HPStatic;
         health.fillAmount = hp / maxHp; //percentage of fill amount
@@ -30,6 +31,14 @@ public class enemyHealth : MonoBehaviour
         }
         hpText.text = hp.ToString();
         fillHealth();
+        if (dbDisplay.attackDragging == true)
+        {
+            glow.active = true;
+        }
+        else
+        {
+            glow.active = false;
+        }
 
     }
     public float getHealth()

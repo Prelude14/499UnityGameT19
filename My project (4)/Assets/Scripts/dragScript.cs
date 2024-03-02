@@ -59,9 +59,14 @@ public class dragScript : MonoBehaviour
     }
     else
     {
+      if (startParent == null)
+      {
+        transform.position = startPos;
+        startParent = transform.parent.gameObject;
+        return;
+      }
       transform.position = startPos;
       transform.SetParent(startParent.transform, false);
-
     }
 
   }
