@@ -21,7 +21,7 @@ public class enemyHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        glow.active = false;
+        glow.SetActive(false);
         //Fill health bar to this much
         hp = HPStatic;
         health.fillAmount = hp / maxHp; //percentage of fill amount
@@ -33,11 +33,11 @@ public class enemyHealth : MonoBehaviour
         fillHealth();
         if (dbDisplay.attackDragging == true)
         {
-            glow.active = true;
+            glow.SetActive(true);
         }
         else
         {
-            glow.active = false;
+            glow.SetActive(false);
         }
 
     }
