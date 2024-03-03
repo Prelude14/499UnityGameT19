@@ -113,7 +113,7 @@ public class dbDisplay : MonoBehaviour
 
         if (this.transform.parent != null)
         {
-            currentZone = this.transform.parent.gameObject;
+            currentZone = this.transform.parent.gameObject;// had this from multplay but changed to fix merge conflicts this.transform.parent.gameObject;
         }
         else
         {

@@ -9,6 +9,8 @@ public class turnScript : MonoBehaviour
     public int myTurn;
     public int isTheirTurn;
     public Text turnText;
+    public bool disable;
+    public static int totalSummons;
 
     public int maxMana;
 
@@ -16,6 +18,10 @@ public class turnScript : MonoBehaviour
     public Text manaText;
 
     public static bool turnStart;
+
+    public static int turnCount = 0;
+    public GameObject playArrows;
+    public GameObject attackArrows;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +34,7 @@ public class turnScript : MonoBehaviour
         maxMana = 1;
         currentMana = 1;
         turnStart = false;
-
+        disable = false;
     }
 
     // Update is called once per frame
@@ -44,11 +50,35 @@ public class turnScript : MonoBehaviour
         }
         manaText.text = currentMana + "/" + maxMana;
 
+        if (turnCount == 0)
+        {
+            playArrows.SetActive(true);
+
+        }
+        else
+        {
+            playArrows.SetActive(false);
+            attackArrows.SetActive(false);
+        }
+
+        if (totalSummons == 1 && disable == false)
+        {
+            attackArrows.SetActive(true);
+        }
+        else
+        {
+            attackArrows.SetActive(false);
+        }
+
     }
     public void endTurn()
     {
         isMyTurn = false;
         isTheirTurn = 1;
+        turnCount++;
+        playArrows.SetActive(false);
+        attackArrows.SetActive(false);
+        disable = true;
     }
     public void endOpponentTurn()
     {
@@ -58,6 +88,10 @@ public class turnScript : MonoBehaviour
         currentMana = maxMana;
         turnStart = true;
         dbDisplay.hasAttacked = false;
+        if (totalSummons < 1)
+        {
+            disable = false;
+        }
     }
 
 

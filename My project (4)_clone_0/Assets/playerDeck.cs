@@ -41,10 +41,10 @@ public class playerDeck : NetworkBehaviour
 
             gameDeckCombo = PlayerManager.clientDecks;//get sync variable from network manager
 
-            Debug.Log("client's gameCombo: "+ gameDeckCombo +", and colour :"+ playerColour);
+            Debug.Log("client's gameCombo: " + gameDeckCombo + ", and colour :" + playerColour);
 
             //if game isn't started yet, and it doesn't have enough players yet for a valid combo when this button is clicked, then send our colour out to server, 
-            if (gameDeckCombo.Equals("") || gameDeckCombo.Equals("BLACK") || gameDeckCombo.Equals("R") || gameDeckCombo.Equals("W") || gameDeckCombo.Equals("BLUE") ) 
+            if (gameDeckCombo.Equals("") || gameDeckCombo.Equals("BLACK") || gameDeckCombo.Equals("R") || gameDeckCombo.Equals("W") || gameDeckCombo.Equals("BLUE"))
             {
                 PlayerManager.CmdGetPlayerColours(playerColour); //send playermanager the deck colour to be used, once 2 clients have run this, the server should deal out car
                 Debug.Log("Sent colour to server. Waiting for response... GameCombo now equals: " + PlayerManager.clientDecks);
@@ -55,7 +55,7 @@ public class playerDeck : NetworkBehaviour
 
                     //Debug.Log("Game started ");
                     //cmd draw also changed the sync var gamestarted bool, so now that game has started, this whole method shouldn't be able to do anything 
-                    localGameStarted = true;    
+                    localGameStarted = true;
                 }
             }
             else if (gameDeckCombo.Equals("Error 2: Too many players/strings."))
@@ -63,7 +63,7 @@ public class playerDeck : NetworkBehaviour
                 //PlayerManager.CmdCreateDeck();
                 connectionError = true; //do nothing and exit
             }
-            
+
         }
     }
 
@@ -73,7 +73,7 @@ public class playerDeck : NetworkBehaviour
         //tell server to change size of deck and the text displaying how many cards are left in it, as well as deal new cards if turn has changed
         //PlayerManager.CmdUpdate();
 
-        
+
 
         //reduce number of "visible" cards on the -deck- stack
         //staticDeck = PlayerManager.combinedDeck;
