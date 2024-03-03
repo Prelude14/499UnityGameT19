@@ -4568,6 +4568,7 @@ MonoBehaviour:
   manaText: {fileID: 468702467}
   playArrows: {fileID: 483352577}
   attackArrows: {fileID: 74178436}
+  actionText: {fileID: 1603993064}
 --- !u!4 &1811560973
 Transform:
   m_ObjectHideFlags: 0

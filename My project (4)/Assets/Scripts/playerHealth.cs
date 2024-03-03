@@ -12,6 +12,7 @@ public class playerHealth : MonoBehaviour
     public Image health;
     public Text hpText;
     public float fillAmount;
+    public static float turnStartHealth;
     void Start()
     {
         maxHp = 30;
@@ -22,6 +23,7 @@ public class playerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        hp = HPStatic;
         //Fill health bar to this much
         if (hp < 0)
         {
@@ -45,9 +47,9 @@ public class playerHealth : MonoBehaviour
     {
         return x / maxHp;
     }
-    public void setHealth(float x)
+    public static void setHealth(float x)
     {
-        this.hp = x;
+        HPStatic = x;
     }
     public float getFillAmount()
     {

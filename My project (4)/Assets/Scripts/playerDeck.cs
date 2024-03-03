@@ -11,7 +11,8 @@ public class playerDeck : MonoBehaviour
     public List<Card1> deck = new List<Card1>();
     public static List<Card1> staticDeck = new List<Card1>();
     public int x;
-
+    public static int staticAmount;
+    public static bool drawStatic = false;
     public GameObject cardInDeck1;
     public GameObject cardInDeck2;
     public GameObject cardInDeck3;
@@ -41,11 +42,16 @@ public class playerDeck : MonoBehaviour
         StartCoroutine(StartGame());
 
     }
-
     // Update is called once per frame
     void Update()
     {
         //reduce number of "visible" cards on the -deck- stack
+        if (drawStatic == true)
+        {
+            Debug.Log("DRAW TRIGGER: " + staticAmount);
+            StartCoroutine(Draw(staticAmount));
+            drawStatic = false;
+        }
         staticDeck = deck;
 
         changeSize();
@@ -118,6 +124,7 @@ public class playerDeck : MonoBehaviour
         // }
         // Debug.Log(result);
     }
+
     IEnumerator Draw(int drawSize)
     {
         if (deckSize > 0) //check if there's other cards. do not draw if no more cards do smth else;
@@ -141,7 +148,9 @@ public class playerDeck : MonoBehaviour
             playerHealth.HPStatic -= burnDamage;
             burnDamage++;
         }
+        drawStatic = false;
     }
+
     //add 20 cards from the cardDatabase using a neutral deck plus one colour (which gets selected by player)
     public void populateDeck()
     {

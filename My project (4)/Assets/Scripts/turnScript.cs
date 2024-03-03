@@ -99,6 +99,7 @@ public class turnScript : MonoBehaviour
             disable = false;
         }
         actionUpdate();
+        playerHealth.turnStartHealth = playerHealth.HPStatic;
     }
 
     public void actionUpdate()
