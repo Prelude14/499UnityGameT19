@@ -32,6 +32,7 @@ public class dbDisplay : MonoBehaviour
 
     public GameObject cardInHand;
     public GameObject hand;
+    public GameObject oppHand;
     public GameObject playZone;
     public GameObject currentZone;
     public static int deckCount;
@@ -120,6 +121,14 @@ public class dbDisplay : MonoBehaviour
             Debug.Log("Parent transform is null for object: " + this.name);
         }
 
+
+        //check if currZone is oppHand, set cardBack to true to not show opponent's cards
+        oppHand = GameObject.Find("oppHand");
+        if (currentZone == oppHand)
+        {
+            cardBack = true;
+        }
+
         currentLoc = currentZone;
 
         playZone = GameObject.Find("playPanel");
@@ -153,7 +162,7 @@ public class dbDisplay : MonoBehaviour
         }
 
 
-        GameObject startParent = transform.parent.gameObject;
+        //GameObject startParent = transform.parent.gameObject;
 
         if (isSummoned == false && currentZone == playZone)
         {

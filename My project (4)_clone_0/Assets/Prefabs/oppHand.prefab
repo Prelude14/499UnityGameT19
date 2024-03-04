@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 334b43863772dd849b133f7a79707fac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hand: {fileID: 5650087382740619346}
+  hand: {fileID: 0}
   handCard: {fileID: 7236696608810499412, guid: bb6f8b4d47ed90a418b3e9b36dbd9aef, type: 3}
 --- !u!114 &5650087382740619355
 MonoBehaviour:

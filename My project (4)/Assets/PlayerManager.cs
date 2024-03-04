@@ -174,6 +174,8 @@ public class PlayerManager : NetworkBehaviour
             else
             {
                 Debug.Log("client DOESN'T 'own' this card, and we are setting its parent to be the oppHand's transform...");
+                //card.GetComponent<dbDisplay>();
+                //dbDisplay.staticCardBack = true;
                 card.transform.SetParent(oppHand.transform, false); //if its not, put it in the enemy's hand object
                                                                     //card.GetComponent<CardFlipper>().Flip(); //show the back of the card 
             }
