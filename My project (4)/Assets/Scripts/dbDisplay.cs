@@ -10,13 +10,19 @@ public class dbDisplay : MonoBehaviour
     public int displayId;
     public static bool attackDragging;
     public int colour; //for each card's colour
+    public static int staticColour;
     public int id;
+    public static int staticID;
     public int hp;
+    public static int staticHP;
     public int pow;
+    public static int staticPow;
     public int cost;
     public static int staticCost;
     public string cardName;
+    public static string staticName;
     public string txt;
+    public static string staticTxt;
 
     public Text nameText;
     public Text descriptionText;
@@ -60,6 +66,13 @@ public class dbDisplay : MonoBehaviour
     public static GameObject currentLoc;
     public static GameObject pz;
 
+    //testing zoom in dbdisplay
+    public GameObject Canvas;
+    public GameObject ZoomCard;
+
+    private GameObject zoomCard;
+    private Sprite zoomSprite;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -90,10 +103,8 @@ public class dbDisplay : MonoBehaviour
     void Update()
     {
 
-        staticAttackBorder = false;
-        staticCost = cost;
         staticSummoned = isSummoned;
-        Debug.Log(staticSummoned + " " + cardName);
+        // Debug.Log(staticSummoned + " " + cardName);
         displayCard();
         hand = GameObject.Find("hand");
         //if this parent is the same as the hands parent 
@@ -110,14 +121,14 @@ public class dbDisplay : MonoBehaviour
         pz = playZone;
         //summoning logic and cost logic
 
-        Debug.Log(cardName + " Is summoned false");
+        // Debug.Log(cardName + " Is summoned false");
         if (this.cost <= turnScript.currentMana && isSummoned == false)
         {
             canBeSummoned = true;
-            Debug.Log(cardName + " Is now playable");
+            // Debug.Log(cardName + " Is now playable");
             if (currentZone == hand)
             {
-                Debug.Log(cardName + " Is now playable");
+                // Debug.Log(cardName + " Is now playable");
             }
 
         }
@@ -131,7 +142,7 @@ public class dbDisplay : MonoBehaviour
         if (canBeSummoned)
         {
             dragScript.isDraggable = true;
-            Debug.Log(cardName + " is now " + currentlyDraggable);
+            // Debug.Log(cardName + " is now " + currentlyDraggable);
             playableBorder.SetActive(true);
             unplayableBorder.SetActive(false);
         }
@@ -150,11 +161,11 @@ public class dbDisplay : MonoBehaviour
             }
             isSummoned = true;
             turnScript.totalSummons++;
-            Debug.Log(cardName + " Summoned sucess | Cost: " + this.cost + " | Current zone: " + currentZone + " | play zone: " + playZone + " | Is summoned? " + isSummoned);
+            // Debug.Log(cardName + " Summoned sucess | Cost: " + this.cost + " | Current zone: " + currentZone + " | play zone: " + playZone + " | Is summoned? " + isSummoned);
             //disable script component when summoned
             GetComponent<dragScript>().enabled = false;
             turnScript.currentMana = turnScript.currentMana - this.cost;
-            Debug.Log("Mana left: " + turnScript.currentMana);
+            // Debug.Log("Mana left: " + turnScript.currentMana);
 
         }
 
@@ -164,7 +175,7 @@ public class dbDisplay : MonoBehaviour
         if (turnScript.isMyTurn == true && isSummoned == true && hasAttacked == false && currentZone == playZone)
         {
             cantAttack = false;
-            Debug.Log(cardName + " ready to attack");
+            // Debug.Log(cardName + " ready to attack");
             unplayableBorder.SetActive(false);
             playableBorder.SetActive(false);
         }
@@ -208,6 +219,11 @@ public class dbDisplay : MonoBehaviour
         }
 
     }
+    public void Awake()
+    {
+        Canvas = GameObject.Find("Canvas");
+    }
+
 
     private void Attack()
     {
@@ -287,6 +303,9 @@ public class dbDisplay : MonoBehaviour
         powText.text = " " + this.pow.ToString();
         hpText.text = " " + this.hp.ToString();
 
+
+
+
         //trying to get the border of the card drwan to change colour to match the card's colour int
         Color border = renderCardColour(colour);//get what colour the border should be
         Image.GetComponent<Image>().color = border; //then render the correct colour
@@ -333,6 +352,29 @@ public class dbDisplay : MonoBehaviour
         }
     }
 
+    public void OnHoverEnter()
+    {
+        // Add logic for zooming in on hover enter
+        Debug.Log("Zooming on: " + cardName);
+        zoomCard = Instantiate(ZoomCard, new Vector2(Input.mousePosition.x, Input.mousePosition.y + 250), Quaternion.identity);
+        zoomCard.transform.SetParent(Canvas.transform, true);
+        RectTransform rect = zoomCard.GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(200, 300);
+        zoomCard.GetComponent<contentZoom>().cardName = cardName;
+        zoomCard.GetComponent<contentZoom>().txt = txt;
+        zoomCard.GetComponent<contentZoom>().cost = cost;
+        zoomCard.GetComponent<contentZoom>().pow = pow;
+        zoomCard.GetComponent<contentZoom>().hp = hp;
+
+
+
+    }
+
+    public void OnHoverExit()
+    {
+        // Add logic for zooming out on hover exit
+        Destroy(zoomCard);
+    }
 
 
 }
