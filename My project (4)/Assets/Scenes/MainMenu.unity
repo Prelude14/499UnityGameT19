@@ -3326,7 +3326,7 @@ GameObject:
   - component: {fileID: 239115926}
   - component: {fileID: 239115925}
   m_Layer: 5
-  m_Name: emailField
+  m_Name: tokenField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3349,7 +3349,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -8.393, y: -167.86}
+  m_AnchoredPosition: {x: -8.393, y: -153}
   m_SizeDelta: {x: 758.371, y: 122.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &239115925
@@ -3393,7 +3393,7 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 239115926}
-  m_TextComponent: {fileID: 0}
+  m_TextComponent: {fileID: 1388939988}
   m_Placeholder: {fileID: 0}
   m_ContentType: 6
   m_InputType: 0
@@ -3427,7 +3427,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 'Enter email or username:'
+  m_Text: 'Enter token:'
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -8219,7 +8219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &610626757
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13254,6 +13254,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   username: {fileID: 1970383473}
+  resetTokenInput: {fileID: 610626756}
+  resetemailInput: {fileID: 1031330694}
 --- !u!1 &1042178423
 GameObject:
   m_ObjectHideFlags: 0
@@ -18090,7 +18092,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1388939985}
   - component: {fileID: 1388939987}
-  - component: {fileID: 1388939986}
+  - component: {fileID: 1388939988}
   m_Layer: 5
   m_Name: Text (Legacy)
   m_TagString: Untagged
@@ -18117,7 +18119,15 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -18}
   m_SizeDelta: {x: -20, y: -13}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1388939986
+--- !u!222 &1388939987
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388939984}
+  m_CullTransparentMesh: 1
+--- !u!114 &1388939988
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -18130,7 +18140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
+  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -18142,23 +18152,15 @@ MonoBehaviour:
     m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 0
+    m_MinSize: 6
     m_MaxSize: 60
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter Reset Token
---- !u!222 &1388939987
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388939984}
-  m_CullTransparentMesh: 1
+  m_Text: 'Enter token:'
 --- !u!1 &1394459858
 GameObject:
   m_ObjectHideFlags: 0
@@ -25213,29 +25215,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1501895153}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1987899463}
+        m_TargetAssemblyTypeName: validateToken, Assembly-CSharp
+        m_MethodName: CallValidate
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 345225105}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1987899461
 MonoBehaviour:
@@ -25288,7 +25278,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   username: {fileID: 1970383473}
-  token: {fileID: 1388939986}
+  token: {fileID: 1388939988}
+  newPasswordInput: {fileID: 1501895153}
+  resetTokenInput: {fileID: 610626756}
 --- !u!1 &1999103464
 GameObject:
   m_ObjectHideFlags: 0
