@@ -88,8 +88,6 @@ public class abilityScript : MonoBehaviour
                 break;
             default:
                 break;
-
-
         }
         // case 0:
         //ability 0: deal 2 damage to yourself

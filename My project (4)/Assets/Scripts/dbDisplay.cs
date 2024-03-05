@@ -139,8 +139,6 @@ public class dbDisplay : MonoBehaviour
         }
 
 
-        GameObject startParent = transform.parent.gameObject;
-
         if (isSummoned == false && currentZone == playZone)
         {
             unplayableBorder.SetActive(false);
