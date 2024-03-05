@@ -1457,6 +1457,8 @@ MonoBehaviour:
   Image: {fileID: 6525077667775594899}
   playableBorder: {fileID: 4347753901248604206}
   unplayableBorder: {fileID: 7870417631566192203}
+  Canvas: {fileID: 0}
+  ZoomCard: {fileID: 7236696608810499412, guid: ef4645fa71a0a48419a9c7ce7109a30d, type: 3}
 --- !u!114 &8507879098216517373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1710,6 +1712,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+
 --- !u!114 &2127190578478546284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1725,6 +1728,52 @@ MonoBehaviour:
   color: 0
   id: 0
   triggered: 0
+
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: CardZoom, Scripts
+          m_MethodName: OnHoverExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 467141001557397880}
+          m_TargetAssemblyTypeName: dbDisplay, Scripts
+          m_MethodName: OnHoverEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 467141001557397880}
+          m_TargetAssemblyTypeName: dbDisplay, Scripts
+          m_MethodName: OnHoverExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+
 --- !u!1 &7386926366361011351
 GameObject:
   m_ObjectHideFlags: 0
