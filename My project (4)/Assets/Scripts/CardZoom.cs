@@ -20,7 +20,6 @@ public class CardZoom : MonoBehaviour
     {
         // Add logic for zooming in on hover enter
         zoomCard = Instantiate(ZoomCard, new Vector2(Input.mousePosition.x, Input.mousePosition.y + 250), Quaternion.identity);
-        zoomCard.GetComponent<Image>().sprite = zoomSprite;
         zoomCard.transform.SetParent(Canvas.transform, true);
         RectTransform rect = zoomCard.GetComponent<RectTransform>();
         rect.sizeDelta = new Vector2(200, 300);
@@ -31,4 +30,5 @@ public class CardZoom : MonoBehaviour
         // Add logic for zooming out on hover exit
         Destroy(zoomCard);
     }
+
 }
