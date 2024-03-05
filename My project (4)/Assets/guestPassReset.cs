@@ -30,13 +30,11 @@ public class guestPassReset : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("username", email.text);
 
-        UnityWebRequest www = UnityWebRequest.Post("http://localhost/resetPass.php", form);
+        UnityWebRequest www = UnityWebRequest.Post("http://localhost/reset.php", form);
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)
         {
-            Debug.Log(www.error);
-            // print error message
         }
         else 
         {
