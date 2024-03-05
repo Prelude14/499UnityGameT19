@@ -11,6 +11,7 @@ public class updatePass : MonoBehaviour
     public Text username;
     public GameObject newPasswordInput;
     public GameObject confirmPasswordUpdate;
+    public Button updateButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,5 +51,10 @@ public class updatePass : MonoBehaviour
             Debug.Log("Validation FAILED. Error Code: " + www.text);
             password.color = Color.red;
         }
+    }
+
+    public void VerifyInputL() //button won't be clickable until input field has at least 8 characters
+    {
+        updateButton.interactable = (password.text.Length >= 8);
     }
 }

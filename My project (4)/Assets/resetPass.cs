@@ -54,10 +54,4 @@ public class resetPass : MonoBehaviour
             username.text = "Invalid Username";
         }
     }
-
-    // public void VerifyInputL() //button won't be clickable until input field has at least 8 characters
-    // {
-    //     resetPassButton.interactable = (DBManager.username.text.Length >= 8);
-    // }
-
 }
