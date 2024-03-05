@@ -9,6 +9,10 @@ public class resetPass : MonoBehaviour
 {
     public Text username;
 
+    public GameObject resetTokenInput;
+
+    public GameObject resetemailInput;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,11 +43,15 @@ public class resetPass : MonoBehaviour
         //Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
         if (www.text[0] == '0')
         {
-            Debug.Log("Token successfully created" + www.text);
+            Debug.Log("Token successfully created:  " + www.text);
+            resetemailInput.SetActive(false);
+            resetTokenInput.SetActive(true);
         }
         else
         {
             Debug.Log("Password reset failed. Error Code: " + www.text);
+            username.color = Color.red;
+            username.text = "Invalid Username";
         }
     }
 
