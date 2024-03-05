@@ -16,29 +16,29 @@ public class cardDatabase : MonoBehaviour
       populateWhiteList();
       populateBlueList();
    }
-   public void populateList()
-   { //colour 0 is the first int (1-4 are the actual colours)
-      cardList.Add(new Card1(0, 0, "None", 5, 1, 5, "None"));
-      cardList.Add(new Card1(0, 1, "Training dummy", 1, 1, 1, "Taunt"));
-      cardList.Add(new Card1(0, 2, "Kobold charger", 5, 1, 5, "Haste"));
-      cardList.Add(new Card1(0, 3, "Bat", 1, 1, 1, "Flying"));
-      cardList.Add(new Card1(0, 4, "Warrior", 4, 4, 2, "haste"));
-      cardList.Add(new Card1(0, 5, "Rat", 1, 1, 1, ""));
-      cardList.Add(new Card1(0, 6, "Training dummy", 1, 1, 1, "Taunt"));
-      cardList.Add(new Card1(0, 7, "Training dummy", 1, 1, 1, "Taunt"));
-      cardList.Add(new Card1(0, 8, "Training dummy", 1, 1, 1, "Taunt"));
-      cardList.Add(new Card1(0, 9, "Training dummy", 1, 1, 1, "Taunt"));
-      cardList.Add(new Card1(0, 10, "Training dummy", 1, 1, 1, "Taunt"));
-      cardList.Add(new Card1(0, 11, "Bat", 1, 1, 1, "Flying"));
-      cardList.Add(new Card1(0, 12, "Bat", 1, 1, 1, "Flying"));
-      cardList.Add(new Card1(0, 13, "Bat", 1, 1, 1, "Flying"));
-      cardList.Add(new Card1(0, 14, "Bat", 1, 1, 1, "Flying"));
-      cardList.Add(new Card1(0, 16, "Goblin", 2, 1, 1, ""));
-      cardList.Add(new Card1(0, 17, "Goblin", 2, 1, 1, ""));
-      cardList.Add(new Card1(0, 18, "Goblin", 2, 1, 1, ""));
-      cardList.Add(new Card1(0, 19, "Goblin", 2, 1, 1, ""));
-      cardList.Add(new Card1(0, 20, "Goblin Lord", 2, 1, 1, "Other goblins have +1/+1"));
-   }//old deck  ============================================================
+   // public void populateList()
+   // { //colour 0 is the first int (1-4 are the actual colours)
+   //    cardList.Add(new Card1(0, 0, "None", 5, 1, 5, "None"));
+   //    cardList.Add(new Card1(0, 1, "Training dummy", 1, 1, 1, "Taunt"));
+   //    cardList.Add(new Card1(0, 2, "Kobold charger", 5, 1, 5, "Haste"));
+   //    cardList.Add(new Card1(0, 3, "Bat", 1, 1, 1, "Flying"));
+   //    cardList.Add(new Card1(0, 4, "Warrior", 4, 4, 2, "haste"));
+   //    cardList.Add(new Card1(0, 5, "Rat", 1, 1, 1, ""));
+   //    cardList.Add(new Card1(0, 6, "Training dummy", 1, 1, 1, "Taunt"));
+   //    cardList.Add(new Card1(0, 7, "Training dummy", 1, 1, 1, "Taunt"));
+   //    cardList.Add(new Card1(0, 8, "Training dummy", 1, 1, 1, "Taunt"));
+   //    cardList.Add(new Card1(0, 9, "Training dummy", 1, 1, 1, "Taunt"));
+   //    cardList.Add(new Card1(0, 10, "Training dummy", 1, 1, 1, "Taunt"));
+   //    cardList.Add(new Card1(0, 11, "Bat", 1, 1, 1, "Flying"));
+   //    cardList.Add(new Card1(0, 12, "Bat", 1, 1, 1, "Flying"));
+   //    cardList.Add(new Card1(0, 13, "Bat", 1, 1, 1, "Flying"));
+   //    cardList.Add(new Card1(0, 14, "Bat", 1, 1, 1, "Flying"));
+   //    cardList.Add(new Card1(0, 16, "Goblin", 2, 1, 1, ""));
+   //    cardList.Add(new Card1(0, 17, "Goblin", 2, 1, 1, ""));
+   //    cardList.Add(new Card1(0, 18, "Goblin", 2, 1, 1, ""));
+   //    cardList.Add(new Card1(0, 19, "Goblin", 2, 1, 1, ""));
+   //    cardList.Add(new Card1(0, 20, "Goblin Lord", 2, 1, 1, "Other goblins have +1/+1"));
+   // }//old deck  ============================================================
 
    //we've got 8 NEUTRAL cards that will be mixed in to every other deck
    public static List<Card1> neutralCardList = new List<Card1>();
@@ -71,17 +71,17 @@ public class cardDatabase : MonoBehaviour
       blackCardList.Add(new Card1(1, 2, "Eye for an Eye", 3, 1, 2, "Discard a random card from your hand, but destroy a target creature as a trade."));
       blackCardList.Add(new Card1(1, 3, "Eye for an Eye", 3, 1, 2, "Discard a random card from your hand, but destroy a target creature as a trade."));
 
-      blackCardList.Add(new Card1(1, 4, "Necromancer's Summon", 7, 5, 5, "If this card gets discarded, it gets summoned to the play area instead."));
-      blackCardList.Add(new Card1(1, 5, "Necromancer's Summon", 7, 5, 5, "If this card gets discarded, it gets summoned to the play area instead."));
+      blackCardList.Add(new Card1(1, 4, "Necromancer's Summon", 7, 5, 5, "Deal 3 damage to yourself"));
+      blackCardList.Add(new Card1(1, 5, "Necromancer's Summon", 7, 5, 5, "Deal 3 damage to yourself"));
 
-      blackCardList.Add(new Card1(1, 6, "Russian Roulette", 6, 3, 4, "Deal 1 damage for every card you've discarded so far to a single random enemy."));
-      blackCardList.Add(new Card1(1, 7, "Russian Roulette", 6, 3, 4, "Deal 1 damage for every card you've discarded so far to a single random enemy."));
+      blackCardList.Add(new Card1(1, 6, "Russian Roulette", 6, 3, 4, "For each life you lost this turn deal that much damage to enemy"));
+      blackCardList.Add(new Card1(1, 7, "Russian Roulette", 6, 3, 4, "For each life you lost this turn deal that much damage to enemy"));
 
-      blackCardList.Add(new Card1(1, 8, "Sacrificial Lamb", 3, 1, 1, "Discard a random card, and then draw a new card for each card you have discarded so far."));
-      blackCardList.Add(new Card1(1, 9, "Sacrificial Lamb", 3, 1, 1, "Discard a random card, and then draw a new card for each card you have discarded so far."));
+      blackCardList.Add(new Card1(1, 8, "Sacrificial Lamb", 3, 1, 1, "Heal yourself equal to damage dealt to self this turn."));
+      blackCardList.Add(new Card1(1, 9, "Sacrificial Lamb", 3, 1, 1, "Heal yourself equal to damage dealt to self this turn."));
 
-      blackCardList.Add(new Card1(1, 10, "Vengeful/Spiteful Spirits", 4, 3, 2, "Discard a random card, and then deal 3 damage to all enemy creatures. If you have discarded 3 or more cards so far, then it deals 6 damage to all enemy creatures instead."));
-      blackCardList.Add(new Card1(1, 11, "Vengeful/Spiteful Spirits", 4, 3, 2, "Discard a random card, and then deal 3 damage to all enemy creatures. If you have discarded 3 or more cards so far, then it deals 6 damage to all enemy creatures instead."));
+      blackCardList.Add(new Card1(1, 10, "Vengeful/Spiteful Spirits", 4, 3, 2, "For each life you're missing draw that many cards divided by 3"));
+      blackCardList.Add(new Card1(1, 11, "Vengeful/Spiteful Spirits", 4, 3, 2, "For each life you're missing draw that many cards divided by 3"));
 
    } //end BLACK deck  ============================================================
 
