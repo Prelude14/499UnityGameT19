@@ -5,8 +5,10 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Networking;
 
-public class passReset : MonoBehaviour
+public class resetPass : MonoBehaviour
 {
+    public Text username;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +30,7 @@ public class passReset : MonoBehaviour
     {
         //make Form to take the user's input 
         WWWForm form = new WWWForm();
-        form.AddField("username",  DBManager.username);
+        form.AddField("username",  username.text);
 
         //connect to url of our database's php file, PASS FORM TO URL
         WWW www = new WWW("http://localhost/sqlconnect/reset.php", form);
@@ -37,9 +39,7 @@ public class passReset : MonoBehaviour
         //Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
         if (www.text[0] == '0')
         {
-
             Debug.Log("Token successfully created" + www.text);
-
         }
         else
         {

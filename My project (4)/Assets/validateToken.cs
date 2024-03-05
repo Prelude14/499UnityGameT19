@@ -7,8 +7,11 @@ using UnityEngine.UI;
 public class validateToken : MonoBehaviour
 {
 
-    public Text username_email;
+    public Text username;
     public Text token;
+
+    public GameObject newPasswordInput;
+    public GameObject resetTokenInput;
 
     public void CallValidate()
     {
@@ -19,7 +22,7 @@ public class validateToken : MonoBehaviour
     {
         //make Form to take the user's input 
         WWWForm form = new WWWForm();
-        form.AddField("username", username_email.text);
+        form.AddField("username", username.text);
         form.AddField("token", token.text);
 
         //connect to url of our database's php file, PASS FORM TO URL
@@ -30,11 +33,14 @@ public class validateToken : MonoBehaviour
         if (www.text[0] == '0')
         {
             Debug.Log("Token Valid");
+            newPasswordInput.SetActive(true);
+            resetTokenInput.SetActive(false);
         }
         else
         {
-
             Debug.Log("Validation FAILED. Error Code: " + www.text);
+            token.color = Color.red;
+            token.text = "Invalid Token";
         }
     }
 }
