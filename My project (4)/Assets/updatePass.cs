@@ -48,7 +48,7 @@ public class updatePass : MonoBehaviour
         }
         else
         {
-            Debug.Log("Validation FAILED. Error Code: " + www.text);
+            Debug.Log("update FAILED. Error Code: " + www.text);
             password.color = Color.red;
         }
     }
