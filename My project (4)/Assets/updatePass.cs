@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class updatePass : MonoBehaviour
 {
     public Text password;
+    public Text username;
     public GameObject newPasswordInput;
     public GameObject confirmPasswordUpdate;
     // Start is called before the first frame update
@@ -30,6 +31,7 @@ public class updatePass : MonoBehaviour
     {
         //make Form to take the user's input 
         WWWForm form = new WWWForm();
+        form.AddField("username", username.text);
         form.AddField("password", password.text);
 
         //connect to url of our database's php file, PASS FORM TO URL
