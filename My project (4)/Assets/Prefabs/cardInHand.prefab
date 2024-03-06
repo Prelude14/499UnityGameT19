@@ -1426,7 +1426,6 @@ MonoBehaviour:
     txt: 
   displayId: 3
   colour: 0
-  id: 0
   hp: 0
   pow: 0
   cost: 0
