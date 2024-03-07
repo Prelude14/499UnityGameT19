@@ -29,50 +29,60 @@ public class readInput : MonoBehaviour
     IEnumerator Login()
     {
         //make Form to take the user's input 
-        WWWForm form = new WWWForm();
-        form.AddField("username", username_email.text);
-        form.AddField("password", user_pass.text);
+        WWWForm formL = new WWWForm();
+        formL.AddField("username", username_email.text);
+        formL.AddField("password", user_pass.text);
 
         //connect to url of our database's php file, PASS FORM TO URL
-        WWW www = new WWW("http://localhost/sqlconnect/login.php", form);
-        yield return www; //tell Unity to yield running the rest of the game till it gets this info from the url
-
-        //Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
-        if (www.text[0] == '0')
+        using (WWW www = new WWW("http://localhost/sqlconnect/login.php", formL))
         {
+            yield return www; //tell Unity to yield running the rest of the game till it gets this info from the url
 
-            Debug.Log("User logged in successfully. Account Values: " + www.text);
-
-            //Store user info in DBManager so Unity can display all the user info
-            DBManager.username = username_email.text;
-            //get datecreated from second index of output from login.php (decremented by tabs)
-            DBManager.datecreated = www.text.Split('\t')[1];
-            //get gamesplayed int from forms output (which is decremented by tabs) index 2, and need to convert from string to int so we can change it later
-            DBManager.gamesplayed = int.Parse(www.text.Split('\t')[2]);
-            DBManager.gameswon = int.Parse(www.text.Split('\t')[3]); //same for others
-            DBManager.damagedealt = int.Parse(www.text.Split('\t')[4]);//get damage dealt
-
-            loginsButton.SetActive(false);
-            confirmLogin.SetActive(true);
-
-            if (DBManager.gamesplayed != 0)
+            if (www.error == null)
             {
-                DBManager.wlratio = DBManager.gameswon / DBManager.gamesplayed; //win loss ratio might need to be caluclated (not stored in table?)
-            }
-            else
-            {
-                DBManager.wlratio = 0; //win loss ratio might need to be caluclated (not stored in table?)
+
+                //Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
+                if (www.text[0] == '0')
+                {
+
+                    Debug.Log("User logged in successfully. Account Values: " + www.text);
+
+                    //Store user info in DBManager so Unity can display all the user info
+                    DBManager.username = username_email.text;
+                    //get datecreated from second index of output from login.php (decremented by tabs)
+                    DBManager.datecreated = www.text.Split('\t')[1];
+                    //get gamesplayed int from forms output (which is decremented by tabs) index 2, and need to convert from string to int so we can change it later
+                    DBManager.gamesplayed = int.Parse(www.text.Split('\t')[2]);
+                    DBManager.gameswon = int.Parse(www.text.Split('\t')[3]); //same for others
+                    DBManager.damagedealt = int.Parse(www.text.Split('\t')[4]);//get damage dealt
+
+                    loginsButton.SetActive(false);
+                    Debug.Log("loginsetActive hit");
+
+                    confirmLogin.SetActive(true);
+                    Debug.Log("confirmLogin hit");
+
+                    if (DBManager.gamesplayed != 0)
+                    {
+                        DBManager.wlratio = DBManager.gameswon / DBManager.gamesplayed; //win loss ratio might need to be caluclated (not stored in table?)
+                    }
+                    else
+                    {
+                        DBManager.wlratio = 0; //win loss ratio might need to be caluclated (not stored in table?)
+                    }
+                }
+                else
+                {
+                    Debug.Log("User logged FAILED. Error Code: " + www.text);
+                    email.color = Color.red;
+                    pass.color = Color.red;
+                    loginText.text = "incorrect email or password";
+                }
+                //for test purposes:
+                loginFinished = true;
             }
         }
-        else
-        {
-            Debug.Log("User logged FAILED. Error Code: " + www.text);
-            email.color = Color.red;
-            pass.color = Color.red;
-            loginText.text = "incorrect email or password";
-        }
-        //for test purposes:
-        loginFinished = true;
+            
     }
 
     public void VerifyInputsL() //login button won't even be clickable until each input field has at least 10 characters in each
@@ -109,34 +119,40 @@ public class readInput : MonoBehaviour
         formC.AddField("password2", c_user_pass2.text); //get second pass from second pass field
 
         //connect to url of our database's php file, PASS FORM TO URL
-        WWW wwwC = new WWW("http://localhost/sqlconnect/create.php", formC);
-        yield return wwwC; //tell Unity to yield running the rest of the game till it gets this info from the url
-
-        //Error check what our PHP file returned
-        if (wwwC.text[0] == '0')
+        using (WWW wwwC = new WWW("http://localhost/sqlconnect/create.php", formC))
         {
-            Debug.Log("User created and logged in successfully. Account Values: " + wwwC.text);
+            yield return wwwC; //tell Unity to yield running the rest of the game till it gets this info from the url
 
-            //Store user info in DBManager so Unity can display all the user info
-            DBManager.username = c_username_email.text;
-            //get datecreated from second index of output from login.php (decremented by tabs)
-            DBManager.datecreated = wwwC.text.Split('\t')[1];
-            //get gamesplayed int from forms output (which is decremented by tabs) index 2, and need to convert from string to int so we can change it later
-            DBManager.gamesplayed = int.Parse(wwwC.text.Split('\t')[2]);
-            DBManager.gameswon = int.Parse(wwwC.text.Split('\t')[3]); //same for others
-            DBManager.wlratio = int.Parse(wwwC.text.Split('\t')[4]); //win loss ratio might need to be caluclated (not stored in table?)
+            if (wwwC.error == null)
+            {
 
-            createsButton.SetActive(false);
-            confirmCreate.SetActive(true);
+                //Error check what our PHP file returned
+                if (wwwC.text[0] == '0')
+                {
+                    Debug.Log("User created and logged in successfully. Account Values: " + wwwC.text);
+
+                    //Store user info in DBManager so Unity can display all the user info
+                    DBManager.username = c_username_email.text;
+                    //get datecreated from second index of output from login.php (decremented by tabs)
+                    DBManager.datecreated = wwwC.text.Split('\t')[1];
+                    //get gamesplayed int from forms output (which is decremented by tabs) index 2, and need to convert from string to int so we can change it later
+                    DBManager.gamesplayed = int.Parse(wwwC.text.Split('\t')[2]);
+                    DBManager.gameswon = int.Parse(wwwC.text.Split('\t')[3]); //same for others
+                    DBManager.wlratio = int.Parse(wwwC.text.Split('\t')[4]); //win loss ratio might need to be caluclated (not stored in table?)
+
+                    createsButton.SetActive(false);
+                    confirmCreate.SetActive(true);
+                }
+                else
+                {
+                    Debug.Log("User create FAILED. Error Code: " + wwwC.text);
+                    createFailed.SetActive(true);
+                    createsButton.SetActive(false);
+                }
+                //for test purposes:
+                createFinished = true;
+            }
         }
-        else
-        {
-            Debug.Log("User create FAILED. Error Code: " + wwwC.text);
-            createFailed.SetActive(true);
-            createsButton.SetActive(false);
-        }
-        //for test purposes:
-        createFinished = true;
     }
     public void VerifyInputsC() //create button won't even be clickable until all three input fields have at least 10 characters in each, AND passwords match
     {

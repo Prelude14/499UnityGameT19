@@ -33,25 +33,31 @@ public class resetPass : MonoBehaviour
     IEnumerator sendResetToken()
     {
         //make Form to take the user's input 
-        WWWForm form = new WWWForm();
-        form.AddField("username",  username.text);
+        WWWForm formR = new WWWForm();
+        formR.AddField("username",  username.text);
 
         //connect to url of our database's php file, PASS FORM TO URL
-        WWW www = new WWW("http://localhost/sqlconnect/reset.php", form);
-        yield return www; //tell Unity to yield running the rest of the game till it gets this info from the url
+        using (WWW wwwR = new WWW("http://localhost/sqlconnect/reset.php", formR))
+        {
+            yield return wwwR; //tell Unity to yield running the rest of the game till it gets this info from the url
 
-        //Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
-        if (www.text[0] == '0')
-        {
-            Debug.Log("Token successfully created:  " + www.text);
-            resetemailInput.SetActive(false);
-            resetTokenInput.SetActive(true);
-        }
-        else
-        {
-            Debug.Log("Password reset failed. Error Code: " + www.text);
-            username.color = Color.red;
-            username.text = "Invalid Username";
+            if (wwwR.error == null)
+            {
+
+                //Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
+                if (wwwR.text[0] == '0')
+                {
+                    Debug.Log("Token successfully created:  " + wwwR.text);
+                    resetemailInput.SetActive(false);
+                    resetTokenInput.SetActive(true);
+                }
+                else
+                {
+                    Debug.Log("Password reset failed. Error Code: " + wwwR.text);
+                    username.color = Color.red;
+                    username.text = "Invalid Username";
+                }
+            }
         }
     }
 }

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class updatePass : MonoBehaviour
@@ -25,36 +24,42 @@ public class updatePass : MonoBehaviour
     }
       public void CallUpdate()
     {
-        StartCoroutine(update());
+        StartCoroutine(updatepass());
     }
 
-    IEnumerator update()
+    IEnumerator updatepass()
     {
         //make Form to take the user's input 
-        WWWForm form = new WWWForm();
-        form.AddField("username", username.text);
-        form.AddField("password", password.text);
+        WWWForm formU = new WWWForm();
+        formU.AddField("username", username.text);
+        formU.AddField("password", password.text);
 
         //connect to url of our database's php file, PASS FORM TO URL
-        WWW www = new WWW("http://localhost/sqlconnect/update.php", form);
-        yield return www; //tell Unity to yield running the rest of the game till it gets this info from the url
+        using (WWW wwwU= new WWW("http://localhost/sqlconnect/update.php", formU))
+        {
+            yield return wwwU; //tell Unity to yield running the rest of the game till it gets this info from the url
 
-        //Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
-        if (www.text[0] == '0')
-        {
-            Debug.Log("Token Valid");
-            confirmPasswordUpdate.SetActive(true);
-            newPasswordInput.SetActive(false);
-        }
-        else
-        {
-            Debug.Log("update FAILED. Error Code: " + www.text);
-            password.color = Color.red;
+            if (wwwU.error == null)
+            {
+
+                //Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
+                if (wwwU.text[0] == '0')
+                {
+                    Debug.Log("Pass Updated Successfully.");
+                    confirmPasswordUpdate.SetActive(true);
+                    newPasswordInput.SetActive(false);
+                }
+                else
+                {
+                    Debug.Log("update FAILED. Error Code: " + wwwU.text);
+                    password.color = Color.red;
+                }
+            }
         }
     }
 
     public void VerifyInputL() //button won't be clickable until input field has at least 8 characters
     {
-        updateButton.interactable = (password.text.Length >= 8);
+        updateButton.interactable = (password.text.Length >= 10);
     }
 }

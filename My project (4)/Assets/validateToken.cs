@@ -23,28 +23,34 @@ public class validateToken : MonoBehaviour
     IEnumerator validate()
     {
         //make Form to take the user's input 
-        WWWForm form = new WWWForm();
-        form.AddField("username", username.text);
-        form.AddField("token", token.text);
+        WWWForm formV = new WWWForm();
+        formV.AddField("username", username.text);
+        formV.AddField("token", token.text);
 
         usernameHolder.text = username.text;
 
         //connect to url of our database's php file, PASS FORM TO URL
-        WWW www = new WWW("http://localhost/sqlconnect/validate.php", form);
-        yield return www; //tell Unity to yield running the rest of the game till it gets this info from the url
+        using (WWW wwwV = new WWW("http://localhost/sqlconnect/validate.php", formV))
+        {
+            yield return wwwV; //tell Unity to yield running the rest of the game till it gets this info from the url
 
-        //Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
-        if (www.text[0] == '0')
-        {
-            Debug.Log("Token Valid");
-            newPasswordInput.SetActive(true);
-            resetTokenInput.SetActive(false);
-        }
-        else
-        {
-            Debug.Log("Validation FAILED. Error Code: " + www.text);
-            token.color = Color.red;
-            token.text = "Invalid Token";
+            if (wwwV.error == null)
+            {
+
+                //Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
+                if (wwwV.text[0] == '0')
+                {
+                    Debug.Log("Token Valid");
+                    newPasswordInput.SetActive(true);
+                    resetTokenInput.SetActive(false);
+                }
+                else
+                {
+                    Debug.Log("Validation FAILED. Error Code: " + wwwV.text);
+                    token.color = Color.red;
+                    token.text = "Invalid Token";
+                }
+            }
         }
     }
 }

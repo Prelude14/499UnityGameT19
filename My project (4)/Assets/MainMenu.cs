@@ -124,7 +124,7 @@ public class MainMenu : MonoBehaviour
             //display user email in top right of screen
             userDisplay.text = "Welcome, " + DBManager.username;
             //set reset pass menu's email text to equal the username as well
-            userDisplayRESETmenu.text = DBManager.username;
+            //userDisplayRESETmenu.text = DBManager.username;
 
             //assign values from DBManager to all of the account info and stat page's text items
             userEmail.text = "" + DBManager.username;

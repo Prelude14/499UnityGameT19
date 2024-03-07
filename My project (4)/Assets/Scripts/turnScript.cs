@@ -52,22 +52,22 @@ public class turnScript : MonoBehaviour
 
         if (turnCount == 0)
         {
-            playArrows.active = true;
+            playArrows.SetActive(true);
 
         }
         else
         {
-            playArrows.active = false;
-            attackArrows.active = false;
+            playArrows.SetActive(false);
+            attackArrows.SetActive(false);
         }
 
         if (totalSummons == 1 && disable == false)
         {
-            attackArrows.active = true;
+            attackArrows.SetActive(true);
         }
         else
         {
-            attackArrows.active = false;
+            attackArrows.SetActive(false);
         }
 
     }
@@ -76,8 +76,8 @@ public class turnScript : MonoBehaviour
         isMyTurn = false;
         isTheirTurn = 1;
         turnCount++;
-        playArrows.active = false;
-        attackArrows.active = false;
+        playArrows.SetActive(false);
+        attackArrows.SetActive(false);
         disable = true;
     }
     public void endOpponentTurn()
