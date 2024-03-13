@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class updatePass : MonoBehaviour
 {
     public Text password;
+    public Text password2;
     public Text username;
     public GameObject newPasswordInput;
     public GameObject confirmPasswordUpdate;
@@ -14,7 +15,6 @@ public class updatePass : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -53,13 +53,17 @@ public class updatePass : MonoBehaviour
                 {
                     Debug.Log("update FAILED. Error Code: " + wwwU.text);
                     password.color = Color.red;
+                    password2.color = Color.red;
                 }
             }
         }
     }
 
-    public void VerifyInputL() //button won't be clickable until input field has at least 8 characters
-    {
-        updateButton.interactable = (password.text.Length >= 10);
-    }
+    //     public void VerifyInputsUpdate() //create button won't even be clickable until all three input fields have at least 10 characters in each, AND passwords match
+    // {
+    //     bool longEnoughInputs = true;//password.text.Length >= 10 && password2.text.Length >= 10; //true means all the inputs are long enough
+    //     bool matchingPasswords = string.Equals(password.text, password2.text); //true means the passes match, false means they are different.
+    //     updateButton.interactable = (longEnoughInputs && matchingPasswords);
+    // }
 }
+
