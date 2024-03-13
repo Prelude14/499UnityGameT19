@@ -49,7 +49,7 @@ public class resetPass : MonoBehaviour
                 {
                     Debug.Log("Token successfully created:  " + wwwR.text);
                     resetemailInput.SetActive(false);
-                    resetTokenInput.SetActive(true);
+                    // resetTokenInput.SetActive(true);
                 }
                 else
                 {
