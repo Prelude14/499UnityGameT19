@@ -14,6 +14,9 @@ public class updatePass : MonoBehaviour
     public GameObject newPasswordInput;
     public GameObject confirmPasswordUpdate;
     public Button updateButton;
+    public Text u_errorMessage;
+    public GameObject u_errorMessag_GO;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +59,18 @@ public class updatePass : MonoBehaviour
                     Debug.Log("update FAILED. Error Code: " + wwwU.text);
                     password.color = Color.red;
                     password2.color = Color.red;
+
+                   if (wwwU.text[0] == '5'){
+                        u_errorMessage.text = "ERROR: There is a problem with your account. Please try again later!";
+                    }
+                    else if (wwwU.text[0] == '9'){
+                        u_errorMessage.text = "ERROR: This password has already been updated.";
+                    }
+                    else if (wwwU.text[0] == '1'){
+                        u_errorMessage.text = "ERROR: Could not change your password at the moment. Please try again later!";
+                    }
+
+                    u_errorMessag_GO.SetActive(true);
                 }
             }
         }
