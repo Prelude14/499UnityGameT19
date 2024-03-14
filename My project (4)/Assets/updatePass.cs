@@ -16,6 +16,11 @@ public class updatePass : MonoBehaviour
     public Button updateButton;
     public Text u_errorMessage;
     public GameObject u_errorMessag_GO;
+    public GameObject cross;
+    public GameObject cross1;
+    public GameObject check;
+    public GameObject check1;
+
 
     // Start is called before the first frame update
     void Start()
@@ -81,6 +86,8 @@ public class updatePass : MonoBehaviour
         bool longEnoughInputs = true;//password.text.Length >= 10 && password2.text.Length >= 10; //true means all the inputs are long enough
         bool matchingPasswords = string.Equals(r_userpassField.text, r_userpass2Field.text); //true means the passes match, false means they are different.
         updateButton.interactable = (longEnoughInputs && matchingPasswords);
+        check.SetActive(longEnoughInputs && matchingPasswords); check1.SetActive(longEnoughInputs && matchingPasswords);
+        cross.SetActive(!(longEnoughInputs && matchingPasswords)); cross1.SetActive(!(longEnoughInputs && matchingPasswords));
     }
 }
 
