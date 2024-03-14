@@ -125,58 +125,64 @@ public class readInput : MonoBehaviour
         yield return wwwC; //tell Unity to yield running the rest of the game till it gets this info from the url
 
         //Error check what our PHP file returned
-        if (wwwC.text[0] == '0')
-        {
-            Debug.Log("User created and logged in successfully. Account Values: " + wwwC.text);
+        if (!string.IsNullOrEmpty(wwwC.text) && wwwC.text.Length > 0){
+            if (wwwC.text[0] == '0')
+            {
+                Debug.Log("User created and logged in successfully. Account Values: " + wwwC.text);
 
-            //Store user info in DBManager so Unity can display all the user info
-            DBManager.username = c_username_email.text;
-            //get datecreated from second index of output from login.php (decremented by tabs)
-            DBManager.datecreated = wwwC.text.Split('\t')[1];
-            //get gamesplayed int from forms output (which is decremented by tabs) index 2, and need to convert from string to int so we can change it later
-            DBManager.gamesplayed = int.Parse(wwwC.text.Split('\t')[2]);
-            DBManager.gameswon = int.Parse(wwwC.text.Split('\t')[3]); //same for others
-            DBManager.wlratio = int.Parse(wwwC.text.Split('\t')[4]); //win loss ratio might need to be caluclated (not stored in table?)
+                //Store user info in DBManager so Unity can display all the user info
+                DBManager.username = c_username_email.text;
+                //get datecreated from second index of output from login.php (decremented by tabs)
+                DBManager.datecreated = wwwC.text.Split('\t')[1];
+                //get gamesplayed int from forms output (which is decremented by tabs) index 2, and need to convert from string to int so we can change it later
+                DBManager.gamesplayed = int.Parse(wwwC.text.Split('\t')[2]);
+                DBManager.gameswon = int.Parse(wwwC.text.Split('\t')[3]); //same for others
+                DBManager.wlratio = int.Parse(wwwC.text.Split('\t')[4]); //win loss ratio might need to be caluclated (not stored in table?)
 
-            createsButton.SetActive(false);
-            confirmCreate.SetActive(true);
-        }
-        else
-        {
-            Debug.Log("User create FAILED. Error Code: " + wwwC.text);
+                createsButton.SetActive(false);
+                confirmCreate.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("User create FAILED. Error Code: " + wwwC.text);
 
-            // createFailed.SetActive(true);
-            // createsButton.SetActive(false);
+                // createFailed.SetActive(true);
+                // createsButton.SetActive(false);
 
-            if (wwwC.text[0] == '1'){
-                if (wwwC.text[1] == '0'){
-                    create_errorMessage.text = "ERROR: Your username must be greater than 10 characters.";
+                if (wwwC.text[0] == '1'){
+                    if (wwwC.text[1] == '0'){
+                        create_errorMessage.text = "ERROR: Your username must be greater than 10 characters.";
+                    }
+                    else {
+                        create_errorMessage.text = "ERROR: Connect Failed. Please try again in a few minutes!";
+                    }
+
                 }
-                else {
-                    create_errorMessage.text = "ERROR: Connect Failed. Please try again in a few minutes!";
+                else if (wwwC.text[0] == '2'){
+                    create_errorMessage.text = "ERROR: Your username contains invalid characters.";
                 }
-
+                else if (wwwC.text[0] == '3'){
+                    create_errorMessage.text = "ERROR: The inputted username is not a valid email address.";
+                }
+                else if (wwwC.text[0] == '8'){
+                    create_errorMessage.text = "ERROR: The passwords do not match.";
+                }
+                else if (wwwC.text[0] == '9'){
+                    create_errorMessage.text = "ERROR: Your password must be greater than 10 characters.";
+                }   
+                else if (wwwC.text[0] == '7'){
+                    create_errorMessage.text = "ERROR: This account is already in use.";
+                }
+                create_email_text.color = Color.red;
+                create_pass_text.color = Color.red;
+                create_pass2_text.color = Color.red;
+                create_errorMessag_GO.SetActive(true);
             }
-            else if (wwwC.text[0] == '2'){
-                 create_errorMessage.text = "ERROR: Your username contains invalid characters.";
-            }
-            else if (wwwC.text[0] == '3'){
-                create_errorMessage.text = "ERROR: The inputted username is not a valid email address.";
-            }
-            else if (wwwC.text[0] == '8'){
-                create_errorMessage.text = "ERROR: The passwords do not match.";
-            }
-            else if (wwwC.text[0] == '9'){
-                create_errorMessage.text = "ERROR: Your password must be greater than 10 characters.";
-            }   
-            else if (wwwC.text[0] == '7'){
-                create_errorMessage.text = "ERROR: This account is already in use.";
-            }
-
-            create_email_text.color = Color.red;
-            create_pass_text.color = Color.red;
-            create_pass2_text.color = Color.red;
-            create_errorMessag_GO.SetActive(true);
+        } else{
+                create_email_text.color = Color.red;
+                create_pass_text.color = Color.red;
+                create_pass2_text.color = Color.red;
+                create_errorMessag_GO.SetActive(true);
         }
         //for test purposes:
         createFinished = true;
