@@ -21,6 +21,7 @@ public class readInput : MonoBehaviour
     public Text pass;
     public TMPro.TextMeshProUGUI loginText;
 
+
     public void CallLogin()
     {
         StartCoroutine(Login());
@@ -92,6 +93,17 @@ public class readInput : MonoBehaviour
     public InputField c_user_pass;
     public InputField c_user_pass2;//confirm pass input field from create page
     private bool createFinished = false; //for test purposes
+    public Text create_email_text;
+    public Text create_pass_text;
+    public Text create_pass2_text;
+    public Text create_errorMessage;
+    public GameObject create_errorMessag_GO;
+    public GameObject cross;
+    public GameObject cross1;
+    public GameObject cross2;
+    public GameObject check;
+    public GameObject check1;
+    public GameObject check2;
 
     public Button createButton; //create page button
 
@@ -113,27 +125,64 @@ public class readInput : MonoBehaviour
         yield return wwwC; //tell Unity to yield running the rest of the game till it gets this info from the url
 
         //Error check what our PHP file returned
-        if (wwwC.text[0] == '0')
-        {
-            Debug.Log("User created and logged in successfully. Account Values: " + wwwC.text);
+        if (!string.IsNullOrEmpty(wwwC.text) && wwwC.text.Length > 0){
+            if (wwwC.text[0] == '0')
+            {
+                Debug.Log("User created and logged in successfully. Account Values: " + wwwC.text);
 
-            //Store user info in DBManager so Unity can display all the user info
-            DBManager.username = c_username_email.text;
-            //get datecreated from second index of output from login.php (decremented by tabs)
-            DBManager.datecreated = wwwC.text.Split('\t')[1];
-            //get gamesplayed int from forms output (which is decremented by tabs) index 2, and need to convert from string to int so we can change it later
-            DBManager.gamesplayed = int.Parse(wwwC.text.Split('\t')[2]);
-            DBManager.gameswon = int.Parse(wwwC.text.Split('\t')[3]); //same for others
-            DBManager.wlratio = int.Parse(wwwC.text.Split('\t')[4]); //win loss ratio might need to be caluclated (not stored in table?)
+                //Store user info in DBManager so Unity can display all the user info
+                DBManager.username = c_username_email.text;
+                //get datecreated from second index of output from login.php (decremented by tabs)
+                DBManager.datecreated = wwwC.text.Split('\t')[1];
+                //get gamesplayed int from forms output (which is decremented by tabs) index 2, and need to convert from string to int so we can change it later
+                DBManager.gamesplayed = int.Parse(wwwC.text.Split('\t')[2]);
+                DBManager.gameswon = int.Parse(wwwC.text.Split('\t')[3]); //same for others
+                DBManager.wlratio = int.Parse(wwwC.text.Split('\t')[4]); //win loss ratio might need to be caluclated (not stored in table?)
 
-            createsButton.SetActive(false);
-            confirmCreate.SetActive(true);
-        }
-        else
-        {
-            Debug.Log("User create FAILED. Error Code: " + wwwC.text);
-            createFailed.SetActive(true);
-            createsButton.SetActive(false);
+                createsButton.SetActive(false);
+                confirmCreate.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("User create FAILED. Error Code: " + wwwC.text);
+
+                // createFailed.SetActive(true);
+                // createsButton.SetActive(false);
+
+                if (wwwC.text[0] == '1'){
+                    if (wwwC.text[1] == '0'){
+                        create_errorMessage.text = "ERROR: Your username must be greater than 10 characters.";
+                    }
+                    else {
+                        create_errorMessage.text = "ERROR: Connect Failed. Please try again in a few minutes!";
+                    }
+
+                }
+                else if (wwwC.text[0] == '2'){
+                    create_errorMessage.text = "ERROR: Your username contains invalid characters.";
+                }
+                else if (wwwC.text[0] == '3'){
+                    create_errorMessage.text = "ERROR: The inputted username is not a valid email address.";
+                }
+                else if (wwwC.text[0] == '8'){
+                    create_errorMessage.text = "ERROR: The passwords do not match.";
+                }
+                else if (wwwC.text[0] == '9'){
+                    create_errorMessage.text = "ERROR: Your password must be greater than 10 characters.";
+                }   
+                else if (wwwC.text[0] == '7'){
+                    create_errorMessage.text = "ERROR: This account is already in use.";
+                }
+                create_email_text.color = Color.red;
+                create_pass_text.color = Color.red;
+                create_pass2_text.color = Color.red;
+                create_errorMessag_GO.SetActive(true);
+            }
+        } else{
+                create_email_text.color = Color.red;
+                create_pass_text.color = Color.red;
+                create_pass2_text.color = Color.red;
+                create_errorMessag_GO.SetActive(true);
         }
         //for test purposes:
         createFinished = true;
@@ -143,6 +192,9 @@ public class readInput : MonoBehaviour
         bool longEnoughInputs = c_username_email.text.Length >= 10 && c_user_pass.text.Length >= 10 && c_user_pass2.text.Length >= 10; //true means all the inputs are long enough
         bool matchingPasswords = string.Equals(c_user_pass.text, c_user_pass2.text); //true means the passes match, false means they are different.
         createButton.interactable = (longEnoughInputs && matchingPasswords);
+        check1.SetActive(longEnoughInputs && matchingPasswords); check2.SetActive(longEnoughInputs && matchingPasswords);
+        cross1.SetActive(!(longEnoughInputs && matchingPasswords)); cross2.SetActive(!(longEnoughInputs && matchingPasswords));
+        check.SetActive(c_username_email.text.Length >= 10); cross.SetActive(!(c_username_email.text.Length >= 10));
     }
     // Method to check if the create coroutine has completed FOR TESTING
     public bool IsCreateCoroutineCompleted()
