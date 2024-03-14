@@ -98,6 +98,12 @@ public class readInput : MonoBehaviour
     public Text create_pass2_text;
     public Text create_errorMessage;
     public GameObject create_errorMessag_GO;
+    public GameObject cross;
+    public GameObject cross1;
+    public GameObject cross2;
+    public GameObject check;
+    public GameObject check1;
+    public GameObject check2;
 
     public Button createButton; //create page button
 
@@ -180,6 +186,9 @@ public class readInput : MonoBehaviour
         bool longEnoughInputs = c_username_email.text.Length >= 10 && c_user_pass.text.Length >= 10 && c_user_pass2.text.Length >= 10; //true means all the inputs are long enough
         bool matchingPasswords = string.Equals(c_user_pass.text, c_user_pass2.text); //true means the passes match, false means they are different.
         createButton.interactable = (longEnoughInputs && matchingPasswords);
+        check1.SetActive(longEnoughInputs && matchingPasswords); check2.SetActive(longEnoughInputs && matchingPasswords);
+        cross1.SetActive(!(longEnoughInputs && matchingPasswords)); cross2.SetActive(!(longEnoughInputs && matchingPasswords));
+        check.SetActive(c_username_email.text.Length >= 10); cross.SetActive(!(c_username_email.text.Length >= 10));
     }
     // Method to check if the create coroutine has completed FOR TESTING
     public bool IsCreateCoroutineCompleted()
