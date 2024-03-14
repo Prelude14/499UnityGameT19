@@ -21,6 +21,7 @@ public class readInput : MonoBehaviour
     public Text pass;
     public TMPro.TextMeshProUGUI loginText;
 
+
     public void CallLogin()
     {
         StartCoroutine(Login());
@@ -92,6 +93,11 @@ public class readInput : MonoBehaviour
     public InputField c_user_pass;
     public InputField c_user_pass2;//confirm pass input field from create page
     private bool createFinished = false; //for test purposes
+    public Text create_email_text;
+    public Text create_pass_text;
+    public Text create_pass2_text;
+    public Text create_errorMessage;
+    public GameObject create_errorMessag_GO;
 
     public Button createButton; //create page button
 
@@ -132,8 +138,39 @@ public class readInput : MonoBehaviour
         else
         {
             Debug.Log("User create FAILED. Error Code: " + wwwC.text);
-            createFailed.SetActive(true);
-            createsButton.SetActive(false);
+
+            // createFailed.SetActive(true);
+            // createsButton.SetActive(false);
+
+            if (wwwC.text[0] == '1'){
+                if (wwwC.text[1] == '0'){
+                    create_errorMessage.text = "ERROR: Your username must be greater than 10 characters.";
+                }
+                else {
+                    create_errorMessage.text = "ERROR: Connect Failed. Please try again in a few minutes!";
+                }
+
+            }
+            else if (wwwC.text[0] == '2'){
+                 create_errorMessage.text = "ERROR: Your username contains invalid characters.";
+            }
+            else if (wwwC.text[0] == '3'){
+                create_errorMessage.text = "ERROR: The inputted username is not a valid email address.";
+            }
+            else if (wwwC.text[0] == '8'){
+                create_errorMessage.text = "ERROR: The passwords do not match.";
+            }
+            else if (wwwC.text[0] == '9'){
+                create_errorMessage.text = "ERROR: Your password must be greater than 10 characters.";
+            }   
+            else if (wwwC.text[0] == '7'){
+                create_errorMessage.text = "ERROR: This account is already in use.";
+            }
+
+            create_email_text.color = Color.red;
+            create_pass_text.color = Color.red;
+            create_pass2_text.color = Color.red;
+            create_errorMessag_GO.SetActive(true);
         }
         //for test purposes:
         createFinished = true;
