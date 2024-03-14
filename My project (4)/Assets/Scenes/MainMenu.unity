@@ -9326,7 +9326,7 @@ GameObject:
   - component: {fileID: 621594003}
   - component: {fileID: 621594002}
   m_Layer: 5
-  m_Name: c_userPassInputFieldLegacy
+  m_Name: r_userPassInputFieldLegacy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9361,7 +9361,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 621594000}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: effcf609637f6a04b8a851e07483c2ef, type: 3}
   m_Name: 
@@ -9426,7 +9426,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1365834868}
+        m_TargetAssemblyTypeName: updatePass, Assembly-CSharp
+        m_MethodName: VerifyInputsUpdate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
@@ -19355,6 +19367,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be73a0672257f4d798c22715aafbd417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  r_userpassField: {fileID: 621594003}
+  r_userpass2Field: {fileID: 2119835282}
   password: {fileID: 221360987}
   password2: {fileID: 677479921}
   username: {fileID: 322180640}
@@ -30108,7 +30122,7 @@ GameObject:
   - component: {fileID: 2119835282}
   - component: {fileID: 2119835281}
   m_Layer: 5
-  m_Name: c_userPass2InputFieldLegacy
+  m_Name: r_userPass2InputFieldLegacy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30143,7 +30157,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2119835279}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: effcf609637f6a04b8a851e07483c2ef, type: 3}
   m_Name: 
@@ -30208,7 +30222,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1365834868}
+        m_TargetAssemblyTypeName: updatePass, Assembly-CSharp
+        m_MethodName: VerifyInputsUpdate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}

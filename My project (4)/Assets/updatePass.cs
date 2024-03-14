@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class updatePass : MonoBehaviour
 {
+    public InputField r_userpassField;
+    public InputField r_userpass2Field;
     public Text password;
     public Text password2;
     public Text username;
@@ -59,11 +61,11 @@ public class updatePass : MonoBehaviour
         }
     }
 
-    //     public void VerifyInputsUpdate() //create button won't even be clickable until all three input fields have at least 10 characters in each, AND passwords match
-    // {
-    //     bool longEnoughInputs = true;//password.text.Length >= 10 && password2.text.Length >= 10; //true means all the inputs are long enough
-    //     bool matchingPasswords = string.Equals(password.text, password2.text); //true means the passes match, false means they are different.
-    //     updateButton.interactable = (longEnoughInputs && matchingPasswords);
-    // }
+        public void VerifyInputsUpdate() //create button won't even be clickable until all three input fields have at least 10 characters in each, AND passwords match
+    {
+        bool longEnoughInputs = true;//password.text.Length >= 10 && password2.text.Length >= 10; //true means all the inputs are long enough
+        bool matchingPasswords = string.Equals(r_userpassField.text, r_userpass2Field.text); //true means the passes match, false means they are different.
+        updateButton.interactable = (longEnoughInputs && matchingPasswords);
+    }
 }
 
