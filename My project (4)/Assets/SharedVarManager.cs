@@ -23,6 +23,8 @@ public class SharedVarManager : NetworkBehaviour
     public static int deckSize = 40; //two decks combined should always equal 40 cards
     public List<Card1> combinedDeck = new List<Card1>(); //list of card1 game objects for combined deck
 
+    public List<Card1> temp_combinedDeck = new List<Card1>(); //list of card1 game objects for server's temporary combined deck
+
     //public CardDatabase cardDatabase; // Add this in order to initialize the card deck lists script for use later
 
 
@@ -48,7 +50,7 @@ public class SharedVarManager : NetworkBehaviour
             if (!secondCheck.Equals("Error 1: Not enough players/strings.") && !secondCheck.Equals("Error 2: Too many players/strings."))
             {
                 serverCreateDeck(secondCheck); //build deck
-                RpcStartGame(combo, validDeckShuffled, combinedDeck); //send all info inside rpc to all clients
+                RpcStartGame(combo, validDeckShuffled, temp_combinedDeck); //send all info inside rpc to all clients
                 //after serverCreateDeck is run, validDeckShuffled becomes TRUE inside the shuffle() function, so the draw cmd can deal cards out
 
             }
@@ -180,72 +182,72 @@ public class SharedVarManager : NetworkBehaviour
         else if (checkCombo.Equals("BLACKBLACK"))       //IF both players chose BLACK deck, combinedDeck becomes 2 black decks
         {
             //deal and shuffle 2 black decks together to be dealt to clients Done inside the functions below
-            populateCombinedDeck(11);
+            populateTempCombinedDeck(11);
 
-            shuffleCombinedDeck();
+            shuffleTempCombinedDeck();
         }
         else if (checkCombo.Equals("BLACKRED"))       //IF players chose 1 BLACK and 1 Red deck, combinedDeck becomes blackred deck
         {
             //deal and shuffle 1 black and 1 red deck together to be dealt to clients Done inside the functions below
-            populateCombinedDeck(12);
+            populateTempCombinedDeck(12);
 
-            shuffleCombinedDeck();
+            shuffleTempCombinedDeck();
         }
         else if (checkCombo.Equals("BLACKWHITE"))       //IF players chose 1 BLACK and 1 White deck, combinedDeck becomes blackwhite deck
         {
             //deal and shuffle 1 black and 1 white deck together to be dealt to clients Done inside the functions below
-            populateCombinedDeck(13);
+            populateTempCombinedDeck(13);
 
-            shuffleCombinedDeck();
+            shuffleTempCombinedDeck();
         }
         else if (checkCombo.Equals("BLACKBLUE"))       //IF players chose 1 BLACK and 1 Blue deck, combinedDeck becomes blackblue deck
         {
             //deal and shuffle 1 black and 1 blue deck together to be dealt to clients Done inside the functions below
-            populateCombinedDeck(14);
+            populateTempCombinedDeck(14);
 
-            shuffleCombinedDeck();
+            shuffleTempCombinedDeck();
         } //============================ RED COMBOS =====================================================================            ***RED == 2
         else if (checkCombo.Equals("REDRED"))       //IF both players chose RED deck, combinedDeck becomes 2 red decks
         {
             //deal and shuffle 2 red decks together to be dealt to clients Done inside the functions below
-            populateCombinedDeck(22);
+            populateTempCombinedDeck(22);
 
-            shuffleCombinedDeck();
+            shuffleTempCombinedDeck();
         }
         else if (checkCombo.Equals("REDWHITE"))       //IF players chose 1 Red and 1 White deck, combinedDeck becomes redwhite deck
         {
             //deal and shuffle 1 red and 1 white deck together to be dealt to clients Done inside the functions below
-            populateCombinedDeck(23);
+            populateTempCombinedDeck(23);
 
-            shuffleCombinedDeck();
+            shuffleTempCombinedDeck();
         }
         else if (checkCombo.Equals("REDBLUE"))       //IF players chose 1 BLACK and 1 White deck, combinedDeck becomes redblue deck
         {
             //deal and shuffle 1 red and 1 blue deck together to be dealt to clients Done inside the functions below
-            populateCombinedDeck(24);
+            populateTempCombinedDeck(24);
 
-            shuffleCombinedDeck();
+            shuffleTempCombinedDeck();
         }//============================ WHITE COMBOS =====================================================================          ***WHITE == 3
         else if (checkCombo.Equals("WHITEWHITE"))       //IF both players chose White deck, combinedDeck becomes 2 white decks
         {
             //deal and shuffle 2 white decks together to be dealt to clients Done inside the functions below
-            populateCombinedDeck(33);
+            populateTempCombinedDeck(33);
 
-            shuffleCombinedDeck();
+            shuffleTempCombinedDeck();
         }
         else if (checkCombo.Equals("WHITEBLUE"))       //IF players chose 1 White deck anbd 1 Blue deck, combinedDeck becomes whiteblue deck
         {
             //deal and shuffle 1 white and 1 blue deck together to be dealt to clients Done inside the functions below
-            populateCombinedDeck(34);
+            populateTempCombinedDeck(34);
 
-            shuffleCombinedDeck();
+            shuffleTempCombinedDeck();
         }//============================ BLUE COMBOS =====================================================================           ***BLUE == 4
         else if (checkCombo.Equals("BLUEBLUE"))       //IF both players chose Blue deck, combinedDeck becomes 2 blue decks
         {
             //deal and shuffle 2 blue decks together to be dealt to clients Done inside the functions below
-            populateCombinedDeck(44);
+            populateTempCombinedDeck(44);
 
-            shuffleCombinedDeck();
+            shuffleTempCombinedDeck();
         }
         else
         {
@@ -385,7 +387,7 @@ public class SharedVarManager : NetworkBehaviour
 
     //add 40 cards from the cardDatabase using 2 neutral decks plus two colours (which gets selected by player) -- ONLY SERVER CAN DO THIS
     [Server]
-    void populateCombinedDeck(int selectedcombo)
+    void populateTempCombinedDeck(int selectedcombo)
     {
         //every deck gets 16 neutral cards added to it first (there is only 8 cards per deck regularly, but this is the combination of 2)
         populateNeutralList();
@@ -399,7 +401,7 @@ public class SharedVarManager : NetworkBehaviour
                 //Debug.Log("offset = " + offset + " and i = " + i + " and k = " + k); //should all be zero to start
                 //combinedDeck[k + offset]
                 //Debug.Log("combinedDeck equals = " + combinedDeck[(k + offset)]);
-                combinedDeck.Add(neutralCardList[k]);
+                temp_combinedDeck.Add(neutralCardList[k]);
             } //ADD 8 Neutral cards first iteration, then 2nd 8 cards in the 2nd iteration
 
         }//16 neutral cards should now be in 1st 16 slots of deck list
@@ -417,7 +419,7 @@ public class SharedVarManager : NetworkBehaviour
                 for (int k = 0; k < 12; k++)                //ADD first 12 BLACK cards starting at index 16
                 {
                     //int offset = 1 * i;
-                    combinedDeck.Add(blackCardList[k]);
+                    temp_combinedDeck.Add(blackCardList[k]);
                     //j++;
                 }
                 //j will hit index 16+12 = 28 after first iteration , then 28+12 =40 for second
@@ -430,13 +432,13 @@ public class SharedVarManager : NetworkBehaviour
             populateBlackList();
             for (int i = 0; i < 12; i++)                //ADD 12 BLACK cards after first 16 neutral
             {
-                combinedDeck.Add(blackCardList[i]);
+                temp_combinedDeck.Add(blackCardList[i]);
                 //j++; //j should go from 16-28
             }
             populateRedList();
             for (int i = 0; i < 12; i++)                //ADD 12 RED cards after 12 black
             {
-                combinedDeck.Add(redCardList[i]);
+                temp_combinedDeck.Add(redCardList[i]);
                 //j++; //j should go from 28-40
             }
             //j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
@@ -447,13 +449,13 @@ public class SharedVarManager : NetworkBehaviour
             Debug.Log("Attempting to add black and white cards...");
             for (int i = 0; i < 12; i++)                //ADD 12 BLACK cards after first 16 neutral
             {
-                combinedDeck.Add(blackCardList[i]);
+                temp_combinedDeck.Add(blackCardList[i]);
                 //j++; //j should go from 16-28
             }
             populateWhiteList();
             for (int i = 0; i < 12; i++)                //ADD 12 WHITE cards after 12 black
             {
-                combinedDeck.Add(whiteCardList[i]);
+                temp_combinedDeck.Add(whiteCardList[i]);
                 //j++; //j should go from 28-40
             }
             //j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
@@ -464,13 +466,13 @@ public class SharedVarManager : NetworkBehaviour
             Debug.Log("Attempting to add black and blue cards...");
             for (int i = 0; i < 12; i++)                //ADD 12 BLACK cards after first 16 neutral
             {
-                combinedDeck.Add(blackCardList[i]);
+                temp_combinedDeck.Add(blackCardList[i]);
                 //j++; //j should go from 16-28
             }
             populateBlueList();
             for (int i = 0; i < 12; i++)                //ADD 12 BLUE cards after 12 black
             {
-                combinedDeck.Add(blueCardList[i]);
+                temp_combinedDeck.Add(blueCardList[i]);
                 //j++; //j should go from 28-40
             }
             //j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
@@ -485,7 +487,7 @@ public class SharedVarManager : NetworkBehaviour
                 for (int k = 0; k < 12; k++)                //ADD first 12 RED cards starting at index 16
                 {
                     //int offset = 1 * i;
-                    combinedDeck.Add(redCardList[k]);
+                    temp_combinedDeck.Add(redCardList[k]);
                     //j++;
                 }
                 //j will hit index 16+12 = 28 after first iteration , then 28+12 =40 for second
@@ -498,13 +500,13 @@ public class SharedVarManager : NetworkBehaviour
             Debug.Log("Attempting to add red and white cards...");
             for (int i = 0; i < 12; i++)                //ADD 12 RED cards after first 16 neutral
             {
-                combinedDeck.Add(redCardList[i]);
+                temp_combinedDeck.Add(redCardList[i]);
                 //j++; //j should go from 16-28
             }
             populateWhiteList();
             for (int i = 0; i < 12; i++)                //ADD 12 WHITE cards after 12 red
             {
-                combinedDeck.Add(whiteCardList[i]);
+                temp_combinedDeck.Add(whiteCardList[i]);
                 //j++; //j should go from 28-40
             }
             //j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
@@ -515,13 +517,13 @@ public class SharedVarManager : NetworkBehaviour
             Debug.Log("Attempting to add red and blue cards...");
             for (int i = 0; i < 12; i++)                //ADD 12 RED cards after first 16 neutral
             {
-                combinedDeck.Add(redCardList[i]);
+                temp_combinedDeck.Add(redCardList[i]);
                 //j++; //j should go from 16-28
             }
             populateBlueList();
             for (int i = 0; i < 12; i++)                //ADD 12 BLUE cards after 12 red
             {
-                combinedDeck.Add(blueCardList[i]);
+                temp_combinedDeck.Add(blueCardList[i]);
                 //j++; //j should go from 28-40
             }
             //j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
@@ -536,7 +538,7 @@ public class SharedVarManager : NetworkBehaviour
                 for (int k = 0; k < 12; k++)                //ADD first 12 WHITE cards starting at index 16
                 {
                     //int offset = 1 * i;
-                    combinedDeck.Add(whiteCardList[k]);
+                    temp_combinedDeck.Add(whiteCardList[k]);
                     //j++;
                 }
                 //j will hit index 16+12 = 28 after first iteration , then 28+12 =40 for second
@@ -549,13 +551,13 @@ public class SharedVarManager : NetworkBehaviour
             Debug.Log("Attempting to add white and blue cards...");
             for (int i = 0; i < 12; i++)                //ADD 12 WHITE cards after first 16 neutral
             {
-                combinedDeck.Add(whiteCardList[i]);
+                temp_combinedDeck.Add(whiteCardList[i]);
                 //j++; //j should go from 16-28
             }
             populateBlueList();
             for (int i = 0; i < 12; i++)                //ADD 12 BLUE cards after 12 white
             {
-                combinedDeck.Add(blueCardList[i]);
+                temp_combinedDeck.Add(blueCardList[i]);
                 //j++; //j should go from 28-40
             }
             //j = 16; //reset j to 16 after loop is done, to make sure other decks don't get indexed incorrectly in future
@@ -570,7 +572,7 @@ public class SharedVarManager : NetworkBehaviour
                 for (int k = 0; k < 12; k++)                //ADD first 12 BLUE cards starting at index 16
                 {
                     //int offset = 1 * i; //second round will add indexes 28-40
-                    combinedDeck.Add(whiteCardList[k]);
+                    temp_combinedDeck.Add(whiteCardList[k]);
                     //j++;
                 }
                 //j will hit index 16+12 = 28 after first iteration , then 28+12 =40 for second
@@ -581,14 +583,14 @@ public class SharedVarManager : NetworkBehaviour
     }//end populateCombinedDeck
 
     [Server]
-    public void shuffleCombinedDeck() //takes whatever deck is, and shuffles it using random indexing
+    public void shuffleTempCombinedDeck() //takes whatever deck is, and shuffles it using random indexing
     {
         for (int i = 0; i < deckSize; i++)
         {
-            container.Add(combinedDeck[i]); //always store current combinedDeck value in first slot of container's list
+            container.Add(temp_combinedDeck[i]); //always store current combinedDeck value in first slot of container's list
             int randomIndex = Random.Range(i, deckSize);
-            combinedDeck[i] = combinedDeck[randomIndex];
-            combinedDeck[randomIndex] = container[0];
+            temp_combinedDeck[i] = temp_combinedDeck[randomIndex];
+            temp_combinedDeck[randomIndex] = container[0];
             container.RemoveAt(0); //delete container's first value after use, so next card is shuffled properly
         }
         //now that deck is shuffled, change SYNC VAR bool variable to reflect this
@@ -602,7 +604,7 @@ public class SharedVarManager : NetworkBehaviour
     [Server]
     public string getCombinedDeckTop()
     {
-        return combinedDeck[0].ToString();
+        return temp_combinedDeck[0].ToString();
     }
 
 
