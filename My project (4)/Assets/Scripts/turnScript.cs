@@ -13,7 +13,9 @@ public class turnScript : MonoBehaviour
     public static int totalSummons;
 
     public int maxMana;
+    public static int actionPoints;
 
+    public int actionPointsTotal;
     public static int currentMana;
     public Text manaText;
 
@@ -22,6 +24,7 @@ public class turnScript : MonoBehaviour
     public static int turnCount = 0;
     public GameObject playArrows;
     public GameObject attackArrows;
+    public Text actionText;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +38,8 @@ public class turnScript : MonoBehaviour
         currentMana = 1;
         turnStart = false;
         disable = false;
+        actionPointsTotal = 1;
+        actionPoints = 1;
     }
 
     // Update is called once per frame
@@ -49,25 +54,25 @@ public class turnScript : MonoBehaviour
             turnText.text = "Opponent's turn";
         }
         manaText.text = currentMana + "/" + maxMana;
-
+        actionText.text = actionPoints + "/" + actionPointsTotal;
         if (turnCount == 0)
         {
-            playArrows.SetActive(true);
+            playArrows.active = true;
 
         }
         else
         {
-            playArrows.SetActive(false);
-            attackArrows.SetActive(false);
+            playArrows.active = false;
+            attackArrows.active = false;
         }
 
         if (totalSummons == 1 && disable == false)
         {
-            attackArrows.SetActive(true);
+            attackArrows.active = true;
         }
         else
         {
-            attackArrows.SetActive(false);
+            attackArrows.active = false;
         }
 
     }
@@ -76,9 +81,10 @@ public class turnScript : MonoBehaviour
         isMyTurn = false;
         isTheirTurn = 1;
         turnCount++;
-        playArrows.SetActive(false);
-        attackArrows.SetActive(false);
+        playArrows.active = false;
+        attackArrows.active = false;
         disable = true;
+
     }
     public void endOpponentTurn()
     {
@@ -92,7 +98,17 @@ public class turnScript : MonoBehaviour
         {
             disable = false;
         }
+        actionUpdate();
+        playerHealth.turnStartHealth = playerHealth.HPStatic;
     }
 
+    public void actionUpdate()
+    {
+        if (turnCount % 2 != 0 && turnCount <= 10)
+        {
+            actionPointsTotal++; //adds total action points
+        }
+        actionPoints = actionPointsTotal;
+    }
 
 }

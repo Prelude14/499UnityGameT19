@@ -10,19 +10,13 @@ public class dbDisplay : MonoBehaviour
     public int displayId;
     public static bool attackDragging;
     public int colour; //for each card's colour
-    public static int staticColour;
     public int id;
-    public static int staticID;
     public int hp;
-    public static int staticHP;
     public int pow;
-    public static int staticPow;
     public int cost;
     public static int staticCost;
     public string cardName;
-    public static string staticName;
     public string txt;
-    public static string staticTxt;
 
     public Text nameText;
     public Text descriptionText;
@@ -49,6 +43,12 @@ public class dbDisplay : MonoBehaviour
     public bool cantAttack;
     public static bool hasAttacked;
 
+    public GameObject Canvas;
+    public GameObject ZoomCard;
+
+    private GameObject zoomCard;
+    private Sprite zoomSprite;
+
     public bool targeting;
     public bool targetingEnemy;
     public static bool staticTargeting;
@@ -65,14 +65,8 @@ public class dbDisplay : MonoBehaviour
     public GameObject unplayableBorder;
     public static GameObject currentLoc;
     public static GameObject pz;
-
-    //testing zoom in dbdisplay
-    public GameObject Canvas;
-    public GameObject ZoomCard;
-
-    private GameObject zoomCard;
-    private Sprite zoomSprite;
-
+    public static int staticID;
+    public static int staticCardColor;
     // Start is called before the first frame update
     void Start()
     {
@@ -98,11 +92,42 @@ public class dbDisplay : MonoBehaviour
         playableBorder.SetActive(false);
         unplayableBorder.SetActive(false);
     }
+     public void Awake()
+    {
+        Canvas = GameObject.Find("Canvas");
+    }
+
+    public void OnHoverEnter()
+    {
+        // Add logic for zooming in on hover enter
+        Debug.Log("Zooming on: " + cardName);
+        zoomCard = Instantiate(ZoomCard, new Vector2(Input.mousePosition.x, Input.mousePosition.y + 250), Quaternion.identity);
+        zoomCard.transform.SetParent(Canvas.transform, true);
+        RectTransform rect = zoomCard.GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(200, 300);
+        zoomCard.GetComponent<contentZoom>().cardName = cardName;
+        zoomCard.GetComponent<contentZoom>().txt = txt;
+        zoomCard.GetComponent<contentZoom>().cost = cost;
+        zoomCard.GetComponent<contentZoom>().pow = pow;
+        zoomCard.GetComponent<contentZoom>().hp = hp;
+
+
+
+    }
+
+    public void OnHoverExit()
+    {
+        // Add logic for zooming out on hover exit
+        Destroy(zoomCard);
+    }
 
     // Update is called once per frame
     void Update()
     {
-
+        staticCardColor = colour;
+        staticID = id;
+        staticAttackBorder = false;
+        staticCost = cost;
         staticSummoned = isSummoned;
         // Debug.Log(staticSummoned + " " + cardName);
         displayCard();
@@ -122,7 +147,7 @@ public class dbDisplay : MonoBehaviour
         //summoning logic and cost logic
 
         // Debug.Log(cardName + " Is summoned false");
-        if (this.cost <= turnScript.currentMana && isSummoned == false)
+        if (this.cost <= turnScript.currentMana && isSummoned == false && turnScript.actionPoints >= 1)
         {
             canBeSummoned = true;
             // Debug.Log(cardName + " Is now playable");
@@ -166,13 +191,14 @@ public class dbDisplay : MonoBehaviour
             GetComponent<dragScript>().enabled = false;
             turnScript.currentMana = turnScript.currentMana - this.cost;
             // Debug.Log("Mana left: " + turnScript.currentMana);
+            turnScript.actionPoints--;
 
         }
 
         currentlyDraggable = dragScript.isDraggable;
 
         //decide attackers
-        if (turnScript.isMyTurn == true && isSummoned == true && hasAttacked == false && currentZone == playZone)
+        if (turnScript.isMyTurn == true && isSummoned == true && hasAttacked == false && currentZone == playZone && turnScript.actionPoints >= 1)
         {
             cantAttack = false;
             // Debug.Log(cardName + " ready to attack");
@@ -180,7 +206,7 @@ public class dbDisplay : MonoBehaviour
             playableBorder.SetActive(false);
         }
 
-        if (turnScript.isMyTurn == true && cantAttack == false)
+        if (turnScript.isMyTurn == true && cantAttack == false && turnScript.actionPoints >= 1)
         {
             canAttack = true;
 
@@ -219,15 +245,10 @@ public class dbDisplay : MonoBehaviour
         }
 
     }
-    public void Awake()
-    {
-        Canvas = GameObject.Find("Canvas");
-    }
-
 
     private void Attack()
     {
-        if (canAttack == true && isSummoned)
+        if (canAttack == true && isSummoned && turnScript.actionPoints >= 1)
         {
 
             if (Target != null)
@@ -241,7 +262,7 @@ public class dbDisplay : MonoBehaviour
                     hasAttacked = true;
                     staticAttackBorder = false;
                     attackBorder = false;
-
+                    turnScript.actionPoints--;
                 }
 
                 if (Target.name == "cardInHand(Clone)")
@@ -289,7 +310,7 @@ public class dbDisplay : MonoBehaviour
     }
     private void displayCard()
     {
-
+        this.id = displayList[0].id;//update ids to match real id of card
         this.cardName = displayList[0].cardName;
         this.colour = displayList[0].colour;//new
         this.pow = displayList[0].pow;
@@ -302,9 +323,6 @@ public class dbDisplay : MonoBehaviour
         costText.text = " " + this.cost.ToString();
         powText.text = " " + this.pow.ToString();
         hpText.text = " " + this.hp.ToString();
-
-
-
 
         //trying to get the border of the card drwan to change colour to match the card's colour int
         Color border = renderCardColour(colour);//get what colour the border should be
@@ -352,29 +370,6 @@ public class dbDisplay : MonoBehaviour
         }
     }
 
-    public void OnHoverEnter()
-    {
-        // Add logic for zooming in on hover enter
-        Debug.Log("Zooming on: " + cardName);
-        zoomCard = Instantiate(ZoomCard, new Vector2(Input.mousePosition.x, Input.mousePosition.y + 250), Quaternion.identity);
-        zoomCard.transform.SetParent(Canvas.transform, true);
-        RectTransform rect = zoomCard.GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(200, 300);
-        zoomCard.GetComponent<contentZoom>().cardName = cardName;
-        zoomCard.GetComponent<contentZoom>().txt = txt;
-        zoomCard.GetComponent<contentZoom>().cost = cost;
-        zoomCard.GetComponent<contentZoom>().pow = pow;
-        zoomCard.GetComponent<contentZoom>().hp = hp;
-
-
-
-    }
-
-    public void OnHoverExit()
-    {
-        // Add logic for zooming out on hover exit
-        Destroy(zoomCard);
-    }
 
 
 }

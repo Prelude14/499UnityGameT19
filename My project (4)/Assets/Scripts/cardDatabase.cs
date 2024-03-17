@@ -71,17 +71,17 @@ public class cardDatabase : MonoBehaviour
       blackCardList.Add(new Card1(1, 2, "Eye for an Eye", 3, 1, 2, "Discard a random card from your hand, but destroy a target creature as a trade."));
       blackCardList.Add(new Card1(1, 3, "Eye for an Eye", 3, 1, 2, "Discard a random card from your hand, but destroy a target creature as a trade."));
 
-      blackCardList.Add(new Card1(1, 4, "Necromancer's Summon", 7, 5, 5, "If this card gets discarded, it gets summoned to the play area instead."));
-      blackCardList.Add(new Card1(1, 5, "Necromancer's Summon", 7, 5, 5, "If this card gets discarded, it gets summoned to the play area instead."));
+      blackCardList.Add(new Card1(1, 4, "Necromancer's Summon", 7, 5, 5, "Deal 3 damage to self."));
+      blackCardList.Add(new Card1(1, 5, "Necromancer's Summon", 7, 5, 5, "Deal 3 damage to self."));
 
       blackCardList.Add(new Card1(1, 6, "Russian Roulette", 6, 3, 4, "Deal 1 damage for every card you've discarded so far to a single random enemy."));
       blackCardList.Add(new Card1(1, 7, "Russian Roulette", 6, 3, 4, "Deal 1 damage for every card you've discarded so far to a single random enemy."));
 
-      blackCardList.Add(new Card1(1, 8, "Sacrificial Lamb", 3, 1, 1, "Discard a random card, and then draw a new card for each card you have discarded so far."));
-      blackCardList.Add(new Card1(1, 9, "Sacrificial Lamb", 3, 1, 1, "Discard a random card, and then draw a new card for each card you have discarded so far."));
+      blackCardList.Add(new Card1(1, 8, "Sacrificial Lamb", 3, 1, 1, "Heal yourself equal to damage dealt to self this turn."));
+      blackCardList.Add(new Card1(1, 9, "Sacrificial Lamb", 3, 1, 1, "Heal yourself equal to damage dealt to self this turn. "));
 
-      blackCardList.Add(new Card1(1, 10, "Vengeful/Spiteful Spirits", 4, 3, 2, "Discard a random card, and then deal 3 damage to all enemy creatures. If you have discarded 3 or more cards so far, then it deals 6 damage to all enemy creatures instead."));
-      blackCardList.Add(new Card1(1, 11, "Vengeful/Spiteful Spirits", 4, 3, 2, "Discard a random card, and then deal 3 damage to all enemy creatures. If you have discarded 3 or more cards so far, then it deals 6 damage to all enemy creatures instead."));
+      blackCardList.Add(new Card1(1, 10, "Vengeful/Spiteful Spirits", 4, 3, 2, "For each life you're missing draw that many cards divided by 3."));
+      blackCardList.Add(new Card1(1, 11, "Vengeful/Spiteful Spirits", 4, 3, 2, "For each life you're missing draw that many cards divided by 3."));
 
    } //end BLACK deck  ============================================================
 

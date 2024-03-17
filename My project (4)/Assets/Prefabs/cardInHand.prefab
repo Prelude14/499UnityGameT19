@@ -1321,6 +1321,7 @@ GameObject:
   - component: {fileID: 5993375699930521061}
   - component: {fileID: 8534690278288399297}
   - component: {fileID: 6326981270343975611}
+  - component: {fileID: 2321643969815557326}
   - component: {fileID: 15133638781149851}
   - component: {fileID: 2581155786288991711}
   - component: {fileID: 5036313305057053722}
@@ -1446,6 +1447,8 @@ MonoBehaviour:
   isSummoned: 0
   canAttack: 0
   cantAttack: 0
+  Canvas: {fileID: 0}
+  ZoomCard: {fileID: 7236696608810499412, guid: ef4645fa71a0a48419a9c7ce7109a30d, type: 3}
   targeting: 0
   targetingEnemy: 0
   onlyThisCardAttack: 0
@@ -1456,8 +1459,6 @@ MonoBehaviour:
   Image: {fileID: 6525077667775594899}
   playableBorder: {fileID: 4347753901248604206}
   unplayableBorder: {fileID: 7870417631566192203}
-  Canvas: {fileID: 0}
-  ZoomCard: {fileID: 7236696608810499412, guid: ef4645fa71a0a48419a9c7ce7109a30d, type: 3}
 --- !u!114 &8507879098216517373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1534,6 +1535,21 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
+--- !u!114 &2321643969815557326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7236696608810499412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96765ad882305a049bd37c4bff40ad97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 1
+  id: 4
+  triggered: 0
 --- !u!114 &15133638781149851
 MonoBehaviour:
   m_ObjectHideFlags: 0
