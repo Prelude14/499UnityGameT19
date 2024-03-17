@@ -136,8 +136,8 @@ public class cardDatabase : MonoBehaviour
       whiteCardList.Add(new Card1(3, 8, "Copycat", 4, 3, 2, "Summon a copy of this creature if you have healed 5 damage so far."));
       whiteCardList.Add(new Card1(3, 9, "Copycat", 4, 3, 2, "Summon a copy of this creature if you have healed 5 damage so far."));
 
-      whiteCardList.Add(new Card1(3, 10, "Karma Heal", 6, 5, 5, "Deal an amount of damage equal to the amount you have healed this game to the enemy."));
-      whiteCardList.Add(new Card1(3, 11, "Karma Heal", 6, 5, 5, "Deal an amount of damage equal to the amount you have healed this game to the enemy."));
+      whiteCardList.Add(new Card1(3, 10, "Karma Heal", 10, 5, 5, "Deal damage equal to damage you've healed this game to enemy."));
+      whiteCardList.Add(new Card1(3, 11, "Karma Heal", 10, 5, 5, "Deal damage equal to damage you've healed this game to enemy."));
 
    } //end WHITE deck  =============================================================
 

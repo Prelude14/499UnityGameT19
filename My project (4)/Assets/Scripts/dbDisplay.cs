@@ -67,6 +67,8 @@ public class dbDisplay : MonoBehaviour
     public static GameObject pz;
     public static int staticID;
     public static int staticCardColor;
+
+    public static int staticPow;
     // Start is called before the first frame update
     void Start()
     {
@@ -124,6 +126,7 @@ public class dbDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        staticPow = pow;
         staticCardColor = colour;
         staticID = id;
         staticAttackBorder = false;
