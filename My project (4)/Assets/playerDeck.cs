@@ -18,6 +18,11 @@ public class playerDeck : NetworkBehaviour
     public bool localGameStarted = false;
     public bool connectionError = false; //for debugging connecting to server
 
+    //status message text for when player has started the game, --tells them to wait for other playert to do the same.
+    public Text dealCardsStatusMessage;
+    //get shuffle button game object in order to only allow it to be pressed once
+    public GameObject dealButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +54,12 @@ public class playerDeck : NetworkBehaviour
                 PlayerManager.CmdGetPlayerColours(playerColour); //send playermanager the deck colour to be used, once 2 clients have run this, the server should deal out car
                 Debug.Log("Sent colour to server. Waiting for response... GameCombo now equals: " + PlayerManager.clientDecks);
 
-                if (PlayerManager.deckShuffled) //if after sending our colour to server, the server created and shuffled the deck properly, we can now start the game
+                //change status message text in screen to tell first client that they have started the game, and they need to wait for the other player to start it as well.
+                dealCardsStatusMessage.text = "COLOUR MIXING IN PROGRESS... (Waiting for other client to deal)...";
+                //make button to deal inactive so that one client can't start game with 2 of its own colour as the deck and skip whatever the other client picked
+                dealButton.SetActive(false);
+
+                if (PlayerManager.deckShuffled == true) //if after sending our colour to server, the server created and shuffled the deck properly, we can now start the game
                 {
                     //PlayerManager.CmdDraw(2, PlayerManager.clientDecks); //get server to deal out two cards for each client
 

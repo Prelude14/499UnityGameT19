@@ -10,13 +10,19 @@ public class dbDisplay : MonoBehaviour
     public int displayId;
     public static bool attackDragging;
     public int colour; //for each card's colour
+    public static int staticColour;
     public int id;
+    public static int staticID;
     public int hp;
+    public static int staticHP;
     public int pow;
+    public static int staticPow;
     public int cost;
     public static int staticCost;
     public string cardName;
+    public static string staticName;
     public string txt;
+    public static string staticTxt;
 
     public Text nameText;
     public Text descriptionText;
@@ -60,6 +66,13 @@ public class dbDisplay : MonoBehaviour
     public GameObject unplayableBorder;
     public static GameObject currentLoc;
     public static GameObject pz;
+
+    //testing zoom in dbdisplay
+    public GameObject Canvas;
+    public GameObject ZoomCard;
+
+    private GameObject zoomCard;
+    private Sprite zoomSprite;
 
     // Start is called before the first frame update (Find each card's info to be displayed)
     void Start()
@@ -233,6 +246,10 @@ public class dbDisplay : MonoBehaviour
         }
 
     }
+    public void Awake()
+    {
+        Canvas = GameObject.Find("Canvas");
+    }
 
     private void Attack()
     {
@@ -357,6 +374,30 @@ public class dbDisplay : MonoBehaviour
         {
             return Color.yellow;
         }
+    }
+
+    public void OnHoverEnter()
+    {
+        // Add logic for zooming in on hover enter
+        Debug.Log("Zooming on: " + cardName);
+        zoomCard = Instantiate(ZoomCard, new Vector2(Input.mousePosition.x, Input.mousePosition.y + 250), Quaternion.identity);
+        zoomCard.transform.SetParent(Canvas.transform, true);
+        RectTransform rect = zoomCard.GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(200, 300);
+        zoomCard.GetComponent<contentZoom>().cardName = cardName;
+        zoomCard.GetComponent<contentZoom>().txt = txt;
+        zoomCard.GetComponent<contentZoom>().cost = cost;
+        zoomCard.GetComponent<contentZoom>().pow = pow;
+        zoomCard.GetComponent<contentZoom>().hp = hp;
+
+
+
+    }
+
+    public void OnHoverExit()
+    {
+        // Add logic for zooming out on hover exit
+        Destroy(zoomCard);
     }
 
 

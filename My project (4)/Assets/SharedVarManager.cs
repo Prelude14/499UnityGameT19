@@ -24,8 +24,15 @@ public class SharedVarManager : NetworkBehaviour
     public List<Card1> combinedDeck = new List<Card1>(); //list of card1 game objects for combined deck
 
     public List<Card1> temp_combinedDeck = new List<Card1>(); //list of card1 game objects for server's temporary combined deck
-     
+
     //public CardDatabase cardDatabase; // Add this in order to initialize the card deck lists script for use later
+
+    //get deal button menu as a game object in order to get rid of the screen when the game begins properly
+    public GameObject dealButtonMenu;
+
+
+    [SyncVar]//need to store who's turn it is
+    public int whosTurn = 0; //start at 0, but it will switch from 1 and 2 to communicate if its player 1 or 2's turn (first player to send colour is player 1)
 
 
     //=====================================================================  METHODS  ===============================================================================
@@ -97,6 +104,11 @@ public class SharedVarManager : NetworkBehaviour
         PlayerManager.CmdDraw(1, combo); //get server to deal out two cards for each client
 
         Debug.Log("Game started !");
+
+        dealButtonMenu = GameObject.Find("startScreen background"); //get startgame and deal cards menu and text object so that we can deactivate it when the cards are dealt and the game begins.
+        dealButtonMenu.SetActive(false);
+
+        gameStarted = true; //store game started value
     }
 
     //we will have server check for this until there is enough players  -- ONLY SERVER CAN DO THIS (supposedly)
