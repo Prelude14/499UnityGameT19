@@ -937,6 +937,7 @@ MonoBehaviour:
   combinedDeck: []
   temp_combinedDeck: []
   dealButtonMenu: {fileID: 1320906626}
+  whosTurn: 0
 --- !u!114 &492603886
 MonoBehaviour:
   m_ObjectHideFlags: 0

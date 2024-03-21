@@ -155,12 +155,27 @@ public class PlayerManager : NetworkBehaviour
             }
         }
     }
+    //method for when player plays a card
+    public void PlayCard(GameObject card)
+    {
+        CmdPlayCard(card); //call server command
+    }
+    [Command]                                       
+    void CmdPlayCard(GameObject card) //just run rpc on clients to show card as played now
+    {
+        RpcShowCard(card, "Played");
+
+    }
+
     //this method is requested by the Server to run on all Clients, and it decides how to display the cards being dealt or played in the game
     [ClientRpc]
     void RpcShowCard(GameObject card, string type)
     {
         hand = GameObject.Find("hand");//each client should find its version of hand and opphand to place the card into.
         oppHand = GameObject.Find("oppHand");
+
+        playPanel = GameObject.Find("playPanel");//redundant check to force each client to find thier own versions of these gameobjects for cards played
+        oppPlayPanel = GameObject.Find("oppPlayPanel");
 
         //check type and then the authority of the card to see if the card has been "Dealt" to the client, and display the dealt card according to if the client owns it or not
         if (type.Equals("Dealt"))
@@ -183,6 +198,7 @@ public class PlayerManager : NetworkBehaviour
         //if the card has been "Played", check which client played it, and display it accordingly on each client's side
         else if (type.Equals("Played"))
         {
+            Debug.Log("Made it to RPC Play card...");
             if (!isOwned)
             {
                 card.transform.SetParent(oppPlayPanel.transform, false); //enemy play panel

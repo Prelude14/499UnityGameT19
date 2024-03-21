@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems; //important --> use this for db method;
+using Mirror; //need this script to be outside of script folder in order for it to use mirror for some reason (EACH CARD SPAWNED has copy of this script)
 
-public class dbDisplay : MonoBehaviour
+
+public class dbDisplay : NetworkBehaviour
 {
     public List<Card1> displayList = new List<Card1>();
     public int displayId;
@@ -40,6 +42,7 @@ public class dbDisplay : MonoBehaviour
     public GameObject hand;
     public GameObject oppHand;
     public GameObject playZone;
+    public GameObject oppPlayPanel;
     public GameObject currentZone;
     public static int deckCount;
 
@@ -58,7 +61,7 @@ public class dbDisplay : MonoBehaviour
     public GameObject Target;
     public GameObject Enemy;
     public static bool staticSummoned;
-    public bool currentlyDraggable;
+    public bool currentlyDraggable = false;
     public bool attackBorder;
     public static bool staticAttackBorder;
     public GameObject Image;
@@ -77,7 +80,7 @@ public class dbDisplay : MonoBehaviour
     // Start is called before the first frame update (Find each card's info to be displayed)
     void Start()
     {
-        Debug.Log("dbDisplay started...");
+        //Debug.Log("dbDisplay started...");
         deckCount = playerDeck.deckSize;
 
         
@@ -111,7 +114,7 @@ public class dbDisplay : MonoBehaviour
         staticAttackBorder = false;
         staticCost = cost;
         staticSummoned = isSummoned;
-        Debug.Log(staticSummoned + " " + cardName);
+        //Debug.Log(staticSummoned + " " + cardName);
         displayCard(); //sets the card's information and colour up to be rendered INTO PLACEHOLDER***
         hand = GameObject.Find("hand");
         //if this parent is the same as the hands parent 
@@ -140,6 +143,18 @@ public class dbDisplay : MonoBehaviour
         if (currentZone == oppHand)
         {
             cardBack = true;
+            //canBeSummoned = false; //can't drag opp's cards
+            //dragScript.isDraggable = false; //can't drag opp's cards
+        }
+
+
+        //check if currZone is oppPlayPanel, set cardBack to false in order to now show opponent's card
+        oppPlayPanel = GameObject.Find("oppPlayPanel");
+        if (currentZone == oppPlayPanel)
+        {
+            cardBack = false;
+            //canBeSummoned = false; //can't drag opp's cards
+            //dragScript.isDraggable = false; //can't drag opp's cards
         }
 
         currentLoc = currentZone;
@@ -148,61 +163,65 @@ public class dbDisplay : MonoBehaviour
         pz = playZone;
         //summoning logic and cost logic
 
-        Debug.Log(cardName + " Is summoned false");
-        if (this.cost <= turnScript.currentMana && isSummoned == false)
+        //Debug.Log(cardName + " Is summoned false");
+        if (this.cost <= turnScript.currentMana && isSummoned == false && currentZone == hand ) //added check to stop opponent's cards from being playable if you have enough mana
         {
             canBeSummoned = true;
+            //currentlyDraggable = true; //set to be draggable
+            //dragScript.isDraggable = true;
             Debug.Log(cardName + " Is now playable");
             if (currentZone == hand)
             {
-                Debug.Log(cardName + " Is now playable");
+                //Debug.Log(cardName + " Is now playable");
             }
-
         }
-        else
+        else //if can't be played and your card, turn border grey to show unable to play
         {
             canBeSummoned = false;
+            //currentlyDraggable = false; //check if draggable (can only drag cards you can afford to play
             playableBorder.SetActive(false);
             unplayableBorder.SetActive(true);
         }
 
-        if (canBeSummoned)
+        //if can be played and your card, set border to green
+        if (canBeSummoned && currentZone == hand ) //extra check to ensure opponent's cards can't be played
         {
             dragScript.isDraggable = true;
-            Debug.Log(cardName + " is now " + currentlyDraggable);
-            playableBorder.SetActive(true);
+            //currentlyDraggable = dragScript.isDraggable; //check if draggable
+            Debug.Log(cardName + " is now green " + currentlyDraggable);
+            playableBorder.SetActive(true); //turn green to signify card is playable
             unplayableBorder.SetActive(false);
         }
 
 
         //GameObject startParent = transform.parent.gameObject;
-
+        //if placed into playPanel from hand, check to actually place it there and deduct mana cost for playing
         if (isSummoned == false && currentZone == playZone)
         {
             unplayableBorder.SetActive(false);
             playableBorder.SetActive(false);
-            if (this.cost > turnScript.currentMana)
+            if (this.cost > turnScript.currentMana) //if you don't have enough mana, then send card back to your hand and do nothing
             {
                 transform.SetParent(GameObject.Find("hand").transform, true);
                 return;
             }
-            isSummoned = true;
+            isSummoned = true; //if you can afford it, then card becomes "summoned", or played
             turnScript.totalSummons++;
             Debug.Log(cardName + " Summoned sucess | Cost: " + this.cost + " | Current zone: " + currentZone + " | play zone: " + playZone + " | Is summoned? " + isSummoned);
             //disable script component when summoned
-            GetComponent<dragScript>().enabled = false;
-            turnScript.currentMana = turnScript.currentMana - this.cost;
+            GetComponent<dragScript>().enabled = false; //don't let card be dragged once played
+            turnScript.currentMana = turnScript.currentMana - this.cost; //take proper mana cost from player
             Debug.Log("Mana left: " + turnScript.currentMana);
 
         }
 
-        currentlyDraggable = dragScript.isDraggable;
+        currentlyDraggable = dragScript.isDraggable; //check if draggable
 
         //decide attackers
         if (turnScript.isMyTurn == true && isSummoned == true && hasAttacked == false && currentZone == playZone)
         {
             cantAttack = false;
-            Debug.Log(cardName + " ready to attack");
+            //Debug.Log(cardName + " ready to attack");
             unplayableBorder.SetActive(false);
             playableBorder.SetActive(false);
         }
@@ -253,7 +272,7 @@ public class dbDisplay : MonoBehaviour
 
     private void Attack()
     {
-        if (canAttack == true && isSummoned)
+        if (canAttack == true && isSummoned )
         {
 
             if (Target != null)
@@ -337,7 +356,7 @@ public class dbDisplay : MonoBehaviour
     }
     private void cloneDraw()
     {
-        Debug.Log("Made it to clone draw...");
+        //Debug.Log("Made it to clone draw...");
         //clone cards for draw
         if (this.tag == "clone") //if this dbdisplay's card is a clone, then we draw it from the game deck and update the game deck's information
         {

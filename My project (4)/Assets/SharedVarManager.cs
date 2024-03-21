@@ -584,7 +584,7 @@ public class SharedVarManager : NetworkBehaviour
                 for (int k = 0; k < 12; k++)                //ADD first 12 BLUE cards starting at index 16
                 {
                     //int offset = 1 * i; //second round will add indexes 28-40
-                    temp_combinedDeck.Add(whiteCardList[k]);
+                    temp_combinedDeck.Add(blueCardList[k]);
                     //j++;
                 }
                 //j will hit index 16+12 = 28 after first iteration , then 28+12 =40 for second
