@@ -91,6 +91,7 @@ public class dragScript : NetworkBehaviour
             //not over dropzone, then send it back to start position
             transform.position = startPos;
             transform.SetParent(startParent.transform, false);
+            transform.localScale = new Vector2(1,1);
         }
 
     }

@@ -173,6 +173,7 @@ public class dbDisplay : NetworkBehaviour
             if (currentZone == hand)
             {
                 //Debug.Log(cardName + " Is now playable");
+
             }
         }
         else //if can't be played and your card, turn border grey to show unable to play
