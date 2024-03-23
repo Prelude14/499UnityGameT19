@@ -184,19 +184,21 @@ public class dbDisplay : NetworkBehaviour
             unplayableBorder.SetActive(true);
         }
 
-        //if can be played and your card, set border to green
+        //if can be played and your card, set border to green and make draggable
         if (canBeSummoned && currentZone == hand ) //extra check to ensure opponent's cards can't be played
         {
-            dragScript.isDraggable = true;
-            //currentlyDraggable = dragScript.isDraggable; //check if draggable
-            Debug.Log(cardName + " is now green " + currentlyDraggable);
-            playableBorder.SetActive(true); //turn green to signify card is playable
-            unplayableBorder.SetActive(false);
+            if (turnScript.isMyTurn == true) { //AND its MY TURN
+                dragScript.isDraggable = true;
+                //currentlyDraggable = dragScript.isDraggable; //check if draggable
+                Debug.Log(cardName + " is now green " + currentlyDraggable);
+                playableBorder.SetActive(true); //turn green to signify card is playable
+                unplayableBorder.SetActive(false);
+            }
         }
 
 
         //GameObject startParent = transform.parent.gameObject;
-        //if placed into playPanel from hand, check to actually place it there and deduct mana cost for playing
+        //if placed into playPanel from hand, check to actually place it there and deduct mana cost for playing it
         if (isSummoned == false && currentZone == playZone)
         {
             unplayableBorder.SetActive(false);

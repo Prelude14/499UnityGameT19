@@ -41,8 +41,8 @@ public class playerDeck : NetworkBehaviour
         if (!localGameStarted && !connectionError) //check if game has started yet, as well if theres any errors and if not, dont do anything
         {
             //locate the PlayerManager in this Client and send the clients deck colour to the server so the server can deal the cards
-            NetworkIdentity networkIdentity = NetworkClient.connection.identity;
-            PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+            NetworkIdentity networkClientIdentity = NetworkClient.connection.identity;
+            PlayerManager = networkClientIdentity.GetComponent<PlayerManager>();
 
             gameDeckCombo = PlayerManager.clientDecks;//get sync variable from network manager
 
@@ -51,7 +51,7 @@ public class playerDeck : NetworkBehaviour
             //if game isn't started yet, and it doesn't have enough players yet for a valid combo when this button is clicked, then send our colour out to server, 
             if (gameDeckCombo.Equals("") || gameDeckCombo.Equals("BLACK") || gameDeckCombo.Equals("R") || gameDeckCombo.Equals("W") || gameDeckCombo.Equals("BLUE"))
             {
-                PlayerManager.CmdGetPlayerColours(playerColour); //send playermanager the deck colour to be used, once 2 clients have run this, the server should deal out car
+                PlayerManager.CmdGetPlayerColours(playerColour, networkClientIdentity); //send playermanager the deck colour to be used, once 2 clients have run this, the server should deal out car
                 Debug.Log("Sent colour to server. Waiting for response... GameCombo now equals: " + PlayerManager.clientDecks);
 
                 //change status message text in screen to tell first client that they have started the game, and they need to wait for the other player to start it as well.

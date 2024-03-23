@@ -11,6 +11,7 @@ public class SharedVarManager : NetworkBehaviour
 
     //need access to player manager script that is unique to each client
     public PlayerManager PlayerManager;
+    public PlayerManager PlayerTurnManager; //new one for turn set up just to double check it is new playermanager connection from the Cmdgetplayercolour command
 
     //I ended up using some sync vars for these 2 bools, to add additional checks to the game starting logic
     [SyncVar]
@@ -33,19 +34,92 @@ public class SharedVarManager : NetworkBehaviour
 
     [SyncVar]//need to store who's turn it is
     public int whosTurn = 0; //start at 0, but it will switch from 1 and 2 to communicate if its player 1 or 2's turn (first player to send colour is player 1)
+    [SyncVar]//need to store who's turn it is
+    public int serverTurnCount = 0; //start at 0, but it will be incremented each time a turn ends
+
+    [SyncVar] public int p1Mana = 1; //need sync var to treack each player's mana
+    [SyncVar] public int p2Mana = 1; //need sync var to treack each player's mana
 
 
     //=====================================================================  METHODS  ===============================================================================
 
+    /*public void setPlayerNum() //first client to add thier colour to sharedVar's list is made 1st player 
+    {
+        //locate the PlayerManager in the Client that sent their colour to server, assign them as 1st, 2nd, or no player
+        NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+        PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+
+        if (playerColors.Count == 1) 
+        {
+            PlayerManager.isPlayerOne = true; //SET sync variables from player manager to true or false in order for it to track who is player ONE
+            PlayerManager.isPlayerTwo = false;
+        }
+        else if (playerColors.Count == 2)
+        {
+            PlayerManager.isPlayerOne = false; //SET sync variables from player manager to true or false in order for it to track who is player TWO
+            PlayerManager.isPlayerTwo = true;
+        }
+        else //set both to false, because the game shouldn't be working if their is more than 2 players
+        {
+            PlayerManager.isPlayerOne = false; //SET sync variables from player manager to false incase error on second player
+            PlayerManager.isPlayerTwo = false;
+        }
+    }*/
+
+    [Command(requiresAuthority = false)]
+    public void CmdUpdateWhosTurn(NetworkIdentity networkTurnIdentity)
+    {
+        PlayerTurnManager = networkTurnIdentity.GetComponent<PlayerManager>();          //want to track who is ending each turn
+
+        if (whosTurn == 1) //if its player one's turn
+        {
+            if (PlayerTurnManager.isPlayerOne == true && PlayerTurnManager.isPlayerTwo == false) //if player one ended their turn
+            {
+                serverTurnCount++;//increment turn count each time this is called
+                whosTurn = 2; //if it was player 1's turn, then now it is player 2
+                p1Mana++; //add one mana to player one since they will need it come the next turn, player 2 still needs to take their turn before gaining more mana
+
+                //PlayerTurnManager.isPlayerManagersTurn = false;//It is no longer my turn
+            } 
+            else if (PlayerTurnManager.isPlayerTwo == true && PlayerTurnManager.isPlayerOne == false) //if player 2 ended player 1's turn somehow
+            {
+                //Do NOTHING SINCE player2 should never be able to end turn when whosTurn = 1
+            }
+        }
+        else if (whosTurn == 2)
+        {
+            if (PlayerTurnManager.isPlayerOne == true && PlayerTurnManager.isPlayerTwo == false) //if player one ended player 2's turn somehow
+            {
+                //Do NOTHING SINCE player1 should never be able to end turn when whosTurn = 2
+            }
+            else if (PlayerTurnManager.isPlayerTwo == true && PlayerTurnManager.isPlayerOne == false) //if player 2 ended their turn
+            {
+                serverTurnCount++; //increment turn count each time this is called
+                whosTurn = 1; //if it was player 2's turn, then now it is player 1's
+                p2Mana++; //add one mana to player two since they will need it come the next turn, player 1 still needs to take their turn before gaining more mana
+
+                //PlayerTurnManager.isPlayerManagersTurn = false;//It is no longer my turn
+            }
+        }
+    }
+
+
     //this command receives a client's colour, and then checks to see if game can be started
     [Command(requiresAuthority = false)]
-    public void CmdGetPlayerColor(string clientColour) //clients will call this server function to add their colour to this list of strings (list should get around the 2 instances of playerManager 
+    public void CmdGetPlayerColor(string clientColour, NetworkIdentity networkClientIdentity) //clients will call this server function to add their colour to this list of strings (list should get around the 2 instances of playerManager 
     {
         // Add the client's color to the list
         playerColors.Add(clientColour);
 
+        if (playerColors.Count == 1)
+        {
+            PlayerManager = networkClientIdentity.GetComponent<PlayerManager>();
+            PlayerManager.isPlayerOne = true; //SET sync variables from player manager to true or false in order for it to track who is player ONE
+            PlayerManager.isPlayerTwo = false;
+            //PlayerManager.isPlayerManagersTurn = true; //1st player gets to go first
+        }
         // Check if there is a valid combination, ONLY TWO Strings will allow game to start, 
-        if (playerColors.Count == 2)
+        else if (playerColors.Count == 2)
         {
             string combo = playerColors[0] + playerColors[1]; //get strings as one string for checks
             
@@ -56,8 +130,15 @@ public class SharedVarManager : NetworkBehaviour
 
             if (!secondCheck.Equals("Error 1: Not enough players/strings.") && !secondCheck.Equals("Error 2: Too many players/strings."))
             {
+                PlayerManager = networkClientIdentity.GetComponent<PlayerManager>();
+                PlayerManager.isPlayerOne = false; //SET sync variables from player manager to true or false in order for it to track who is player TWO
+                PlayerManager.isPlayerTwo = true;  //first player to run this command is player TWO
+
                 serverCreateDeck(secondCheck); //build deck
                 RpcStartGame(combo, validDeckShuffled, temp_combinedDeck); //send all info inside rpc to all clients
+
+                whosTurn = 1;//start with player one's turn when game is officially started
+
                 //after serverCreateDeck is run, validDeckShuffled becomes TRUE inside the shuffle() function, so the draw cmd can deal cards out
 
             }

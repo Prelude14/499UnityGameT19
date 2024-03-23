@@ -37,6 +37,11 @@ public class PlayerManager : NetworkBehaviour
 
     public bool deckShuffled = false; //need to track if game deck was made properly
 
+    [SyncVar] public bool isPlayerOne = false; //need to sync who is player one or two
+    [SyncVar] public bool isPlayerTwo = false; //redudant second bool for clarity
+
+    //[SyncVar] public bool isPlayerManagersTurn = false; //need to sync if it is my turn or not
+
 
     public override void OnStartClient() //if our playermanager is acting as a client
     {
@@ -89,7 +94,7 @@ public class PlayerManager : NetworkBehaviour
 
     //Client CMD to update the combined deck on the server using the sync variable's string (each client passes its unique deck colour on start)
     [Command(requiresAuthority = false)] //added the authority bit in the process of debugging, defaults to true, so I think only the owner's version of their clientDeck will be changed unless this is here (but haven't really seen proof yet)
-    public void CmdGetPlayerColours(string clientColour)
+    public void CmdGetPlayerColours(string clientColour, NetworkIdentity networkClientIdentity)
     {
         Debug.Log("Server's clientDeck string at start of cmd call:" + clientDecks);
 
@@ -100,10 +105,12 @@ public class PlayerManager : NetworkBehaviour
         if (sharedVarManagerObj != null)
         {
             SharedVarManager sharedVarManager = sharedVarManagerObj.GetComponent<SharedVarManager>();
-            // Call the command on the NetworkManager
-            sharedVarManager.CmdGetPlayerColor(clientColour); // this calls the SharedVarManager script, which should handle the game logic from here, and deal out cards properly
+            //Call the command on the NetworkManager
+            
+            sharedVarManager.CmdGetPlayerColor(clientColour, networkClientIdentity); // this calls the SharedVarManager script, which should handle the game logic from here, and deal out cards properly
             //clientDecks = clientColour; //set sync var to your client's colour so that the PlayerManager can now see and track across network what colour the client chose specifically (there is one instance of this per player)
             //playerDeck.staticDeck = sharedVarManager;
+            //sharedVarManager.setPlayerNum(); //after sending their colour, ask sharedVarManager check who is first player
         }
         else
         {
@@ -209,6 +216,27 @@ public class PlayerManager : NetworkBehaviour
                 card.transform.SetParent(playPanel.transform, false); //if the client played it, move it to the regular playPlanel
             }
         }
+    }
+    //Client CMD to update the combined deck on the server using the sync variable's string (each client passes its unique deck colour on start)
+    [Command(requiresAuthority = false)] //added the authority bit in the process of debugging, defaults to true, so I think only the owner's version of their clientDeck will be changed unless this is here (but haven't really seen proof yet)
+    public void CmdSendTurnInfo(NetworkIdentity networkTurnIdentity)
+    {
+        //find sharedvar game object in scene at runtime (for deck colour strings and game start booleans
+        GameObject sharedVarManagerObj = GameObject.Find("SharedVarManager");
+
+        // Check if the SharedVarManager GameObject is found AND 
+        if (sharedVarManagerObj != null)
+        {
+            SharedVarManager sharedVarManager = sharedVarManagerObj.GetComponent<SharedVarManager>();
+            //Call the command on the NetworkManager
+
+            sharedVarManager.CmdUpdateWhosTurn(networkTurnIdentity); // this calls the SharedVarManager script, which should handle the game logic from here, and deal out cards properly
+        }
+        else
+        {
+            Debug.Log("SharedVarManager GameObject not found! In CmdSendTurnInfo"); //couldn't send colour properly
+        }
+
     }
 
     /*
