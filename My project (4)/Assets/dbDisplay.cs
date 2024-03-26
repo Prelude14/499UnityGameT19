@@ -77,6 +77,9 @@ public class dbDisplay : NetworkBehaviour
     private GameObject zoomCard;
     private Sprite zoomSprite;
 
+    //need access to player manager script that is unique to each client
+    public PlayerManager PlayerManager;
+
     // Start is called before the first frame update (Find each card's info to be displayed)
     void Start()
     {
@@ -283,7 +286,9 @@ public class dbDisplay : NetworkBehaviour
 
                 if (Target == Enemy)
                 {
-                    enemyHealth.HPStatic -= pow;
+                    //enemyHealth.HPStatic -= pow;
+                    attackEnemy(pow); //send pow of card attacking to attack command
+                    
                     targeting = false;
                     cantAttack = true;
                     hasAttacked = true;
@@ -299,8 +304,16 @@ public class dbDisplay : NetworkBehaviour
             }
         }
     }
+    public void attackEnemy(int damage)
+    {
+        //locate the PlayerManager in the Client, need to call command on server to update health counts
+        NetworkIdentity networkAttackIdentity = NetworkClient.connection.identity;
+        PlayerManager = networkAttackIdentity.GetComponent<PlayerManager>();
 
+        PlayerManager.CmdAttackOtherPlayer(damage, networkAttackIdentity);//call playermanager's cmd that calls server's update turn count method, and send who has pressed the button
+        Debug.Log("Attacked opponent...attack sent CmdAttackOtherPlayer...");
 
+    }
 
     public void UntargetEnemy()
     {
