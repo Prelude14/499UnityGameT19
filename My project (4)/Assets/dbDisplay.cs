@@ -310,8 +310,8 @@ public class dbDisplay : NetworkBehaviour
         NetworkIdentity networkAttackIdentity = NetworkClient.connection.identity;
         PlayerManager = networkAttackIdentity.GetComponent<PlayerManager>();
 
-        PlayerManager.CmdAttackOtherPlayer(damage, networkAttackIdentity);//call playermanager's cmd that calls server's update turn count method, and send who has pressed the button
-        Debug.Log("Attacked opponent...attack sent CmdAttackOtherPlayer...");
+        PlayerManager.CmdSendAttackInfo(damage, networkAttackIdentity); //call playermanager's cmd that calls server's attackPlayer CMD
+        Debug.Log("Attacked opponent...attack sent CmdSendAttackInfo to playermanager...");
 
     }
 

@@ -17,13 +17,13 @@ public class contentZoom : MonoBehaviour
     public string cardName;
     public string txt;
 
-    public Text nameText;
-    public Text descriptionText;
+    public TMPro.TMP_Text nameText;
+    public TMPro.TMP_Text descriptionText;
     public Image artworkImage;
 
-    public Text costText;
-    public Text powText;
-    public Text hpText;
+    public TMPro.TMP_Text costText;
+    public TMPro.TMP_Text powText;
+    public TMPro.TMP_Text hpText;
 
 
 

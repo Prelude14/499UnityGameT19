@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems; //important --> use this for db method;
 using Mirror; //need this script to be outside of script folder in order for it to use mirror for some reason (EACH CARD SPAWNED has copy of this script)
-
+using TMPro;
 
 public class dbDisplay : NetworkBehaviour
 {
@@ -26,13 +26,13 @@ public class dbDisplay : NetworkBehaviour
     public string txt;
     public static string staticTxt;
 
-    public Text nameText;
-    public Text descriptionText;
+    public TMPro.TMP_Text nameText;
+    public TMPro.TMP_Text descriptionText;
     public Image artworkImage;
 
-    public Text costText;
-    public Text powText;
-    public Text hpText;
+    public TMPro.TMP_Text costText;
+    public TMPro.TMP_Text powText;
+    public TMPro.TMP_Text hpText;
 
 
     public bool cardBack;
@@ -76,6 +76,9 @@ public class dbDisplay : NetworkBehaviour
 
     private GameObject zoomCard;
     private Sprite zoomSprite;
+
+    //need access to player manager script that is unique to each client
+    public PlayerManager PlayerManager;
 
     // Start is called before the first frame update (Find each card's info to be displayed)
     void Start()
@@ -283,7 +286,9 @@ public class dbDisplay : NetworkBehaviour
 
                 if (Target == Enemy)
                 {
-                    enemyHealth.HPStatic -= pow;
+                    //enemyHealth.HPStatic -= pow;
+                    attackEnemy(pow); //send pow of card attacking to attack command
+                    
                     targeting = false;
                     cantAttack = true;
                     hasAttacked = true;
@@ -299,8 +304,16 @@ public class dbDisplay : NetworkBehaviour
             }
         }
     }
+    public void attackEnemy(int damage)
+    {
+        //locate the PlayerManager in the Client, need to call command on server to update health counts
+        NetworkIdentity networkAttackIdentity = NetworkClient.connection.identity;
+        PlayerManager = networkAttackIdentity.GetComponent<PlayerManager>();
 
+        PlayerManager.CmdSendAttackInfo(damage, networkAttackIdentity); //call playermanager's cmd that calls server's attackPlayer CMD
+        Debug.Log("Attacked opponent...attack sent CmdSendAttackInfo to playermanager...");
 
+    }
 
     public void UntargetEnemy()
     {
@@ -400,9 +413,12 @@ public class dbDisplay : NetworkBehaviour
 
     public void OnHoverEnter()
     {
+        if(currentZone == oppHand){
+            return; //if this is an opponent's card do not show
+        }
         // Add logic for zooming in on hover enter
         Debug.Log("Zooming on: " + cardName);
-        zoomCard = Instantiate(ZoomCard, new Vector2(Input.mousePosition.x, Input.mousePosition.y + 250), Quaternion.identity);
+        zoomCard = Instantiate(ZoomCard, new Vector2(600, 250), Quaternion.identity);
         zoomCard.transform.SetParent(Canvas.transform, true);
         RectTransform rect = zoomCard.GetComponent<RectTransform>();
         rect.sizeDelta = new Vector2(200, 300);

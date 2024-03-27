@@ -163,14 +163,31 @@ public class PlayerManager : NetworkBehaviour
         }
     }
     //method for when player plays a card
-    public void PlayCard(GameObject card)
+    public void PlayCard(GameObject card, int manaCost, NetworkIdentity networkPlayIdentity)
     {
-        CmdPlayCard(card); //call server command
+        CmdPlayCard(card, manaCost, networkPlayIdentity); //call server command
     }
-    [Command]                                       
-    void CmdPlayCard(GameObject card) //just run rpc on clients to show card as played now
+    [Command(requiresAuthority = false)]                                       
+    void CmdPlayCard(GameObject card, int manaCost, NetworkIdentity networkPlayIdentity) //just run rpc on clients to show card as played now, also tell server to update mana of the player who played the card
     {
-        RpcShowCard(card, "Played");
+        //find sharedvar game object in scene at runtime (for deck colour strings and game start booleans
+        GameObject sharedVarManagerObj = GameObject.Find("SharedVarManager");
+
+        // Check if the SharedVarManager GameObject is found AND 
+        if (sharedVarManagerObj != null)
+        {
+            SharedVarManager sharedVarManager = sharedVarManagerObj.GetComponent<SharedVarManager>();
+            //Call the command on the NetworkManager
+
+            sharedVarManager.CmdUpdateManaCount(manaCost, networkPlayIdentity); //call server's updateManaCount CMD to update mana variables accordingly
+            Debug.Log("Card Played Info recieved from dragscript...manaCost sent to server's CmdUpdateManaCount...");
+        }
+        else
+        {
+            Debug.Log("SharedVarManager GameObject not found! In CmdplayCard"); //couldn't send attack info properly
+        }
+
+        RpcShowCard(card, "Played"); //actually tell clients about card played
 
     }
 
@@ -234,7 +251,30 @@ public class PlayerManager : NetworkBehaviour
         }
         else
         {
-            Debug.Log("SharedVarManager GameObject not found! In CmdSendTurnInfo"); //couldn't send colour properly
+            Debug.Log("SharedVarManager GameObject not found! In CmdSendTurnInfo"); //couldn't send turn info properly
+        }
+
+    }
+
+    //Client CMD to attack other player on the server, and get it to update sync variables for health accordingly
+    [Command(requiresAuthority = false)] //added the authority bit in the process of debugging, defaults to true, so I think only the owner's version of their clientDeck will be changed unless this is here (but haven't really seen proof yet)
+    public void CmdSendAttackInfo(int damage, NetworkIdentity networkAttackIdentity)
+    {
+        //find sharedvar game object in scene at runtime (for deck colour strings and game start booleans
+        GameObject sharedVarManagerObj = GameObject.Find("SharedVarManager");
+
+        // Check if the SharedVarManager GameObject is found AND 
+        if (sharedVarManagerObj != null)
+        {
+            SharedVarManager sharedVarManager = sharedVarManagerObj.GetComponent<SharedVarManager>();
+            //Call the command on the NetworkManager
+
+            sharedVarManager.CmdAttackOtherPlayer(damage, networkAttackIdentity); //call server's attackPlayer CMD to update health variables accordingly
+            Debug.Log("Attacked info recieved by dbdisplay...attack sent to server's CmdAttackOtherPlayer...");
+        }
+        else
+        {
+            Debug.Log("SharedVarManager GameObject not found! In CmdSendAttackInfo"); //couldn't send attack info properly
         }
 
     }

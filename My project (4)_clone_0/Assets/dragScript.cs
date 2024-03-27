@@ -183,7 +183,11 @@ public class dragScript : NetworkBehaviour
             //tell network we played card, by sending the card we played to our specific playerManager's playCard command
             NetworkIdentity networkIdentity = NetworkClient.connection.identity;
             PlayerManager = networkIdentity.GetComponent<PlayerManager>();
-            PlayerManager.PlayCard(gameObject); //passes its own game object to the playermanager object's script's PlayCard method
+
+            dbDisplay = this.GetComponent<dbDisplay>(); //get this card's specific dbdisplay script in order to send the card's cost to the server's updateManaCount method
+            int manaCost = dbDisplay.cost;
+
+            PlayerManager.PlayCard(gameObject, manaCost, networkIdentity); //passes its own game object to the playermanager object's script's PlayCard method, also passing the card's cost and its network identity to server
 
         }
         else

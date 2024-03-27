@@ -12,6 +12,9 @@ public class SharedVarManager : NetworkBehaviour
     //need access to player manager script that is unique to each client
     public PlayerManager PlayerManager;
     public PlayerManager PlayerTurnManager; //new one for turn set up just to double check it is new playermanager connection from the Cmdgetplayercolour command
+    public PlayerManager PlayerManaManager; //new one for attack set up just to double check it is new playermanager connection from the Cmdgetplayercolour or CmdUpdateWhosTurn
+    public PlayerManager PlayerAttackManager; //new one for attack set up just to double check it is new playermanager connection from the Cmdgetplayercolour, CmdUpdateWhosTurn, or CmdUpdateManaCount
+   
 
     //I ended up using some sync vars for these 2 bools, to add additional checks to the game starting logic
     [SyncVar]
@@ -37,39 +40,19 @@ public class SharedVarManager : NetworkBehaviour
     [SyncVar]//need to store who's turn it is
     public int serverTurnCount = 0; //start at 0, but it will be incremented each time a turn ends
 
-    [SyncVar] public int p1Mana = 1; //need sync var to treack each player's mana
-    [SyncVar] public int p2Mana = 1; //need sync var to treack each player's mana
+    [SyncVar] public int p1Mana = 1; //need sync var to track each player's mana
+    [SyncVar] public int p2Mana = 1; //need sync var to track each player's mana
 
+    [SyncVar] public float p1Health = 30; //need sync var to track each player's health (start with full 30 points)
+    [SyncVar] public float p2Health = 30; //need sync var to track each player's health
 
     //=====================================================================  METHODS  ===============================================================================
 
-    /*public void setPlayerNum() //first client to add thier colour to sharedVar's list is made 1st player 
-    {
-        //locate the PlayerManager in the Client that sent their colour to server, assign them as 1st, 2nd, or no player
-        NetworkIdentity networkIdentity = NetworkClient.connection.identity;
-        PlayerManager = networkIdentity.GetComponent<PlayerManager>();
-
-        if (playerColors.Count == 1) 
-        {
-            PlayerManager.isPlayerOne = true; //SET sync variables from player manager to true or false in order for it to track who is player ONE
-            PlayerManager.isPlayerTwo = false;
-        }
-        else if (playerColors.Count == 2)
-        {
-            PlayerManager.isPlayerOne = false; //SET sync variables from player manager to true or false in order for it to track who is player TWO
-            PlayerManager.isPlayerTwo = true;
-        }
-        else //set both to false, because the game shouldn't be working if their is more than 2 players
-        {
-            PlayerManager.isPlayerOne = false; //SET sync variables from player manager to false incase error on second player
-            PlayerManager.isPlayerTwo = false;
-        }
-    }*/
-
+    //command when turn is ended on client side (they press end turn button and call this command in turnscript)
     [Command(requiresAuthority = false)]
     public void CmdUpdateWhosTurn(NetworkIdentity networkTurnIdentity)
     {
-        PlayerTurnManager = networkTurnIdentity.GetComponent<PlayerManager>();          //want to track who is ending each turn
+        PlayerTurnManager = networkTurnIdentity.GetComponent<PlayerManager>(); //want to track who is ending each turn
 
         if (whosTurn == 1) //if its player one's turn
         {
@@ -80,10 +63,11 @@ public class SharedVarManager : NetworkBehaviour
                 p1Mana++; //add one mana to player one since they will need it come the next turn, player 2 still needs to take their turn before gaining more mana
 
                 //PlayerTurnManager.isPlayerManagersTurn = false;//It is no longer my turn
-            } 
+            }
             else if (PlayerTurnManager.isPlayerTwo == true && PlayerTurnManager.isPlayerOne == false) //if player 2 ended player 1's turn somehow
             {
                 //Do NOTHING SINCE player2 should never be able to end turn when whosTurn = 1
+                //Debug.log("Player 2 tried to end player 1's turn");
             }
         }
         else if (whosTurn == 2)
@@ -91,6 +75,7 @@ public class SharedVarManager : NetworkBehaviour
             if (PlayerTurnManager.isPlayerOne == true && PlayerTurnManager.isPlayerTwo == false) //if player one ended player 2's turn somehow
             {
                 //Do NOTHING SINCE player1 should never be able to end turn when whosTurn = 2
+                //Debug.log("Player 1 tried to end player 2's turn");
             }
             else if (PlayerTurnManager.isPlayerTwo == true && PlayerTurnManager.isPlayerOne == false) //if player 2 ended their turn
             {
@@ -102,7 +87,74 @@ public class SharedVarManager : NetworkBehaviour
             }
         }
     }
+    //command when client plays a card and needs to update their mana count
+    [Command(requiresAuthority = false)]
+    public void CmdUpdateManaCount(int manaCost, NetworkIdentity networkManaIdentity)
+    {
+        PlayerManaManager = networkManaIdentity.GetComponent<PlayerManager>(); //want to track who is playing the card
 
+        if (whosTurn == 1) //if its player one's turn
+        {
+            if (PlayerManaManager.isPlayerOne == true && PlayerManaManager.isPlayerTwo == false) //if player one played the card
+            {
+                p1Mana -= manaCost; //subtract mana cost from player one's overall mana (since they have to pay to place a card down)
+
+                //PlayerTurnManager.isPlayerManagersTurn = false;//It is no longer my turn
+            }
+            else if (PlayerManaManager.isPlayerTwo == true && PlayerManaManager.isPlayerOne == false) //if player 2 played a card on player 1's turn somehow
+            {
+                //Do NOTHING SINCE player2 should never be able to end turn when whosTurn = 1
+                //Debug.log("Player 2 tried to play during player 1's turn");
+            }
+        }
+        else if (whosTurn == 2)
+        {
+            if (PlayerManaManager.isPlayerOne == true && PlayerManaManager.isPlayerTwo == false) //if player one played a card on player 2's turn somehow
+            {
+                //Do NOTHING SINCE player1 should never be able to end turn when whosTurn = 2
+                //Debug.log("Player 1 tried to play during player 2's turn");
+            }
+            else if (PlayerManaManager.isPlayerTwo == true && PlayerManaManager.isPlayerOne == false) //if player 2 played the card
+            {
+                p2Mana -= manaCost; //subtract mana cost from player 2's overall mana (since they have to pay to place a card down)
+
+                //PlayerTurnManager.isPlayerManagersTurn = false;//It is no longer my turn
+            }
+        }
+    }
+
+    //command when a client attacks the other player (they drag a played card into the opponent's avatar in order to attack)
+    [Command(requiresAuthority = false)]
+    public void CmdAttackOtherPlayer(int damage, NetworkIdentity networkAttackIdentity)
+    {
+        PlayerAttackManager = networkAttackIdentity.GetComponent<PlayerManager>(); //want to track who is attacking
+
+        if (whosTurn == 1) //if its player one's turn
+        {
+            if (PlayerAttackManager.isPlayerOne == true && PlayerAttackManager.isPlayerTwo == false) //if player one attacked
+            {
+                p2Health -= damage; //update p2 Health to equal old health minus the amount of damage that was sent by p1
+
+            }
+            else if (PlayerAttackManager.isPlayerTwo == true && PlayerAttackManager.isPlayerOne == false) //if player 2 attacked player 1 somehow
+            {
+                //Do NOTHING SINCE player2 should never be able to attack when whosTurn = 1
+                //Debug.log("Player 2 tried to attack p1 during player 1's turn");
+            }
+        }
+        else if (whosTurn == 2)
+        {
+            if (PlayerAttackManager.isPlayerOne == true && PlayerAttackManager.isPlayerTwo == false) //if player one attacked player 2 somehow
+            {
+                //Do NOTHING SINCE player1 should never be able to attack when whosTurn = 2
+                //Debug.log("Player 1 tried to attack p2 during player 2's turn");
+            }
+            else if (PlayerAttackManager.isPlayerTwo == true && PlayerAttackManager.isPlayerOne == false) //if player 2 attacked
+            {
+                p1Health -= damage; //update p1 Health to equal old health minus the amount of damage that was sent by p2
+            }
+        }
+    }
 
     //this command receives a client's colour, and then checks to see if game can be started
     [Command(requiresAuthority = false)]
@@ -122,7 +174,7 @@ public class SharedVarManager : NetworkBehaviour
         else if (playerColors.Count == 2)
         {
             string combo = playerColors[0] + playerColors[1]; //get strings as one string for checks
-            
+
 
             //send combo to checkFor2PlayersAndTheirCombo method to ensure valid colour combination
             string secondCheck = checkFor2PlayersAndTheirCombo(combo);
@@ -489,7 +541,7 @@ public class SharedVarManager : NetworkBehaviour
         {
             for (int k = 0; k < 8; k++)
             {
-                
+
                 //int offset = 8 * i;
                 //Debug.Log("offset = " + offset + " and i = " + i + " and k = " + k); //should all be zero to start
                 //combinedDeck[k + offset]
@@ -499,7 +551,7 @@ public class SharedVarManager : NetworkBehaviour
 
         }//16 neutral cards should now be in 1st 16 slots of deck list
          //====================================================== ADD COLOURS =======================================================
-        //int j = 16;//start adding the other 24 cards from each deck at index 16 because of neutral cards
+         //int j = 16;//start adding the other 24 cards from each deck at index 16 because of neutral cards
 
         //===================================================== BLACK COMBOS =======================================================
 
@@ -700,6 +752,6 @@ public class SharedVarManager : NetworkBehaviour
         return temp_combinedDeck[0].ToString();
     }
 
-    
+
 
 }
