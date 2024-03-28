@@ -419,7 +419,7 @@ public class dbDisplay : NetworkBehaviour
         }
         // Add logic for zooming in on hover enter
         Debug.Log("Zooming on: " + cardName);
-        zoomCard = Instantiate(ZoomCard, new Vector2(600, 250), Quaternion.identity);
+        zoomCard = Instantiate(ZoomCard, new Vector2(Input.mousePosition.x + 100, 250), Quaternion.identity);
         zoomCard.transform.SetParent(Canvas.transform, true);
         RectTransform rect = zoomCard.GetComponent<RectTransform>();
         rect.sizeDelta = new Vector2(200, 300);

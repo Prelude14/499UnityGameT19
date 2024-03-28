@@ -115,6 +115,7 @@ public class turnScript : NetworkBehaviour
         if (isMyTurn == true)
         {
             turnText.text = "Your turn";
+            
         }
         else
         {
@@ -153,7 +154,7 @@ public class turnScript : NetworkBehaviour
         Debug.Log("endturn button pressed...updateturnCount sent Cmd...");
 
         //turnStart = PlayerManager.myTurnStart;//set this to update properly when updateTurn is triggered in place of the end opponent's turn method.
-
+        
     }
 
     public void endTurn()
@@ -166,7 +167,7 @@ public class turnScript : NetworkBehaviour
 
         //turnCount++;
         updateTurnCount();
-
+        PlayerManager.CmdDraw(1, PlayerManager.clientDecks);
     }
     public void endOpponentTurn()
     {
@@ -183,6 +184,7 @@ public class turnScript : NetworkBehaviour
 
         playerHealth.turnStartHealth = (int)playerHealth.HPStatic; //updates turnstart health to track how much life they started w/
         Debug.Log("Your health is at: " + playerHealth.turnStartHealth);
+        
     }
 
 
