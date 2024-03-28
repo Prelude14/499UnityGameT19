@@ -17,7 +17,7 @@ public class turnScript : NetworkBehaviour
     public int maxMana;
 
     public static int currentMana;
-    public Text manaText;
+    public TMPro.TMP_Text manaText;
 
     public static bool turnStart;
 
