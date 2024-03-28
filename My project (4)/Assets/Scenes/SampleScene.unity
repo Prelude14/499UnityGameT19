@@ -535,6 +535,8 @@ MonoBehaviour:
   syncInterval: 0
   PlayerManager: {fileID: 0}
   PlayerTurnManager: {fileID: 0}
+  PlayerManaManager: {fileID: 0}
+  PlayerAttackManager: {fileID: 0}
   validDeckShuffled: 0
   gameStarted: 0
   container: []
@@ -545,6 +547,8 @@ MonoBehaviour:
   serverTurnCount: 0
   p1Mana: 1
   p2Mana: 1
+  p1Health: 30
+  p2Health: 30
 --- !u!114 &492603886
 MonoBehaviour:
   m_ObjectHideFlags: 0

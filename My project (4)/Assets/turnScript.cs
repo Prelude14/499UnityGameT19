@@ -166,6 +166,7 @@ public class turnScript : NetworkBehaviour
 
         //turnCount++;
         updateTurnCount();
+
     }
     public void endOpponentTurn()
     {
@@ -179,6 +180,9 @@ public class turnScript : NetworkBehaviour
         {
             disable = false;
         }
+
+        playerHealth.turnStartHealth = (int)playerHealth.HPStatic; //updates turnstart health to track how much life they started w/
+        Debug.Log("Your health is at: " + playerHealth.turnStartHealth);
     }
 
 

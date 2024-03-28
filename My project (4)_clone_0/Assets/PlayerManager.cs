@@ -267,7 +267,7 @@ public class PlayerManager : NetworkBehaviour
         if (sharedVarManagerObj != null)
         {
             SharedVarManager sharedVarManager = sharedVarManagerObj.GetComponent<SharedVarManager>();
-            //Call the command on the NetworkManager
+            //Call the command on the 
 
             sharedVarManager.CmdAttackOtherPlayer(damage, networkAttackIdentity); //call server's attackPlayer CMD to update health variables accordingly
             Debug.Log("Attacked info recieved by dbdisplay...attack sent to server's CmdAttackOtherPlayer...");

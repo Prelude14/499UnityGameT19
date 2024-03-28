@@ -17,7 +17,7 @@ public class turnScript : NetworkBehaviour
     public int maxMana;
 
     public static int currentMana;
-    public Text manaText;
+    public TMPro.TMP_Text manaText;
 
     public static bool turnStart;
 
@@ -166,6 +166,7 @@ public class turnScript : NetworkBehaviour
 
         //turnCount++;
         updateTurnCount();
+
     }
     public void endOpponentTurn()
     {
@@ -179,6 +180,9 @@ public class turnScript : NetworkBehaviour
         {
             disable = false;
         }
+
+        playerHealth.turnStartHealth = (int)playerHealth.HPStatic; //updates turnstart health to track how much life they started w/
+        Debug.Log("Your health is at: " + playerHealth.turnStartHealth);
     }
 
 

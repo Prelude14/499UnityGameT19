@@ -2,20 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+
+using UnityEngine.UI;
+using Mirror;
 public class abilityScript : MonoBehaviour
 {
     // Start is called before the first frame update
-    public int color = dbDisplay.staticColour;
+    public int color;
     public int id = dbDisplay.staticID;
     public bool triggered = false;
-
+    public PlayerManager PlayerManager;
+    NetworkIdentity networkIdentity;
     void Update()
     {
+        networkIdentity = NetworkClient.connection.identity;
+         PlayerManager = networkIdentity.GetComponent<PlayerManager>();
         color = dbDisplay.staticColour;
         id = dbDisplay.staticID;
         if (triggered == false && dbDisplay.staticSummoned == true)
         {
-            Debug.Log("Ability triggered init");
+            Debug.Log("Ability triggered init " + color);
+
             switch (color)
             {
                 case 1:
@@ -42,6 +49,7 @@ public class abilityScript : MonoBehaviour
     public void abilityListBlack(int id)
     {
         Debug.Log("black trigger id: " + id);
+ 
         switch (id)
         {
             case 0:
@@ -81,20 +89,27 @@ public class abilityScript : MonoBehaviour
             case 11:
                 //noenemy targetting yet
                 float difInHealth = 30 - playerHealth.HPStatic;
-                // int drawAmount = (int)Math.Floor(difInHealth / 3);
-                // playerDeck.staticAmount = drawAmount;
-                // playerDeck.drawStatic = true;
-                // Debug.Log("Drawn: " + drawAmount);
+                //draw
+                int drawAmount = (int)Math.Floor(difInHealth / 3);
+                //draw difference in health amount
+                PlayerManager.CmdDraw(drawAmount, PlayerManager.clientDecks);
+                Debug.Log("Drawn: " + drawAmount);
                 break;
             default:
                 break;
         }
         // case 0:
         //ability 0: deal 2 damage to yourself
+        triggered = true;
 
     }
     public void abilityListWhite(int id)
     {
+        
+        Debug.Log("TRIGGER WHITE ABILTIY");
+        PlayerManager.CmdDraw(3, PlayerManager.clientDecks);
+        Debug.Log("Drawn: " + 3);
+        triggered = true;
 
         // case 0:
         //ability 0: deal 2 damage to yourself

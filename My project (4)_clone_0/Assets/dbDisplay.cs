@@ -113,6 +113,7 @@ public class dbDisplay : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        staticColour = colour;
 
         staticAttackBorder = false;
         staticCost = cost;

@@ -61,7 +61,7 @@ public class playerDeck : NetworkBehaviour
 
                 if (PlayerManager.deckShuffled == true) //if after sending our colour to server, the server created and shuffled the deck properly, we can now start the game
                 {
-                    //PlayerManager.CmdDraw(2, PlayerManager.clientDecks); //get server to deal out two cards for each client
+                    // PlayerManager.CmdDraw(2, PlayerManager.clientDecks); //get server to deal out two cards for each client
 
                     //Debug.Log("Game started ");
                     //cmd draw also changed the sync var gamestarted bool, so now that game has started, this whole method shouldn't be able to do anything 

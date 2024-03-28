@@ -18,6 +18,7 @@ public class playerHealth : NetworkBehaviour
     //need access to player manager script that is unique to each client
     public PlayerManager PlayerManager;
     public float myHealth = 31; //default val for my health inside setUpMyHealth()
+    public static int turnStartHealth;
 
 
     void Start()
