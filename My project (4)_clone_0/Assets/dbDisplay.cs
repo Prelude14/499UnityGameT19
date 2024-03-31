@@ -436,6 +436,4 @@ public class dbDisplay : NetworkBehaviour
         Destroy(zoomCard);
     }
 
-
-
 }

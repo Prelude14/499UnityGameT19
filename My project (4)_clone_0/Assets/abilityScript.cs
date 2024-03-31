@@ -49,14 +49,18 @@ public class abilityScript : MonoBehaviour
     public void abilityListBlack(int id)
     {
         Debug.Log("black trigger id: " + id);
- 
+        int damage;
+        NetworkIdentity networkAttackIdentity = NetworkClient.connection.identity;
+        PlayerManager = networkAttackIdentity.GetComponent<PlayerManager>();
         switch (id)
        {
             case 0:
             case 1:
                 // playerHealth.HPStatic -= 2;
                 // Debug.Log("reduce health by 2");
+                damage = 2; 
                 
+                PlayerManager.CmdSendSelfDamage(damage, networkAttackIdentity);
                 break;
             case 2:
             case 3:
@@ -66,10 +70,15 @@ public class abilityScript : MonoBehaviour
             case 5:
                 // playerHealth.HPStatic -= 3;
                 // Debug.Log("reduce health by 3");
+                damage = 3; 
+                
+                PlayerManager.CmdSendSelfDamage(damage, networkAttackIdentity);
                 break;
             case 6:
             case 7:
                 //target enemy or minion targetting yet
+                 damage = 2; 
+                 PlayerManager.CmdSendSelfDamage(damage, networkAttackIdentity);
                 break;
             case 8:
             case 9:
@@ -87,6 +96,10 @@ public class abilityScript : MonoBehaviour
                 // }
                 // Debug.Log("Healed for diff of " + healthDiff);
                 // break;
+                 damage = 2; 
+                
+                PlayerManager.CmdSendSelfDamage(damage, networkAttackIdentity);
+                break;
             case 10:
             case 11:
                 //noenemy targetting yet
@@ -96,6 +109,8 @@ public class abilityScript : MonoBehaviour
                 // playerDeck.drawStatic = true;
                 // Debug.Log("Drawn: " + drawAmount);
                 // turnScript.cardsDrawn += drawAmount;
+                 damage = 2; 
+               PlayerManager.CmdSendSelfDamage(damage, networkAttackIdentity);
                 break;
             default:
                 break;
@@ -179,6 +194,9 @@ public class abilityScript : MonoBehaviour
         foreach (Transform child in enemyZone.transform) {
             NetworkServer.Destroy(child.gameObject);
         }
+       //destroyCardDupeClone
+       GameObject cardDupe = GameObject.Find("cardDupe (clone)");
+       Destroy(cardDupe);
     }
 }
 
