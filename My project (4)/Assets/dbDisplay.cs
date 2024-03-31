@@ -428,9 +428,6 @@ public class dbDisplay : NetworkBehaviour
         zoomCard.GetComponent<contentZoom>().cost = cost;
         zoomCard.GetComponent<contentZoom>().pow = pow;
         zoomCard.GetComponent<contentZoom>().hp = hp;
-
-
-
     }
 
     public void OnHoverExit()

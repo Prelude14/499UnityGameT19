@@ -51,11 +51,12 @@ public class abilityScript : MonoBehaviour
         Debug.Log("black trigger id: " + id);
  
         switch (id)
-        {
+       {
             case 0:
             case 1:
-                playerHealth.HPStatic -= 2;
-                Debug.Log("reduce health by 2");
+                // playerHealth.HPStatic -= 2;
+                // Debug.Log("reduce health by 2");
+                
                 break;
             case 2:
             case 3:
@@ -63,8 +64,8 @@ public class abilityScript : MonoBehaviour
                 break;
             case 4:
             case 5:
-                playerHealth.HPStatic -= 3;
-                Debug.Log("reduce health by 3");
+                // playerHealth.HPStatic -= 3;
+                // Debug.Log("reduce health by 3");
                 break;
             case 6:
             case 7:
@@ -73,30 +74,33 @@ public class abilityScript : MonoBehaviour
             case 8:
             case 9:
                 //turn start health
-                float startHealth = playerHealth.turnStartHealth;
-                float healthDiff = playerHealth.turnStartHealth - playerHealth.HPStatic;
-                if (healthDiff >= 0)
-                {
-                    playerHealth.HPStatic += healthDiff;
-                }
-                else
-                {
-                    playerHealth.HPStatic += 0;
-                }
-                Debug.Log("Healed for diff of " + healthDiff);
-                break;
+                // float startHealth = playerHealth.turnStartHealth;
+                // float healthDiff = playerHealth.turnStartHealth - playerHealth.HPStatic;
+                // if (healthDiff >= 0)
+                // {
+                //     playerHealth.HPStatic += healthDiff;
+                //     turnScript.damageHealed += (int)healthDiff;
+                // }
+                // else
+                // {
+                //     playerHealth.HPStatic += 0;
+                // }
+                // Debug.Log("Healed for diff of " + healthDiff);
+                // break;
             case 10:
             case 11:
                 //noenemy targetting yet
-                float difInHealth = 30 - playerHealth.HPStatic;
-                //draw
-                int drawAmount = (int)Math.Floor(difInHealth / 3);
-                //draw difference in health amount
-                PlayerManager.CmdDraw(drawAmount, PlayerManager.clientDecks);
-                Debug.Log("Drawn: " + drawAmount);
+                // float difInHealth = 30 - playerHealth.HPStatic;
+                // int drawAmount = (int)Math.Floor(difInHealth / 3);
+                // playerDeck.staticAmount = drawAmount;
+                // playerDeck.drawStatic = true;
+                // Debug.Log("Drawn: " + drawAmount);
+                // turnScript.cardsDrawn += drawAmount;
                 break;
             default:
                 break;
+
+
         }
         // case 0:
         //ability 0: deal 2 damage to yourself
@@ -134,6 +138,48 @@ public class abilityScript : MonoBehaviour
 
         // case 0:
         //ability 0: deal 2 damage to yourself
+        switch(id){
+            case 0:
+            case 1:
+                triggered = true;
+                boardWipe();
+                break;
+            case 2:
+            case 3:
+                PlayerManager.CmdDraw(1, PlayerManager.clientDecks);
+                Debug.Log("Drawn: " + 1);
+                triggered = true;
+                boardWipe();
+                break;
+            case 4:
+            case 5:
+                //deal direct target damage to opponent using attack trigger?
+                boardWipe();
+                triggered = true;
+                break;
+            case 6:
+            case 7:
+                Debug.Log("Triggered board wipe");
+                boardWipe();
+                triggered = true;
+                break;
+            default:
+                break;
+        }
 
     }
+
+    public void boardWipe() {
+        GameObject playZone = GameObject.Find("playPanel");
+        GameObject enemyZone = GameObject.Find("oppPlayPanel");
+        //preparing to blow up the board
+        foreach (Transform child in playZone.transform) {
+            NetworkServer.Destroy(child.gameObject);
+        }
+        foreach (Transform child in enemyZone.transform) {
+            NetworkServer.Destroy(child.gameObject);
+        }
+    }
 }
+
+
