@@ -168,6 +168,14 @@ public class SharedVarManager : NetworkBehaviour
             p2Health -= damage;
         }
     }
+    [Command(requiresAuthority = false)]
+    public void CmdHealDamage(int healed){
+        if(whosTurn == 1){ //if player one played this
+            p1Health += healed;
+        }else {
+            p2Health += healed;
+        }
+    }
 
      [Command(requiresAuthority = false)]
     public void CmdSelfHealAbility(float heal){
