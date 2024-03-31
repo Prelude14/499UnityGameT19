@@ -274,7 +274,7 @@ public class abilityScript : MonoBehaviour
         NetworkIdentity networkAttackIdentity = NetworkClient.connection.identity;
         PlayerManager = networkAttackIdentity.GetComponent<PlayerManager>();
        GameObject playPanel = GameObject.Find("playPanel");
-       int creatureCount = playPanel.childCount;
+       int creatureCount = playPanel.transform.childCount;
        switch(id){
         case 0:
         case 1:
@@ -297,7 +297,7 @@ public class abilityScript : MonoBehaviour
         case 6:
         case 7:
             //mana restoration? Todo:
-            int toRefill = playPanel.childCount;
+            int toRefill = playPanel.transform.childCount;
             break;
         case 8:
         case 9:
