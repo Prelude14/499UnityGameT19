@@ -95,8 +95,8 @@ public class cardDatabase : MonoBehaviour
         redCardList.Add(new Card1(2, 0, "Toxic Blade", 1, 2, 1, "If this creature attacks an enemy, deal another 2 damage."));
         redCardList.Add(new Card1(2, 1, "Toxic Blade", 1, 2, 1, "If this creature attacks an enemy, deal another 2 damage."));
 
-        redCardList.Add(new Card1(2, 2, "Beserker", 2, 1, 1, "Gives all your creatures played a +1/+0 stat buff."));
-        redCardList.Add(new Card1(2, 3, "Beserker", 2, 1, 1, "Gives all your creatures played a +1/+0 stat buff."));
+        redCardList.Add(new Card1(2, 2, "Beserker", 3, 5, 1, ""));
+        redCardList.Add(new Card1(2, 3, "Beserker", 3, 5, 1, ""));
 
         redCardList.Add(new Card1(2, 4, "Summoner", 4, 2, 3, "Draw a new card for each creature you currently control."));
         redCardList.Add(new Card1(2, 5, "Summoner", 4, 2, 3, "Draw a new card for each creature you currently control."));

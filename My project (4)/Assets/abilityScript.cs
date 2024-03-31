@@ -12,6 +12,7 @@ public class abilityScript : MonoBehaviour
     public int id = dbDisplay.staticID;
     public bool triggered = false;
     public PlayerManager PlayerManager;
+    public static bool attacked = false;
     NetworkIdentity networkIdentity;
     void Update()
     {
@@ -270,32 +271,46 @@ public class abilityScript : MonoBehaviour
     }
     public void abilityListRed(int id)
     {
-
+        NetworkIdentity networkAttackIdentity = NetworkClient.connection.identity;
+        PlayerManager = networkAttackIdentity.GetComponent<PlayerManager>();
+       GameObject playPanel = GameObject.Find("playPanel");
+       int creatureCount = playPanel.childCount;
        switch(id){
         case 0:
         case 1:
-        
+            if(attacked == true){
+                // PlayerManager.CmdPingDamage(SharedVarManager.p2TotalDraw * 2, networkAttackIdentity);
+                PlayerManager.CmdPingDamage(2, networkAttackIdentity);
+                attacked = false;
+            }
             break;
         case 2:
-        
+        case 3:
+            //no ability
+            //just a big stat stick
             break;
         case 4:
         case 5:
-          
+            
+            PlayerManager.CmdDraw(creatureCount, PlayerManager.clientDecks);
             break;
         case 6:
         case 7:
-          
+            //mana restoration? Todo:
+            int toRefill = playPanel.childCount;
             break;
         case 8:
         case 9:
-            //discard?
-           
+            
+                // PlayerManager.CmdPingDamage(SharedVarManager.p2TotalDraw * 2, networkAttackIdentity);
+                PlayerManager.CmdPingDamage(4, networkAttackIdentity);
+            
             break;
         case 10:
         case 11:
             //
-           
+            int damage = creatureCount * 2;
+              PlayerManager.CmdPingDamage(damage, networkAttackIdentity);
             break;
         default:
             break;

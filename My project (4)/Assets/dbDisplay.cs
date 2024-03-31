@@ -313,7 +313,7 @@ public class dbDisplay : NetworkBehaviour
 
         PlayerManager.CmdSendAttackInfo(damage, networkAttackIdentity); //call playermanager's cmd that calls server's attackPlayer CMD
         Debug.Log("Attacked opponent...attack sent CmdSendAttackInfo to playermanager...");
-
+        abilityScript.attacked = true;
     }
 
     public void UntargetEnemy()
