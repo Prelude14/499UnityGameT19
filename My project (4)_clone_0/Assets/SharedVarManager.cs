@@ -54,6 +54,8 @@ public class SharedVarManager : NetworkBehaviour
     public static float p1TotalHeal;
     public static float p2TotalHeal;
 
+    public static int p1TotalDraw;
+    public static int p2TotalDraw;
     //command when turn is ended on client side (they press end turn button and call this command in turnscript)
     [Command(requiresAuthority = false)]
     public void CmdUpdateWhosTurn(NetworkIdentity networkTurnIdentity)

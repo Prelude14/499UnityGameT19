@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using Random=UnityEngine.Random;
 using UnityEngine.UI;
 using Mirror;
 public class abilityScript : MonoBehaviour
@@ -194,7 +194,7 @@ public class abilityScript : MonoBehaviour
             if(SharedVarManager.staticTurn == 1){
                 damage = (int)SharedVarManager.p1TotalHeal; //deal damage equal to healing 
                 //target damage
-                PlayerManager.CmdPingDamage(damage);
+                PlayerManager.CmdPingDamage(damage, networkAttackIdentity);
             }
                 break;
         default:
@@ -205,16 +205,101 @@ public class abilityScript : MonoBehaviour
     }
     public void abilityListBlue(int id)
     {
-
         // case 0:
         //ability 0: deal 2 damage to yourself
+         NetworkIdentity networkAttackIdentity = NetworkClient.connection.identity;
+        PlayerManager = networkAttackIdentity.GetComponent<PlayerManager>();
+       
+        GameObject enemyZone = GameObject.Find("oppPlayPanel");
+        GameObject enemyHand = GameObject.Find("oppHand");
+        GameObject yourHand = GameObject.Find("hand");
+        int myHandCount = yourHand.transform.childCount;
+        switch(id){
+        case 0:
+        case 1:
+            //
+           
+            break;
+        case 2:
+        case 3:
+            //
+            //destroy random enemy
+            
+            int childCount = enemyZone.transform.childCount;
+            int randomChild = Random.Range(0, childCount);
+            NetworkServer.Destroy(transform.GetChild(randomChild).gameObject);
+            break;
+        case 4:
+        case 5:
+            //draw 1 reduce cost 1?
+             PlayerManager.CmdDraw(1, PlayerManager.clientDecks);
+            break;
+        case 6:
+        case 7:
+            int enemyHandCount = enemyHand.transform.childCount;
+            
+            int toDraw = enemyHandCount - myHandCount;
+            if(toDraw <= 0){
+                return;
+            }else {
+                PlayerManager.CmdDraw(toDraw, PlayerManager.clientDecks);
+            }
+            break;
+        case 8:
+        case 9:
+            //discard?
+           int handplus1 = myHandCount + 1;
+           foreach (Transform child in yourHand.transform) {
+            NetworkServer.Destroy(child.gameObject);
+            }
+            PlayerManager.CmdDraw(handplus1, PlayerManager.clientDecks);
+            break;
+        case 10:
+        case 11:
+            if(SharedVarManager.staticTurn == 1){
+                PlayerManager.CmdPingDamage(SharedVarManager.p1TotalDraw * 2, networkAttackIdentity);
+            }else {
+                PlayerManager.CmdPingDamage(SharedVarManager.p2TotalDraw * 2, networkAttackIdentity);
+            }
+            break;
+        default:
+            break;
+    }
+        
         triggered = true;
     }
     public void abilityListRed(int id)
     {
 
-        // case 0:
-        //ability 0: deal 2 damage to yourself
+       switch(id){
+        case 0:
+        case 1:
+        
+            break;
+        case 2:
+        
+            break;
+        case 4:
+        case 5:
+          
+            break;
+        case 6:
+        case 7:
+          
+            break;
+        case 8:
+        case 9:
+            //discard?
+           
+            break;
+        case 10:
+        case 11:
+            //
+           
+            break;
+        default:
+            break;
+    }
         triggered = true;
     }
     public void abilityListColorless(int id)

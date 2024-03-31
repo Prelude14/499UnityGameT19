@@ -151,6 +151,11 @@ public class PlayerManager : NetworkBehaviour
                     NetworkServer.Spawn(card, connectionToClient); //Server spawns object across network for other clients to use, and gives Client the authority of the object (their card in this case)
                     RpcShowCard(card, "Dealt"); //this gets server to display the card object across both clients (and it displays specificly based on who has authority inside the rpc method)
                                                 //renderCardColour(card);
+                    if(SharedVarManager.staticTurn == 1){
+                        SharedVarManager.p1TotalDraw += drawSize;
+                    }else {
+                        SharedVarManager.p2TotalDraw += drawSize;
+                    }
                 }
                 //sharedVarManager.gameStarted = true; //server should sync this value to all clients, and once 
             }
