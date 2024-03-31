@@ -300,7 +300,7 @@ public class PlayerManager : NetworkBehaviour
     }
     //general heal
     [Command(requiresAuthority = false)] //added the authority bit in the process of debugging, defaults to true, so I think only the owner's version of their clientDeck will be changed unless this is here (but haven't really seen proof yet)
-    public void CmdSendSelfDamage(int healed, NetworkIdentity networkAttackIdentity)
+    public void CmdSendHealing(int healed, NetworkIdentity networkAttackIdentity)
     {
         //find sharedvar game object in scene at runtime (for deck colour strings and game start booleans
         GameObject sharedVarManagerObj = GameObject.Find("SharedVarManager");
@@ -308,9 +308,16 @@ public class PlayerManager : NetworkBehaviour
         sharedVarManager.CmdHealDamage(healed);
         Debug.Log("SENDING " + healed +" to self");
     }
+    [Command(requiresAuthority = false)] //added the authority bit in the process of debugging, defaults to true, so I think only the owner's version of their clientDeck will be changed unless this is here (but haven't really seen proof yet)
+    public void CmdPingDamage(int ping, NetworkIdentity networkAttackIdentity)
+    {
+        //find sharedvar game object in scene at runtime (for deck colour strings and game start booleans
+        GameObject sharedVarManagerObj = GameObject.Find("SharedVarManager");
+        SharedVarManager sharedVarManager = sharedVarManagerObj.GetComponent<SharedVarManager>();
+        sharedVarManager.CmdPingDamage(ping);
+    }
 
     
-
 
     /*
     [Command]

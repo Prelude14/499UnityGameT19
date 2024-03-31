@@ -51,6 +51,9 @@ public class SharedVarManager : NetworkBehaviour
     public static float p2HP;
     public static int staticTurn;
 
+    public static float p1TotalHeal;
+    public static float p2TotalHeal;
+
     //command when turn is ended on client side (they press end turn button and call this command in turnscript)
     [Command(requiresAuthority = false)]
     public void CmdUpdateWhosTurn(NetworkIdentity networkTurnIdentity)
@@ -168,12 +171,24 @@ public class SharedVarManager : NetworkBehaviour
             p2Health -= damage;
         }
     }
+
+    //ping bits of damage
+    [Command(requiresAuthority = false)]
+    public void CmdPingDamage(int damage){
+        if(whosTurn == 1){ //if player one played this
+            p2Health -= damage;
+        }else {
+            p1Health -= damage;
+        }
+    }
     [Command(requiresAuthority = false)]
     public void CmdHealDamage(int healed){
         if(whosTurn == 1){ //if player one played this
             p1Health += healed;
+            p1TotalHeal += healed;
         }else {
             p2Health += healed;
+            p2TotalHeal += healed;
         }
     }
 
@@ -184,6 +199,7 @@ public class SharedVarManager : NetworkBehaviour
             toHeal = turnScript.p1StartingHP - p1Health; //difference in heal
             if(toHeal >= 0){
                 p1Health += toHeal;
+                p1TotalHeal += toHeal;
             }else{
                 p1Health += 0;
             }
@@ -191,6 +207,7 @@ public class SharedVarManager : NetworkBehaviour
             toHeal = turnScript.p2StartingHP - p2Health; //difference in heal
             if(toHeal >= 0){
                 p2Health += toHeal;
+                p2TotalHeal += toHeal;
             }else{
                 p2Health += 0;
             }

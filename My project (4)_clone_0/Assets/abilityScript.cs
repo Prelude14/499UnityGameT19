@@ -136,12 +136,71 @@ public class abilityScript : MonoBehaviour
     {
         
         Debug.Log("TRIGGER WHITE ABILTIY");
-        PlayerManager.CmdDraw(3, PlayerManager.clientDecks);
-        Debug.Log("Drawn: " + 3);
-        triggered = true;
+        // PlayerManager.CmdDraw(3, PlayerManager.clientDecks);
+        // Debug.Log("Drawn: " + 3);
+        // triggered = true;
 
         // case 0:
         //ability 0: deal 2 damage to yourself
+        int healed;
+        NetworkIdentity networkAttackIdentity = NetworkClient.connection.identity;
+        PlayerManager = networkAttackIdentity.GetComponent<PlayerManager>();
+        int damage;
+         switch(id){
+        case 0:
+        case 1:
+            // playerHealth.HPStatic += 2;
+            // Debug.Log("increase health by 2");
+            // turnScript.damageHealed += 2;
+            healed = 2; 
+            PlayerManager.CmdSendHealing(healed, networkAttackIdentity);
+            break;
+        case 2:
+        case 3:
+            // playerHealth.HPStatic += 2;
+            // Debug.Log("increase health by 2");
+            // //deal 2 
+            // enemyHealth.HPStatic -= 2;
+            // Debug.Log("ping enemy 2");
+            // turnScript.damageHealed += 2;
+            //heal 2 deal 2
+            healed = 2; 
+            PlayerManager.CmdSendHealing(healed, networkAttackIdentity);
+            damage = 2; 
+            PlayerManager.CmdSendSelfDamage(damage, networkAttackIdentity);
+            break;
+        case 4:
+        case 5:
+            //draw card & heal 5
+            PlayerManager.CmdDraw(1, PlayerManager.clientDecks);
+                Debug.Log("Drawn: " + 1);
+                triggered = true;
+                //heal 5 dmg
+                 healed = 5; 
+            PlayerManager.CmdSendHealing(healed, networkAttackIdentity);
+            break;
+        case 6:
+        case 7:
+            //Heal target no target yet
+            break;
+        case 8:
+        case 9:
+            //copy card
+            //Change?
+            break;
+        case 10:
+        case 11:
+               
+            if(SharedVarManager.staticTurn == 1){
+                damage = (int)SharedVarManager.p1TotalHeal; //deal damage equal to healing 
+                //target damage
+                PlayerManager.CmdPingDamage(damage);
+            }
+                break;
+        default:
+            break;
+    }
+    triggered = true;
 
     }
     public void abilityListBlue(int id)
@@ -149,37 +208,38 @@ public class abilityScript : MonoBehaviour
 
         // case 0:
         //ability 0: deal 2 damage to yourself
-
+        triggered = true;
     }
     public void abilityListRed(int id)
     {
 
         // case 0:
         //ability 0: deal 2 damage to yourself
-
+        triggered = true;
     }
     public void abilityListColorless(int id)
-    {
-
+    {   
+        NetworkIdentity networkAttackIdentity = NetworkClient.connection.identity;
+        PlayerManager = networkAttackIdentity.GetComponent<PlayerManager>();
         // case 0:
         //ability 0: deal 2 damage to yourself
         switch(id){
             case 0:
             case 1:
                 triggered = true;
-                boardWipe();
+                
                 break;
             case 2:
             case 3:
                 PlayerManager.CmdDraw(1, PlayerManager.clientDecks);
                 Debug.Log("Drawn: " + 1);
                 triggered = true;
-                boardWipe();
+                
                 break;
             case 4:
             case 5:
                 //deal direct target damage to opponent using attack trigger?
-                boardWipe();
+                PlayerManager.CmdPingDamage(5, networkAttackIdentity);
                 triggered = true;
                 break;
             case 6:
