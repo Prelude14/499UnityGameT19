@@ -59,7 +59,6 @@ public class abilityScript : MonoBehaviour
                 // playerHealth.HPStatic -= 2;
                 // Debug.Log("reduce health by 2");
                 damage = 2; 
-                
                 PlayerManager.CmdSendSelfDamage(damage, networkAttackIdentity);
                 break;
             case 2:
@@ -71,14 +70,12 @@ public class abilityScript : MonoBehaviour
                 // playerHealth.HPStatic -= 3;
                 // Debug.Log("reduce health by 3");
                 damage = 3; 
-                
                 PlayerManager.CmdSendSelfDamage(damage, networkAttackIdentity);
                 break;
             case 6:
             case 7:
                 //target enemy or minion targetting yet
-                 damage = 2; 
-                 PlayerManager.CmdSendSelfDamage(damage, networkAttackIdentity);
+                 
                 break;
             case 8:
             case 9:
@@ -96,9 +93,19 @@ public class abilityScript : MonoBehaviour
                 // }
                 // Debug.Log("Healed for diff of " + healthDiff);
                 // break;
-                 damage = 2; 
                 
-                PlayerManager.CmdSendSelfDamage(damage, networkAttackIdentity);
+                float currentHealth;
+                int whosTurn = SharedVarManager.staticTurn; // 1 is p1 2 is p2
+                if(whosTurn == 1){
+                    //send p1.heal
+                    currentHealth  = SharedVarManager.p1HP;
+                    PlayerManager.CmdHealDamage(currentHealth, networkAttackIdentity);
+
+                }else {
+                    //send p2.heal
+                    currentHealth = SharedVarManager.p2HP;
+                    PlayerManager.CmdHealDamage(currentHealth, networkAttackIdentity);
+                }
                 break;
             case 10:
             case 11:
@@ -109,8 +116,11 @@ public class abilityScript : MonoBehaviour
                 // playerDeck.drawStatic = true;
                 // Debug.Log("Drawn: " + drawAmount);
                 // turnScript.cardsDrawn += drawAmount;
-                 damage = 2; 
-               PlayerManager.CmdSendSelfDamage(damage, networkAttackIdentity);
+                if(SharedVarManager.staticTurn == 1){
+                    //if its p1 who played this 
+                    int diff = 30 - (int)SharedVarManager.p1HP;
+                    PlayerManager.CmdDraw(diff, PlayerManager.clientDecks);
+                }
                 break;
             default:
                 break;

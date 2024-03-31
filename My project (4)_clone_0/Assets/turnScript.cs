@@ -25,6 +25,8 @@ public class turnScript : NetworkBehaviour
     public GameObject playArrows;
     public GameObject attackArrows;
 
+    public static float p1StartingHP; // turn start HP
+    public static float p2StartingHP; // turn start HP
     //need access to player manager script that is unique to each client
     public PlayerManager PlayerManager;
 
@@ -168,6 +170,10 @@ public class turnScript : NetworkBehaviour
         //turnCount++;
         updateTurnCount();
         PlayerManager.CmdDraw(1, PlayerManager.clientDecks);
+
+        //update the health of each player at the end of each turn
+        p1StartingHP = SharedVarManager.p1HP;
+        p2StartingHP = SharedVarManager.p2HP;
     }
     public void endOpponentTurn()
     {

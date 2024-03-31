@@ -288,6 +288,16 @@ public class PlayerManager : NetworkBehaviour
         sharedVarManager.CmdSelfDamage(damage);
         Debug.Log("SENDING " + damage +" to self");
     }
+    [Command(requiresAuthority = false)] //added the authority bit in the process of debugging, defaults to true, so I think only the owner's version of their clientDeck will be changed unless this is here (but haven't really seen proof yet)
+    public void CmdHealDamage(float heal, NetworkIdentity networkAttackIdentity)
+    {
+        //find sharedvar game object in scene at runtime (for deck colour strings and game start booleans
+        GameObject sharedVarManagerObj = GameObject.Find("SharedVarManager");
+        SharedVarManager sharedVarManager = sharedVarManagerObj.GetComponent<SharedVarManager>();
+        sharedVarManager.CmdSelfHealAbility(heal);
+        Debug.Log("SENDING healing " + heal +" to self");
+    }
+    
 
 
     /*

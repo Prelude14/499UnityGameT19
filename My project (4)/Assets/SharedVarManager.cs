@@ -45,10 +45,11 @@ public class SharedVarManager : NetworkBehaviour
 
     [SyncVar] public float p1Health = 30; //need sync var to track each player's health (start with full 30 points)
     [SyncVar] public float p2Health = 30; //need sync var to track each player's health
-
-    public float p1HealthStartTurn = 30;
-    public float p2HealthStartTurn = 30;
     //=====================================================================  METHODS  ===============================================================================
+
+    public static float p1HP;
+    public static float p2HP;
+    public static int staticTurn;
 
     //command when turn is ended on client side (they press end turn button and call this command in turnscript)
     [Command(requiresAuthority = false)]
@@ -165,6 +166,26 @@ public class SharedVarManager : NetworkBehaviour
             p1Health -= damage;
         }else {
             p2Health -= damage;
+        }
+    }
+
+     [Command(requiresAuthority = false)]
+    public void CmdSelfHealAbility(float heal){
+        float toHeal;
+        if(whosTurn == 1){ //if player one played this
+            toHeal = turnScript.p1StartingHP - p1Health; //difference in heal
+            if(toHeal >= 0){
+                p1Health += toHeal;
+            }else{
+                p1Health += 0;
+            }
+        }else {
+            toHeal = turnScript.p2StartingHP - p2Health; //difference in heal
+            if(toHeal >= 0){
+                p2Health += toHeal;
+            }else{
+                p2Health += 0;
+            }
         }
     }
 
@@ -765,5 +786,10 @@ public class SharedVarManager : NetworkBehaviour
     }
 
 
-
+    void Update(){
+        //update any public data
+        p1HP = p1Health; 
+        p2HP = p2Health;
+        staticTurn = whosTurn;
+    }
 }
