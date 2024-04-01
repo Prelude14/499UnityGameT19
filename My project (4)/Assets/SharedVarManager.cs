@@ -294,7 +294,7 @@ public class SharedVarManager : NetworkBehaviour
         //add the full game deck to the playerDeck script as well
         playerDeck.staticDeck.AddRange(gameDeck); //add ALL OF GAME DECK to playerDeck's static deck list, so that db display can access the right cards.
 
-        PlayerManager.CmdDraw(1, combo); //get server to deal out two cards for each client
+        PlayerManager.CmdDraw(3, combo); //get server to deal out two cards for each client
 
         Debug.Log("Game started !");
 

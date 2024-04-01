@@ -252,7 +252,8 @@ public class PlayerManager : NetworkBehaviour
             SharedVarManager sharedVarManager = sharedVarManagerObj.GetComponent<SharedVarManager>();
             //Call the command on the NetworkManager
 
-            sharedVarManager.CmdUpdateWhosTurn(networkTurnIdentity); // this calls the SharedVarManager script, which should handle the game logic from here, and deal out cards properly
+            sharedVarManager.CmdUpdateWhosTurn(networkTurnIdentity); // this calls the SharedVarManager script, which should handle the game logic from here, and update who's turn it is
+
         }
         else
         {
