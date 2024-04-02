@@ -266,6 +266,12 @@ public class dbDisplay : MonoBehaviour
                     staticAttackBorder = false;
                     attackBorder = false;
                     turnScript.actionPoints--;
+
+                    Debug.LogError("Card Attacked");
+                    if (GameTutorial.Instance)
+                    {
+                        GameTutorial.Instance.AttachTutorialCompleted();
+                    }
                 }
 
                 if (Target.name == "cardInHand(Clone)")
