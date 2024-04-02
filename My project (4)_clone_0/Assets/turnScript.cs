@@ -72,8 +72,8 @@ public class turnScript : NetworkBehaviour
                 isMyTurn = true;
                 myTurn = 1;
                 isTheirTurn = 0;
-                maxMana = sharedVarManager.p1Mana; //set max to equal shared var manager's current count
-                currentMana = maxMana; //update current mana to match full mana (instead of incrementing it? *********************)
+                maxMana = SharedVarManager.p1MaxMana; //set max to equal shared var manager's current count
+                currentMana = SharedVarManager.p1StaticMana; //update current mana to match full mana (instead of incrementing it? *********************)
             }
             else if (PlayerManager.isPlayerTwo == true && PlayerManager.isPlayerOne == false) //if I'm player TWO and its PLAYER ONE'S Turn, then it is not my turn
             {
@@ -96,15 +96,15 @@ public class turnScript : NetworkBehaviour
                 isMyTurn = false;
                 myTurn = 0;
                 isTheirTurn = 1;
-                maxMana = sharedVarManager.p1Mana; //set max to equal shared var manager's current count
+                maxMana = SharedVarManager.p1StaticMana; //set max to equal shared var manager's current count
             }
             else if (PlayerManager.isPlayerTwo == true && PlayerManager.isPlayerOne == false) //if I'm player TWO and its PLAYER TWO'S Turn, then it IS my turn
             {
                 isMyTurn = true;
                 myTurn = 1;
                 isTheirTurn = 0;
-                maxMana = sharedVarManager.p2Mana; //set max to equal shared var manager's current count
-                currentMana = maxMana; //update current mana to match full mana (instead of incrementing it? *********************)
+                maxMana = SharedVarManager.p2MaxMana; //set max to equal shared var manager's current count
+                currentMana = SharedVarManager.p2StaticMana; //update current mana to match full mana (instead of incrementing it? *********************)
             }
         }
     }
@@ -113,7 +113,6 @@ public class turnScript : NetworkBehaviour
     void Update()
     {
         SetUpTurns(); //find out if its my turn or not
-
         if (isMyTurn == true)
         {
             turnText.text = "Your turn";

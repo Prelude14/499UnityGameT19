@@ -14,7 +14,6 @@ public class SharedVarManager : NetworkBehaviour
     public PlayerManager PlayerTurnManager; //new one for turn set up just to double check it is new playermanager connection from the Cmdgetplayercolour command
     public PlayerManager PlayerManaManager; //new one for attack set up just to double check it is new playermanager connection from the Cmdgetplayercolour or CmdUpdateWhosTurn
     public PlayerManager PlayerAttackManager; //new one for attack set up just to double check it is new playermanager connection from the Cmdgetplayercolour, CmdUpdateWhosTurn, or CmdUpdateManaCount
-   
 
     //I ended up using some sync vars for these 2 bools, to add additional checks to the game starting logic
     [SyncVar]
@@ -40,12 +39,17 @@ public class SharedVarManager : NetworkBehaviour
     [SyncVar]//need to store who's turn it is
     public int serverTurnCount = 0; //start at 0, but it will be incremented each time a turn ends
 
-    [SyncVar] public int p1Mana = 1; //need sync var to track each player's mana
-    [SyncVar] public int p2Mana = 1; //need sync var to track each player's mana
+    [SyncVar] public int p1Mana; //need sync var to track each player's mana
+    [SyncVar] public int p2Mana; //need sync var to track each player's mana
+    public static int p1MaxMana = 1;
+    public static int p2MaxMana = 1;
+    public static int p1StaticMana;
+    public static int p2StaticMana;
 
     [SyncVar] public float p1Health = 30; //need sync var to track each player's health (start with full 30 points)
     [SyncVar] public float p2Health = 30; //need sync var to track each player's health
-    //=====================================================================  METHODS  ===============================================================================
+    
+    //==================================================================== VARIABLES FOR ABILITIES ===========================================
 
     public static float p1HP;
     public static float p2HP;
@@ -56,6 +60,9 @@ public class SharedVarManager : NetworkBehaviour
 
     public static int p1TotalDraw;
     public static int p2TotalDraw;
+
+   
+    //=====================================================================  METHODS  ===============================================================================
     //command when turn is ended on client side (they press end turn button and call this command in turnscript)
     [Command(requiresAuthority = false)]
     public void CmdUpdateWhosTurn(NetworkIdentity networkTurnIdentity)
@@ -68,8 +75,9 @@ public class SharedVarManager : NetworkBehaviour
             {
                 serverTurnCount++;//increment turn count each time this is called
                 whosTurn = 2; //if it was player 1's turn, then now it is player 2
-                p1Mana++; //add one mana to player one since they will need it come the next turn, player 2 still needs to take their turn before gaining more mana
-
+                p1MaxMana++; //add one mana to player one since they will need it come the next turn, player 2 still needs to take their turn before gaining more mana
+                p1StaticMana = p1MaxMana;
+                p1Mana = p1MaxMana;
                 //PlayerTurnManager.isPlayerManagersTurn = false;//It is no longer my turn
             }
             else if (PlayerTurnManager.isPlayerTwo == true && PlayerTurnManager.isPlayerOne == false) //if player 2 ended player 1's turn somehow
@@ -89,8 +97,9 @@ public class SharedVarManager : NetworkBehaviour
             {
                 serverTurnCount++; //increment turn count each time this is called
                 whosTurn = 1; //if it was player 2's turn, then now it is player 1's
-                p2Mana++; //add one mana to player two since they will need it come the next turn, player 1 still needs to take their turn before gaining more mana
-
+                p2MaxMana++; //add one mana to player two since they will need it come the next turn, player 1 still needs to take their turn before gaining more mana
+                p2StaticMana = p2MaxMana;
+                p2Mana = p2MaxMana;
                 //PlayerTurnManager.isPlayerManagersTurn = false;//It is no longer my turn
             }
         }
@@ -818,5 +827,7 @@ public class SharedVarManager : NetworkBehaviour
         p1HP = p1Health; 
         p2HP = p2Health;
         staticTurn = whosTurn;
+        p1StaticMana = p1Mana;
+        p2StaticMana = p2Mana;
     }
 }
