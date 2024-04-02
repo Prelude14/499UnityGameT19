@@ -230,11 +230,13 @@ public class PlayerManager : NetworkBehaviour
             Debug.Log("Made it to RPC Play card...");
             if (!isOwned)
             {
+                card.transform.localScale = new Vector2(1,1);
                 card.transform.SetParent(oppPlayPanel.transform, false); //enemy play panel
                                                                          //card.GetComponent<CardFlipper>().Flip(); //show correct side of card when played
             }
             else
             {
+                card.transform.localScale = new Vector2(1,1);
                 card.transform.SetParent(playPanel.transform, false); //if the client played it, move it to the regular playPlanel
             }
         }
