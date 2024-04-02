@@ -77,6 +77,10 @@ public class dbDisplay : NetworkBehaviour
     private GameObject zoomCard;
     private Sprite zoomSprite;
 
+    //turn chekcing
+    public int lastTurn;
+    public int currentTurn;
+
     //need access to player manager script that is unique to each client
     public PlayerManager PlayerManager;
 
@@ -113,6 +117,11 @@ public class dbDisplay : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        currentTurn = SharedVarManager.staticTurn;
+        if(currentTurn != lastTurn){
+            hasAttacked = false;
+            lastTurn = currentTurn;
+        }
         staticColour = colour;
 
         staticAttackBorder = false;
@@ -217,8 +226,8 @@ public class dbDisplay : NetworkBehaviour
             Debug.Log(cardName + " Summoned sucess | Cost: " + this.cost + " | Current zone: " + currentZone + " | play zone: " + playZone + " | Is summoned? " + isSummoned);
             //disable script component when summoned
             GetComponent<dragScript>().enabled = false; //don't let card be dragged once played
-            turnScript.currentMana = turnScript.currentMana - this.cost; //take proper mana cost from player
-            Debug.Log("Mana left: " + turnScript.currentMana);
+            // turnScript.currentMana = turnScript.currentMana - this.cost; //take proper mana cost from player
+            // Debug.Log("Mana left: " + turnScript.currentMana);
 
         }
 
@@ -231,12 +240,7 @@ public class dbDisplay : NetworkBehaviour
             //Debug.Log(cardName + " ready to attack");
             unplayableBorder.SetActive(false);
             playableBorder.SetActive(false);
-        }
-
-        if (turnScript.isMyTurn == true && cantAttack == false)
-        {
             canAttack = true;
-
         }
         else
         {

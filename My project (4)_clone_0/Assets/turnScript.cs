@@ -169,7 +169,6 @@ public class turnScript : NetworkBehaviour
             playArrows.SetActive(false);
             attackArrows.SetActive(false);
             disable = true;
-
             //turnCount++;
             updateTurnCount();
             //redundantly locate the PlayerManager in the Client, need to call our specific version of playermanager's CmdDraw
