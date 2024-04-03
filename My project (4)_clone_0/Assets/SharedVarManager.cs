@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Mirror;
+
 
 public class SharedVarManager : NetworkBehaviour
 {
@@ -23,10 +25,21 @@ public class SharedVarManager : NetworkBehaviour
 
     //need lists to store and manipulate the different decks in the createDeck and shuffle method
     public List<Card1> container = new List<Card1>(); //temp list for shuffling deck
-    public static int deckSize = 40; //two decks combined should always equal 40 cards
+    [SyncVar]//need to store how many cards are in the deck (start with 40)
+    public int deckSize = 40; //two decks combined should always equal 40 cards
     public List<Card1> combinedDeck = new List<Card1>(); //list of card1 game objects for combined deck
 
     public List<Card1> temp_combinedDeck = new List<Card1>(); //list of card1 game objects for server's temporary combined deck
+
+    //bringing playerdeck script into this script
+    //backs of cards in draw pile -- to be spawned and controlled by server once deck is created by server
+    public GameObject cardInDeck1;
+    public GameObject cardInDeck2; // cardindeck objects 
+    public GameObject cardInDeck3;
+    public GameObject cardInDeck4;
+    public GameObject cardInDeck5;
+    public GameObject cardInDeck6;
+    public Text deckCountText;
 
     //public CardDatabase cardDatabase; // Add this in order to initialize the card deck lists script for use later
 
@@ -48,7 +61,7 @@ public class SharedVarManager : NetworkBehaviour
 
     [SyncVar] public float p1Health = 30; //need sync var to track each player's health (start with full 30 points)
     [SyncVar] public float p2Health = 30; //need sync var to track each player's health
-    
+
     //==================================================================== VARIABLES FOR ABILITIES ===========================================
 
     public static float p1HP;
@@ -61,7 +74,7 @@ public class SharedVarManager : NetworkBehaviour
     public static int p1TotalDraw;
     public static int p2TotalDraw;
 
-   
+
     //=====================================================================  METHODS  ===============================================================================
     //command when turn is ended on client side (they press end turn button and call this command in turnscript)
     [Command(requiresAuthority = false)]
@@ -175,51 +188,73 @@ public class SharedVarManager : NetworkBehaviour
 
     //command to self damage your own health
     [Command(requiresAuthority = false)]
-    public void CmdSelfDamage(int damage){
-        if(whosTurn == 1){ //if player one played this
+    public void CmdSelfDamage(int damage)
+    {
+        if (whosTurn == 1)
+        { //if player one played this
             p1Health -= damage;
-        }else {
+        }
+        else
+        {
             p2Health -= damage;
         }
     }
 
     //ping bits of damage
     [Command(requiresAuthority = false)]
-    public void CmdPingDamage(int damage){
-        if(whosTurn == 1){ //if player one played this
+    public void CmdPingDamage(int damage)
+    {
+        if (whosTurn == 1)
+        { //if player one played this
             p2Health -= damage;
-        }else {
+        }
+        else
+        {
             p1Health -= damage;
         }
     }
     [Command(requiresAuthority = false)]
-    public void CmdHealDamage(int healed){
-        if(whosTurn == 1){ //if player one played this
+    public void CmdHealDamage(int healed)
+    {
+        if (whosTurn == 1)
+        { //if player one played this
             p1Health += healed;
             p1TotalHeal += healed;
-        }else {
+        }
+        else
+        {
             p2Health += healed;
             p2TotalHeal += healed;
         }
     }
 
-     [Command(requiresAuthority = false)]
-    public void CmdSelfHealAbility(float heal){
+    [Command(requiresAuthority = false)]
+    public void CmdSelfHealAbility(float heal)
+    {
         float toHeal;
-        if(whosTurn == 1){ //if player one played this
+        if (whosTurn == 1)
+        { //if player one played this
             toHeal = turnScript.p1StartingHP - p1Health; //difference in heal
-            if(toHeal >= 0){
+            if (toHeal >= 0)
+            {
                 p1Health += toHeal;
                 p1TotalHeal += toHeal;
-            }else{
+            }
+            else
+            {
                 p1Health += 0;
             }
-        }else {
+        }
+        else
+        {
             toHeal = turnScript.p2StartingHP - p2Health; //difference in heal
-            if(toHeal >= 0){
+            if (toHeal >= 0)
+            {
                 p2Health += toHeal;
                 p2TotalHeal += toHeal;
-            }else{
+            }
+            else
+            {
                 p2Health += 0;
             }
         }
@@ -822,12 +857,54 @@ public class SharedVarManager : NetworkBehaviour
     }
 
 
-    void Update(){
+    void Update()
+    {
         //update any public data
-        p1HP = p1Health; 
+        p1HP = p1Health;
         p2HP = p2Health;
         staticTurn = whosTurn;
         p1StaticMana = p1Mana;
         p2StaticMana = p2Mana;
+
+        changeDeckSize(); //change deck size to display cards properly on left side of screen
+        //display deck card count;
+        deckCountText.text = "" + deckSize;
+
+        //if new turn for client, draw them a card
+        //if (turnScript.turnStart == true)
+        //{
+        //    CmdDraw(1);
+        //    turnScript.turnStart = false;
+        //}
     }
+    public void changeDeckSize()
+    {
+        //these ifs change what the draw pile of cards looks like based on how many cards are left in the pile.
+        if (deckSize < 20)
+        {
+            cardInDeck6.SetActive(false);
+        }
+        if (deckSize < 15)
+        {
+            cardInDeck5.SetActive(false);
+        }
+        if (deckSize < 10)
+        {
+            cardInDeck4.SetActive(false);
+        }
+        if (deckSize < 5)
+        {
+            cardInDeck3.SetActive(false);
+        }
+        if (deckSize < 3)
+        {
+            cardInDeck2.SetActive(false);
+        }
+        if (deckSize < 1)
+        {
+            cardInDeck1.SetActive(false);
+        }
+    }
+
+
 }

@@ -170,6 +170,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7683230165338858731}
     m_Modifications:
+    - target: {fileID: 1299131647312115925, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1695866106364409652, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -258,6 +262,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: cardBack (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7949818674054121196, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0899892c43afd4544a3d29946ba58834, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
 --- !u!224 &9018665089150473483 stripped
@@ -272,6 +280,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7683230165338858731}
     m_Modifications:
+    - target: {fileID: 1299131647312115925, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1695866106364409652, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -360,6 +372,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: cardBack (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7949818674054121196, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0899892c43afd4544a3d29946ba58834, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
 --- !u!224 &9018665088966907844 stripped
@@ -374,6 +390,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7683230165338858731}
     m_Modifications:
+    - target: {fileID: 1299131647312115925, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1695866106364409652, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -462,6 +482,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: cardBack (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7949818674054121196, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0899892c43afd4544a3d29946ba58834, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
 --- !u!224 &9018665088917328634 stripped
@@ -476,6 +500,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7683230165338858731}
     m_Modifications:
+    - target: {fileID: 1299131647312115925, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1695866106364409652, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -564,6 +592,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: cardBack (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7949818674054121196, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0899892c43afd4544a3d29946ba58834, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
 --- !u!224 &9018665088737521702 stripped
@@ -578,6 +610,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7683230165338858731}
     m_Modifications:
+    - target: {fileID: 1299131647312115925, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1695866106364409652, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -666,6 +702,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: cardBack
       objectReference: {fileID: 0}
+    - target: {fileID: 7949818674054121196, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0899892c43afd4544a3d29946ba58834, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
 --- !u!224 &9018665090013656083 stripped
@@ -680,6 +720,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7683230165338858731}
     m_Modifications:
+    - target: {fileID: 1299131647312115925, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1695866106364409652, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -768,6 +812,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: cardBack (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 7949818674054121196, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0899892c43afd4544a3d29946ba58834, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 534dc4ed5e242804c9393e19bbba2017, type: 3}
 --- !u!224 &9018665089818432353 stripped

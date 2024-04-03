@@ -8,27 +8,18 @@ using Mirror; //need this script to be outside of script folder in order for it 
 public class PlayerManager : NetworkBehaviour
 {
     //bringing playerdeck script into this script
-    //backs of cards in draw pile -- to be spawned and controlled by server once deck is created by server
-    public GameObject deckPanel; //object containing all the below cardindeck objects 
-    //public GameObject cardInDeck1;
-    //public GameObject cardInDeck2;
-    //public GameObject cardInDeck3;
-    //public GameObject cardInDeck4;
-    //public GameObject cardInDeck5;
-    //public GameObject cardInDeck6;
-    public Text deckCountText;
 
     //playermanager will spawn these on the clients when they click join as host or client
     //public GameObject[] clones;
     public GameObject hand; //this is the player's hand object
-    public GameObject oppHand; 
+    public GameObject oppHand;
     public GameObject playPanel; //this is where the player can play their cards
     public GameObject oppPlayPanel;
     public GameObject cardInHand; //need for dealing cards
 
     //need lists to store and manipulate the different decks
     //public List<Card1> container = new List<Card1>(); //temp list for shuffling deck
-    public static int deckSize = 40; //two decks combined should always equal 40 cards
+    public int pM_DeckSize = 40; //two decks combined should always equal 40 cards
     //public List<Card1> combinedDeck = new List<Card1>(); //list of card1 game objects for combined deck
 
     //============================= THIS IS THE PROBLEM VARIABLE =====================================================================================================================
@@ -64,7 +55,7 @@ public class PlayerManager : NetworkBehaviour
     {
         // Do something
         oldValue = newValue;
-        Debug.Log("Old clientDeck = "+oldValue+", New clientDeck = "+newValue);
+        Debug.Log("Old clientDeck = " + oldValue + ", New clientDeck = " + newValue);
     }
 
 
@@ -106,7 +97,7 @@ public class PlayerManager : NetworkBehaviour
         {
             SharedVarManager sharedVarManager = sharedVarManagerObj.GetComponent<SharedVarManager>();
             //Call the command on the NetworkManager
-            
+
             sharedVarManager.CmdGetPlayerColor(clientColour, networkClientIdentity); // this calls the SharedVarManager script, which should handle the game logic from here, and deal out cards properly
             //clientDecks = clientColour; //set sync var to your client's colour so that the PlayerManager can now see and track across network what colour the client chose specifically (there is one instance of this per player)
             //playerDeck.staticDeck = sharedVarManager;
@@ -136,9 +127,11 @@ public class PlayerManager : NetworkBehaviour
         //Double check enough players have joined and the server has recieved a valid combo of colours from the clients to deal decks, go ahead and deal the client their two cards
         string drawCombo = sharedVarManager.checkFor2PlayersAndTheirCombo(drawCheckCombo); //REDUNDANT
 
+        pM_DeckSize = sharedVarManager.deckSize; //get server's decksize value
+
         if (!drawCombo.Equals("Error 1: Not enough players/strings.") && !drawCombo.Equals("Error 2: Too many players/strings."))
         {
-            if (deckSize > 0) //check if there's other cards. do not draw if no more cards do smth else;
+            if (pM_DeckSize > 0) //check if there's other cards. do not draw if no more cards do smth else;
             {
                 //draw cards repeat until drawSize
                 for (int x = 0; x < drawSize; x++)
@@ -151,11 +144,15 @@ public class PlayerManager : NetworkBehaviour
                     NetworkServer.Spawn(card, connectionToClient); //Server spawns object across network for other clients to use, and gives Client the authority of the object (their card in this case)
                     RpcShowCard(card, "Dealt"); //this gets server to display the card object across both clients (and it displays specificly based on who has authority inside the rpc method)
                                                 //renderCardColour(card);
-                    if(SharedVarManager.staticTurn == 1){
+                    if (SharedVarManager.staticTurn == 1)
+                    {
                         SharedVarManager.p1TotalDraw += drawSize;
-                    }else {
+                    }
+                    else
+                    {
                         SharedVarManager.p2TotalDraw += drawSize;
                     }
+                    sharedVarManager.deckSize -= 1; //take away one card from the deckSize each time this loop deals a card
                 }
                 //sharedVarManager.gameStarted = true; //server should sync this value to all clients, and once 
             }
@@ -172,7 +169,7 @@ public class PlayerManager : NetworkBehaviour
     {
         CmdPlayCard(card, manaCost, networkPlayIdentity); //call server command
     }
-    [Command(requiresAuthority = false)]                                       
+    [Command(requiresAuthority = false)]
     void CmdPlayCard(GameObject card, int manaCost, NetworkIdentity networkPlayIdentity) //just run rpc on clients to show card as played now, also tell server to update mana of the player who played the card
     {
         //find sharedvar game object in scene at runtime (for deck colour strings and game start booleans
@@ -230,13 +227,13 @@ public class PlayerManager : NetworkBehaviour
             Debug.Log("Made it to RPC Play card...");
             if (!isOwned)
             {
-                card.transform.localScale = new Vector2((float).75,(float).75);
+                card.transform.localScale = new Vector2((float).75, (float).75);
                 card.transform.SetParent(oppPlayPanel.transform, false); //enemy play panel
                                                                          //card.GetComponent<CardFlipper>().Flip(); //show correct side of card when played
             }
             else
             {
-                card.transform.localScale = new Vector2((float).75,(float).75);
+                card.transform.localScale = new Vector2((float).75, (float).75);
                 card.transform.SetParent(playPanel.transform, false); //if the client played it, move it to the regular playPlanel
             }
         }
@@ -294,7 +291,7 @@ public class PlayerManager : NetworkBehaviour
         GameObject sharedVarManagerObj = GameObject.Find("SharedVarManager");
         SharedVarManager sharedVarManager = sharedVarManagerObj.GetComponent<SharedVarManager>();
         sharedVarManager.CmdSelfDamage(damage);
-        Debug.Log("SENDING " + damage +" to self");
+        Debug.Log("SENDING " + damage + " to self");
     }
     //specific to black heal
     [Command(requiresAuthority = false)] //added the authority bit in the process of debugging, defaults to true, so I think only the owner's version of their clientDeck will be changed unless this is here (but haven't really seen proof yet)
@@ -304,7 +301,7 @@ public class PlayerManager : NetworkBehaviour
         GameObject sharedVarManagerObj = GameObject.Find("SharedVarManager");
         SharedVarManager sharedVarManager = sharedVarManagerObj.GetComponent<SharedVarManager>();
         sharedVarManager.CmdSelfHealAbility(heal);
-        Debug.Log("SENDING healing " + heal +" to self");
+        Debug.Log("SENDING healing " + heal + " to self");
     }
     //general heal
     [Command(requiresAuthority = false)] //added the authority bit in the process of debugging, defaults to true, so I think only the owner's version of their clientDeck will be changed unless this is here (but haven't really seen proof yet)
@@ -314,7 +311,7 @@ public class PlayerManager : NetworkBehaviour
         GameObject sharedVarManagerObj = GameObject.Find("SharedVarManager");
         SharedVarManager sharedVarManager = sharedVarManagerObj.GetComponent<SharedVarManager>();
         sharedVarManager.CmdHealDamage(healed);
-        Debug.Log("SENDING " + healed +" to self");
+        Debug.Log("SENDING " + healed + " to self");
     }
     [Command(requiresAuthority = false)] //added the authority bit in the process of debugging, defaults to true, so I think only the owner's version of their clientDeck will be changed unless this is here (but haven't really seen proof yet)
     public void CmdPingDamage(int ping, NetworkIdentity networkAttackIdentity)
@@ -325,54 +322,6 @@ public class PlayerManager : NetworkBehaviour
         sharedVarManager.CmdPingDamage(ping);
     }
 
-    
-
-    /*
-    [Command]
-    public void CmdUpdate()
-    {
-        RpcChangeSize();
-    }
-    =
-    [ClientRpc]
-    void RpcChangeSize()
-    {
-        //these ifs change what the draw pile of cards looks like based on how many cards are left in the pile.
-        if (deckSize < 20)
-        {
-            cardInDeck6.SetActive(false);
-        }
-        if (deckSize < 15)
-        {
-            cardInDeck5.SetActive(false);
-        }
-        if (deckSize < 10)
-        {
-            cardInDeck4.SetActive(false);
-        }
-        if (deckSize < 5)
-        {
-            cardInDeck3.SetActive(false);
-        }
-        if (deckSize < 3)
-        {
-            cardInDeck2.SetActive(false);
-        }
-        if (deckSize < 1)
-        {
-            cardInDeck1.SetActive(false);
-        }
-
-        //display deck card count;
-        //deckCountText.text = "" + deckSize;
-
-        //if new turn for client, draw them a card
-        //if (turnScript.turnStart == true)
-        //{
-        //    CmdDraw(1);
-        //    turnScript.turnStart = false;
-        //}
-    } */
 
 
 }
