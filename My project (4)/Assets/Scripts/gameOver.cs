@@ -27,7 +27,7 @@ public class gameOver : MonoBehaviour
     {
         main.onClick.AddListener(buttonOnclick);
         
-        if (playerNumber == 1){
+        if (playerNumber == 1) {
             myDamage = p1Damage;
             myResult = p1Result;
         }
