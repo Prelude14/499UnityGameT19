@@ -91,7 +91,7 @@ public class SharedVarManager : NetworkBehaviour
     {
         if (playerNum == 1)
         {
-            p1Health = Mathf.Max(p1Health - damage, 0);
+            p1Health -= damage;
             if (p1Health <= 0)
             {
                 TriggerGameOver(1);
@@ -99,7 +99,7 @@ public class SharedVarManager : NetworkBehaviour
         }
         else if (playerNum == 2)
         {
-            p2Health = Mathf.Max(p2Health - damage, 0);
+            p2Health -= damage;
             if (p2Health <= 0)
             {
                 TriggerGameOver(2);
@@ -130,7 +130,7 @@ public class SharedVarManager : NetworkBehaviour
     [ClientRpc]
     public void clientRpcLoadGameOverScene()
     {
-        SceneManager.LoadScene("GameOver");
+        SceneManager.LoadScene("gameOver");
     }
 
     //command when turn is ended on client side (they press end turn button and call this command in turnscript)
