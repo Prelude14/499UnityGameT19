@@ -86,32 +86,72 @@ public class SharedVarManager : NetworkBehaviour
 
 
     //=====================================================================  METHODS  ===============================================================================
+
+        public void DeductHealth(int playerNumber, float damage)
+    {
+        if (playerNumber == 1)
+        {
+            p1Health = Mathf.Max(p1Health - damage, 0);
+            if (p1Health <= 0)
+            {
+                TriggerGameOver(1);
+            }
+        }
+        else if (playerNumber == 2)
+        {
+            p2Health = Mathf.Max(p2Health - damage, 0);
+            if (p2Health <= 0)
+            {
+                TriggerGameOver(2);
+            }
+        }
+    }
+
+    public void TriggerGameOver(int losingPlayerNumber)
+    {
+    if (losingPlayerNumber == 1)
+    {
+        gameOver.p1Result = 'l';
+        gameOver.p2Result = 'w';
+    }
+    else if (losingPlayerNumber == 2)
+    {
+        gameOver.p1Result = 'w';
+        gameOver.p2Result = 'l';
+    }
+    
+    gameOver.playerNumber = losingPlayerNumber;
+    
+    
+    SceneManager.LoadScene("gameOver");
+    }
+
     //command when turn is ended on client side (they press end turn button and call this command in turnscript)
     [Command(requiresAuthority = false)]
     public void CmdUpdateWhosTurn(NetworkIdentity networkTurnIdentity)
     {
         PlayerTurnManager = networkTurnIdentity.GetComponent<PlayerManager>(); //want to track who is ending each turn
-        GameObject turnSystem = GameObject.Find("turnSystem");
+        // GameObject turnSystem = GameObject.Find("turnSystem");
 
-        if (p1Health <= 0)
-        {
-            gameOver.p1Result = 'l';
-            gameOver.p2Result = 'w';
-            gameOver.p1Damage = p1Damage;
-            gameOver.p2Damage = p2Damage;
-            gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
-            SceneManager.LoadScene("gameOver");
-        }
+        // if (p1Health <= 0)
+        // {
+        //     gameOver.p1Result = 'l';
+        //     gameOver.p2Result = 'w';
+        //     gameOver.p1Damage = p1Damage;
+        //     gameOver.p2Damage = p2Damage;
+        //     gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
+        //     SceneManager.LoadScene("gameOver");
+        // }
 
-        if (p2Health <= 0)
-        {
-            gameOver.p1Result = 'w';
-            gameOver.p2Result = 'l';
-            gameOver.p1Damage = p1Damage;
-            gameOver.p2Damage = p2Damage;
-            gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
-            SceneManager.LoadScene("gameOver");
-        }
+        // if (p2Health <= 0)
+        // {
+        //     gameOver.p1Result = 'w';
+        //     gameOver.p2Result = 'l';
+        //     gameOver.p1Damage = p1Damage;
+        //     gameOver.p2Damage = p2Damage;
+        //     gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
+        //     SceneManager.LoadScene("gameOver");
+        // }
 
         if (whosTurn == 1) //if its player one's turn
         {
@@ -195,7 +235,7 @@ public class SharedVarManager : NetworkBehaviour
         {
             if (PlayerAttackManager.isPlayerOne == true && PlayerAttackManager.isPlayerTwo == false) //if player one attacked
             {
-                p2Health -= damage; //update p2 Health to equal old health minus the amount of damage that was sent by p1
+                DeductHealth(2,damage) //update p2 Health to equal old health minus the amount of damage that was sent by p1
                 p1Damage += damage; //update p1 Damage to equal old damage plus the amount of damage that was sent by p2
             }
             else if (PlayerAttackManager.isPlayerTwo == true && PlayerAttackManager.isPlayerOne == false) //if player 2 attacked player 1 somehow
@@ -208,7 +248,7 @@ public class SharedVarManager : NetworkBehaviour
         {
             if (PlayerAttackManager.isPlayerOne == true && PlayerAttackManager.isPlayerTwo == false) //if player one attacked player 2 somehow
             {
-                p1Health -= damage; //update p1 Health to equal old health minus the amount of damage that was sent by p2
+                DeductHealth(1,damage); //update p1 Health to equal old health minus the amount of damage that was sent by p2
                 p2Damage += damage; //update p2 Damage to equal old damage plus the amount of damage that was sent by p1
                 //Do NOTHING SINCE player1 should never be able to attack when whosTurn = 2
                 //Debug.log("Player 1 tried to attack p2 during player 2's turn");
@@ -226,11 +266,11 @@ public class SharedVarManager : NetworkBehaviour
     {
         if (whosTurn == 1)
         { //if player one played this
-            p1Health -= damage;
+            DeductHealth(1,damage);
         }
         else
         {
-            p2Health -= damage;
+            DeductHealth(2,damage);
         }
     }
 
@@ -240,11 +280,11 @@ public class SharedVarManager : NetworkBehaviour
     {
         if (whosTurn == 1)
         { //if player one played this
-            p2Health -= damage;
+            DeductHealth(2,damage);
         }
         else
         {
-            p1Health -= damage;
+            DeductHealth(1,damage);
         }
     }
     [Command(requiresAuthority = false)]
