@@ -94,7 +94,7 @@ public class SharedVarManager : NetworkBehaviour
         if (playerNum == 1)
         {
             p1Health -= damage;
-            p1Damage += damage;
+            p2Damage += damage;
             if (p1Health <= 0)
             {
                 TriggerGameOver(1);
@@ -103,7 +103,7 @@ public class SharedVarManager : NetworkBehaviour
         else if (playerNum == 2)
         {
             p2Health -= damage;
-            p2Damage += damage;
+            p1Damage += damage;
             if (p2Health <= 0)
             {
                 TriggerGameOver(2);
