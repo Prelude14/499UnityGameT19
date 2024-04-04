@@ -62,8 +62,8 @@ public class SharedVarManager : NetworkBehaviour
     public static int p1StaticMana;
     public static int p2StaticMana;
 
-    [SyncVar] public float p1Health = 5; //need sync var to track each player's health (start with full 30 points)
-    [SyncVar] public float p2Health = 5; //need sync var to track each player's health
+    [SyncVar] public float p1Health = 30; //need sync var to track each player's health (start with full 30 points)
+    [SyncVar] public float p2Health = 30; //need sync var to track each player's health
 
 
     [SyncVar] public int p1Damage = 0; //need sync var to track each player's mana
@@ -100,7 +100,7 @@ public class SharedVarManager : NetworkBehaviour
             gameOver.p1Damage = p1Damage;
             gameOver.p2Damage = p2Damage;
             gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
-            RpcLoadGameOverScene(); // Call a ClientRpc to load the gameOver scene for all clients
+            SceneManager.LoadScene("gameOver");
         }
 
         if (p2Health <= 0)
@@ -110,7 +110,7 @@ public class SharedVarManager : NetworkBehaviour
             gameOver.p1Damage = p1Damage;
             gameOver.p2Damage = p2Damage;
             gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
-            RpcLoadGameOverScene(); // Call a ClientRpc to load the gameOver scene for all clients
+            SceneManager.LoadScene("gameOver");
         }
 
         if (whosTurn == 1) //if its player one's turn
@@ -148,6 +148,7 @@ public class SharedVarManager : NetworkBehaviour
             }
         }
     }
+
     //command when client plays a card and needs to update their mana count
     [Command(requiresAuthority = false)]
     public void CmdUpdateManaCount(int manaCost, NetworkIdentity networkManaIdentity)
@@ -217,12 +218,6 @@ public class SharedVarManager : NetworkBehaviour
                
             }
         }
-    }
-
-    [ClientRpc]
-    void RpcLoadGameOverScene()
-    {
-        SceneManager.LoadScene("gameOver");
     }
 
     //command to self damage your own health
