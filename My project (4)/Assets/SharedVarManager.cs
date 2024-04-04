@@ -87,7 +87,7 @@ public class SharedVarManager : NetworkBehaviour
 
     //=====================================================================  METHODS  ===============================================================================
 
-        public void DeductHealth(int playerNumber, float damage)
+    public void DeductHealth(int playerNumber, float damage)
     {
         if (playerNumber == 1)
         {
@@ -109,22 +109,22 @@ public class SharedVarManager : NetworkBehaviour
 
     public void TriggerGameOver(int losingPlayerNumber)
     {
-    if (losingPlayerNumber == 1)
-    {
-        gameOver.p1Result = 'l';
-        gameOver.p2Result = 'w';
-    }
-    else if (losingPlayerNumber == 2)
-    {
-        gameOver.p1Result = 'w';
-        gameOver.p2Result = 'l';
-    }
-    
-    GameObject turnSystem = GameObject.Find("turnSystem");
-    gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
-    
-    
-    SceneManager.LoadScene("gameOver");
+        if (losingPlayerNumber == 1)
+        {
+            gameOver.p1Result = 'l';
+            gameOver.p2Result = 'w';
+        }
+        else if (losingPlayerNumber == 2)
+        {
+            gameOver.p1Result = 'w';
+            gameOver.p2Result = 'l';
+        }
+        
+        GameObject turnSystem = GameObject.Find("turnSystem");
+        gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
+        
+
+        SceneManager.LoadScene("gameOver");
     }
 
     //command when turn is ended on client side (they press end turn button and call this command in turnscript)
