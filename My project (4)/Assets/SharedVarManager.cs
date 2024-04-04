@@ -87,6 +87,7 @@ public class SharedVarManager : NetworkBehaviour
 
     //=====================================================================  METHODS  ===============================================================================
 
+    [Server]
     public void DeductHealth(int playerNum, int damage)
     {
         Debug.Log("HEALTH DEDUCTED");
@@ -110,6 +111,7 @@ public class SharedVarManager : NetworkBehaviour
         }
     }
 
+    [Server]
     public void TriggerGameOver(int losingPlayerNumber)
     {
         if (losingPlayerNumber == 1)
