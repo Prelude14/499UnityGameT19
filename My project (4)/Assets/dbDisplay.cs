@@ -70,6 +70,8 @@ public class dbDisplay : NetworkBehaviour
     public static GameObject currentLoc;
     public static GameObject pz;
 
+    public int attackCount = 0;
+
     //testing zoom in dbdisplay
     public GameObject Canvas;
     public GameObject ZoomCard;
@@ -117,6 +119,9 @@ public class dbDisplay : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(attackCount == 2){
+            NetworkServer.Destroy(this.gameObject);
+        }
         currentTurn = SharedVarManager.staticTurn;
         if(currentTurn != lastTurn){
             hasAttacked = false;
@@ -292,6 +297,7 @@ public class dbDisplay : NetworkBehaviour
                 if (Target == Enemy)
                 {
                     //enemyHealth.HPStatic -= pow;
+                    attackCount++;
                     attackEnemy(pow); //send pow of card attacking to attack command
                     
                     targeting = false;
