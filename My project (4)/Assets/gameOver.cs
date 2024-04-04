@@ -38,7 +38,7 @@ public class gameOver : MonoBehaviour
             myResult = p2Result;
         }
 
-        Debug.Log("damage dealt: " + myDamage + " result: " +  myResult);
+        // Debug.Log("damage dealt: " + myDamage + " result: " +  myResult);
     }
 
     // Update is called once per frame
@@ -61,29 +61,32 @@ public class gameOver : MonoBehaviour
         string username = DBManager.username;
         //make Form to take the user's input 
         WWWForm formE = new WWWForm();
-        formE.AddField("username", username);
-        formE.AddField("result", myResult);
-        formE.AddField("damageDealt", myDamage);
 
-        //connect to url of our database's php file, PASS FORM TO URL
-        using (WWW wwwE= new WWW("http://localhost/sqlconnect/gameOver.php", formE))
-        {
-             yield return wwwE; //tell Unity to yield running the rest of the game till it gets this info from the url
+        if (username != ""){
+            formE.AddField("username", username);
+            formE.AddField("result", myResult);
+            formE.AddField("damageDealt", myDamage);
+            // Debug.Log("data sent to db (username: " + username + " result: " + myResult + " damage: " + myDamage + ")");
 
-            if (wwwE.error == null)
+            //connect to url of our database's php file, PASS FORM TO URL
+            using (WWW wwwE= new WWW("http://localhost/sqlconnect/gameOver.php", formE))
             {
-                //Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
-                if (wwwE.text[0] == '0')
+                yield return wwwE; //tell Unity to yield running the rest of the game till it gets this info from the url
+
+                if (wwwE.error == null)
                 {
-                    Debug.Log("Stats successfully updated:  " + wwwE.text);
-                }
-                else
-                {
-                      Debug.Log("ERROR: Stats update failed:  " + wwwE.text);
+                    //Error check what our PHP file returned, index 0 should be the first character, 0 means everything worked perfectly
+                    if (wwwE.text[0] == '0')
+                    {
+                        Debug.Log("Stats successfully updated:  " + wwwE.text);
+                    }
+                    else
+                    {
+                        Debug.Log("ERROR: Stats update failed:  " + wwwE.text);
+                    }
                 }
             }
         }
-          
     }
 
 }
