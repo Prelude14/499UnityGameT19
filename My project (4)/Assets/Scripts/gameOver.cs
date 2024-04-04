@@ -25,6 +25,8 @@ public class gameOver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        main.onClick.AddListener(buttonOnclick);
+        
         if (playerNumber == 1){
             myDamage = p1Damage;
             myResult = p1Result;
