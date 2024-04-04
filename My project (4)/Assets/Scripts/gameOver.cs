@@ -35,6 +35,8 @@ public class gameOver : MonoBehaviour
             myDamage = p2Damage;
             myResult = p2Result;
         }
+
+        Debug.Log("damage dealt: " + myDamage + " result: " +  myResult);
     }
 
     // Update is called once per frame
