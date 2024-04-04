@@ -133,7 +133,7 @@ public class SharedVarManager : NetworkBehaviour
         clientRpcLoadGameOverScene();
     }
 
-    [ClientRpc]
+    [Server]
     public void clientRpcLoadGameOverScene()
     {
         SceneManager.LoadScene("gameOver");
