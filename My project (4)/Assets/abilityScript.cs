@@ -51,8 +51,12 @@ public class abilityScript : MonoBehaviour
     {
         Debug.Log("black trigger id: " + id);
         int damage;
+        GameObject enemyZone = GameObject.Find("oppPlayPanel");
+        GameObject enemyHand = GameObject.Find("oppHand");
         NetworkIdentity networkAttackIdentity = NetworkClient.connection.identity;
         PlayerManager = networkAttackIdentity.GetComponent<PlayerManager>();
+        float currentHealth;
+                int whosTurn = SharedVarManager.staticTurn; // 1 is p1 2 is p2
         switch (id)
        {
             case 0:
@@ -64,62 +68,64 @@ public class abilityScript : MonoBehaviour
                 break;
             case 2:
             case 3:
-                //destroy enemy mpinion not yet coded
+                //destroy enemy mpinion
+                int childCount = enemyZone.transform.childCount;
+                int randomChild = Random.Range(0, childCount);
+                NetworkServer.Destroy(transform.GetChild(randomChild).gameObject);
+
+                //deal 5 to self
+                 damage = 5; 
+                PlayerManager.CmdSendSelfDamage(damage, networkAttackIdentity);
                 break;
             case 4:
             case 5:
-                // playerHealth.HPStatic -= 3;
-                // Debug.Log("reduce health by 3");
+                //Deal 3 damage to self and enemy
                 damage = 3; 
                 PlayerManager.CmdSendSelfDamage(damage, networkAttackIdentity);
+                damage = (int)SharedVarManager.p1TotalHeal; //deal damage equal to healing 
+                //target damage
+                PlayerManager.CmdPingDamage(damage, networkAttackIdentity);
                 break;
             case 6:
             case 7:
-                //target enemy or minion targetting yet
-                 
+                //just a guy
+           
+                if(whosTurn == 1){
+                    //send p1.heal
+                    int diff = 30 - (int)SharedVarManager.p1HP;
+                    PlayerManager.CmdPingDamage(diff, networkAttackIdentity);
+                }else {
+                    //send p2.heal
+                    int diff = 30 - (int)SharedVarManager.p1HP;
+                    PlayerManager.CmdPingDamage(diff, networkAttackIdentity);
+                }
+                break;
                 break;
             case 8:
             case 9:
-                //turn start health
-                // float startHealth = playerHealth.turnStartHealth;
-                // float healthDiff = playerHealth.turnStartHealth - playerHealth.HPStatic;
-                // if (healthDiff >= 0)
-                // {
-                //     playerHealth.HPStatic += healthDiff;
-                //     turnScript.damageHealed += (int)healthDiff;
-                // }
-                // else
-                // {
-                //     playerHealth.HPStatic += 0;
-                // }
-                // Debug.Log("Healed for diff of " + healthDiff);
-                // break;
                 
-                float currentHealth;
-                int whosTurn = SharedVarManager.staticTurn; // 1 is p1 2 is p2
+                
                 if(whosTurn == 1){
                     //send p1.heal
-                    currentHealth  = SharedVarManager.p1HP;
-                    PlayerManager.CmdHealDamage(currentHealth, networkAttackIdentity);
+                    int diff = 30 - (int)SharedVarManager.p1HP;
+                    PlayerManager.CmdHealDamage(diff/2, networkAttackIdentity);
 
                 }else {
                     //send p2.heal
-                    currentHealth = SharedVarManager.p2HP;
-                    PlayerManager.CmdHealDamage(currentHealth, networkAttackIdentity);
+                     int diff = 30 - (int)SharedVarManager.p2HP;
+                    PlayerManager.CmdHealDamage(diff/2, networkAttackIdentity);
                 }
                 break;
             case 10:
             case 11:
-                //noenemy targetting yet
-                // float difInHealth = 30 - playerHealth.HPStatic;
-                // int drawAmount = (int)Math.Floor(difInHealth / 3);
-                // playerDeck.staticAmount = drawAmount;
-                // playerDeck.drawStatic = true;
-                // Debug.Log("Drawn: " + drawAmount);
-                // turnScript.cardsDrawn += drawAmount;
+               
                 if(SharedVarManager.staticTurn == 1){
                     //if its p1 who played this 
                     int diff = 30 - (int)SharedVarManager.p1HP;
+                    PlayerManager.CmdDraw(diff, PlayerManager.clientDecks);
+                }else{
+                        //if its p1 who played this 
+                    int diff = 30 - (int)SharedVarManager.p2HP;
                     PlayerManager.CmdDraw(diff, PlayerManager.clientDecks);
                 }
                 break;
@@ -135,7 +141,8 @@ public class abilityScript : MonoBehaviour
     }
     public void abilityListWhite(int id)
     {
-        
+        GameObject enemyZone = GameObject.Find("oppPlayPanel");
+        GameObject enemyHand = GameObject.Find("oppHand");
         Debug.Log("TRIGGER WHITE ABILTIY");
         // PlayerManager.CmdDraw(3, PlayerManager.clientDecks);
         // Debug.Log("Drawn: " + 3);
@@ -150,21 +157,13 @@ public class abilityScript : MonoBehaviour
          switch(id){
         case 0:
         case 1:
-            // playerHealth.HPStatic += 2;
-            // Debug.Log("increase health by 2");
-            // turnScript.damageHealed += 2;
+            //heal 2
             healed = 2; 
             PlayerManager.CmdSendHealing(healed, networkAttackIdentity);
             break;
         case 2:
         case 3:
-            // playerHealth.HPStatic += 2;
-            // Debug.Log("increase health by 2");
-            // //deal 2 
-            // enemyHealth.HPStatic -= 2;
-            // Debug.Log("ping enemy 2");
-            // turnScript.damageHealed += 2;
-            //heal 2 deal 2
+            //Heal 2 ping 2
             healed = 2; 
             PlayerManager.CmdSendHealing(healed, networkAttackIdentity);
             damage = 2; 
@@ -182,16 +181,29 @@ public class abilityScript : MonoBehaviour
             break;
         case 6:
         case 7:
-            //Heal target no target yet
+            //Heal 3 destroy enemy minion
+            healed = 3; 
+            PlayerManager.CmdSendHealing(healed, networkAttackIdentity);
+            int childCount = enemyZone.transform.childCount;
+            int randomChild = Random.Range(0, childCount);
+            NetworkServer.Destroy(transform.GetChild(randomChild).gameObject);
             break;
         case 8:
         case 9:
-            //copy card
-            //Change?
+            //Heal back to full
+            if(SharedVarManager.staticTurn == 1){
+                    //if its p1 who played this 
+                    int diff = 30 - (int)SharedVarManager.p1HP;
+                    PlayerManager.CmdHealDamage(diff, networkAttackIdentity);
+                }else{
+                        //if its p1 who played this 
+                    int diff = 30 - (int)SharedVarManager.p2HP;
+                    PlayerManager.CmdHealDamage(diff, networkAttackIdentity);
+                }
             break;
         case 10:
         case 11:
-               
+            
             if(SharedVarManager.staticTurn == 1){
                 damage = (int)SharedVarManager.p1TotalHeal; //deal damage equal to healing 
                 //target damage
@@ -218,22 +230,26 @@ public class abilityScript : MonoBehaviour
         switch(id){
         case 0:
         case 1:
-            //
-           
+            //Draw 1
+           PlayerManager.CmdDraw(1, PlayerManager.clientDecks);
             break;
         case 2:
         case 3:
             //
-            //destroy random enemy
-            
+            //destroy random enemy draw 1
             int childCount = enemyZone.transform.childCount;
             int randomChild = Random.Range(0, childCount);
             NetworkServer.Destroy(transform.GetChild(randomChild).gameObject);
+            PlayerManager.CmdDraw(1, PlayerManager.clientDecks);
             break;
         case 4:
         case 5:
-            //draw 1 reduce cost 1?
-             PlayerManager.CmdDraw(1, PlayerManager.clientDecks);
+            //draw 1 deal 1
+
+             PlayerManager.CmdDraw(2, PlayerManager.clientDecks);
+           
+            PlayerManager.CmdPingDamage(1, networkAttackIdentity);
+        
             break;
         case 6:
         case 7:
@@ -257,11 +273,13 @@ public class abilityScript : MonoBehaviour
             break;
         case 10:
         case 11:
+        //for each card drawn deal 1
             if(SharedVarManager.staticTurn == 1){
                 PlayerManager.CmdPingDamage(SharedVarManager.p1TotalDraw * 2, networkAttackIdentity);
             }else {
                 PlayerManager.CmdPingDamage(SharedVarManager.p2TotalDraw * 2, networkAttackIdentity);
             }
+
             break;
         default:
             break;
@@ -271,14 +289,18 @@ public class abilityScript : MonoBehaviour
     }
     public void abilityListRed(int id)
     {
+
         NetworkIdentity networkAttackIdentity = NetworkClient.connection.identity;
         PlayerManager = networkAttackIdentity.GetComponent<PlayerManager>();
        GameObject playPanel = GameObject.Find("playPanel");
+       
+        GameObject enemyZone = GameObject.Find("oppPlayPanel");
        int creatureCount = playPanel.transform.childCount;
        switch(id){
         case 0:
         case 1:
             if(attacked == true){
+                //attack ping
                 // PlayerManager.CmdPingDamage(SharedVarManager.p2TotalDraw * 2, networkAttackIdentity);
                 PlayerManager.CmdPingDamage(2, networkAttackIdentity);
                 attacked = false;
@@ -291,13 +313,22 @@ public class abilityScript : MonoBehaviour
             break;
         case 4:
         case 5:
-            
+            //draw for each creature
             PlayerManager.CmdDraw(creatureCount, PlayerManager.clientDecks);
             break;
         case 6:
         case 7:
             //mana restoration? Todo:
-            int toRefill = playPanel.transform.childCount;
+            int tempVar;
+            int childCount = playPanel.transform.childCount;
+            for(int i = 0; i <= childCount; i++){
+                tempVar = enemyZone.transform.childCount;
+                if(tempVar > 0){
+                    int randomChild = Random.Range(0, tempVar);
+                    NetworkServer.Destroy(transform.GetChild(randomChild).gameObject);
+                }
+                //for each creature you control do this
+            }
             break;
         case 8:
         case 9:
