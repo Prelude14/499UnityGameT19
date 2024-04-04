@@ -12,16 +12,27 @@ public class gameOver : MonoBehaviour
 
     private char myResult; 
 
+    private char playerNum; 
+
     public static int p1Damage; // Track player 1's damage.
     public static int p2Damage; // Track player 2's damage.
     public static char p1Result; // Track player 1's result (win/loss).
     public static char p2Result; // Track player 2's result (win/loss).
 
+    public static int playerNumber; 
+
     
     // Start is called before the first frame update
     void Start()
     {
-        //SET VARIABLES - need to find way to find out which player is currently running this.
+        if (playerNumber == 1){
+            myDamage = p1Damage;
+            myResult = p1Result;
+        }
+        else if (playerNumber == 2){
+            myDamage = p2Damage;
+            myResult = p2Result;
+        }
     }
 
     // Update is called once per frame

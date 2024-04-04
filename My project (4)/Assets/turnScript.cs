@@ -30,6 +30,8 @@ public class turnScript : NetworkBehaviour
     //need access to player manager script that is unique to each client
     public PlayerManager PlayerManager;
 
+    public int playerNumber;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,8 +44,6 @@ public class turnScript : NetworkBehaviour
         currentMana = 1;
         turnStart = false;
         disable = false;
-
-
     }
 
     public void SetUpTurns()
@@ -66,6 +66,9 @@ public class turnScript : NetworkBehaviour
             //locate the PlayerManager in the Client, need to check if it is player 1 or 2
             NetworkIdentity networkIdentity = NetworkClient.connection.identity;
             PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+
+            //set player number locally
+            if(PlayerManager.isPlayerOne){playerNumber=1;}else if(PlayerManager.isPlayerTwo){playerNumber=2;}
 
             if (PlayerManager.isPlayerOne == true && PlayerManager.isPlayerTwo == false) //if I'm player ONE and its PLAYER ONE'S Turn, then it is my turn
             {

@@ -144,6 +144,8 @@ public class SharedVarManager : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdAttackOtherPlayer(int damage, NetworkIdentity networkAttackIdentity)
     {
+
+        GameObject turnSystem = GameObject.Find("turnSystem");
         PlayerAttackManager = networkAttackIdentity.GetComponent<PlayerManager>(); //want to track who is attacking
 
         if (whosTurn == 1) //if its player one's turn
@@ -158,6 +160,7 @@ public class SharedVarManager : NetworkBehaviour
                         gameOver.p2Result = 'l';
                         gameOver.p1Damage = p1Damage;
                         gameOver.p2Damage = p2Damage;
+                        gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
                         RpcLoadGameOverScene(); // Call a ClientRpc to load the gameOver scene for all clients
                     }
             }
@@ -184,6 +187,7 @@ public class SharedVarManager : NetworkBehaviour
                         gameOver.p2Result = 'w';
                         gameOver.p1Damage = p1Damage;
                         gameOver.p2Damage = p2Damage;
+                        gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
                         RpcLoadGameOverScene(); // Call a ClientRpc to load the gameOver scene for all clients
                     }
             }
