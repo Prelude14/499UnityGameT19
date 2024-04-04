@@ -215,7 +215,7 @@ public class SharedVarManager : NetworkBehaviour
         {
             if (PlayerAttackManager.isPlayerOne == true && PlayerAttackManager.isPlayerTwo == false) //if player one attacked
             {
-                DeductHealth(2,damage) //update p2 Health to equal old health minus the amount of damage that was sent by p1
+                DeductHealth(2,damage); //update p2 Health to equal old health minus the amount of damage that was sent by p1
                 p1Damage += damage; //update p1 Damage to equal old damage plus the amount of damage that was sent by p2
             }
             else if (PlayerAttackManager.isPlayerTwo == true && PlayerAttackManager.isPlayerOne == false) //if player 2 attacked player 1 somehow
