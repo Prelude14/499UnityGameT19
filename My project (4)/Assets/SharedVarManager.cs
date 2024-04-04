@@ -120,7 +120,8 @@ public class SharedVarManager : NetworkBehaviour
         gameOver.p2Result = 'l';
     }
     
-    gameOver.playerNumber = losingPlayerNumber;
+    GameObject turnSystem = GameObject.Find("turnSystem");
+    gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
     
     
     SceneManager.LoadScene("gameOver");
@@ -131,27 +132,6 @@ public class SharedVarManager : NetworkBehaviour
     public void CmdUpdateWhosTurn(NetworkIdentity networkTurnIdentity)
     {
         PlayerTurnManager = networkTurnIdentity.GetComponent<PlayerManager>(); //want to track who is ending each turn
-        // GameObject turnSystem = GameObject.Find("turnSystem");
-
-        // if (p1Health <= 0)
-        // {
-        //     gameOver.p1Result = 'l';
-        //     gameOver.p2Result = 'w';
-        //     gameOver.p1Damage = p1Damage;
-        //     gameOver.p2Damage = p2Damage;
-        //     gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
-        //     SceneManager.LoadScene("gameOver");
-        // }
-
-        // if (p2Health <= 0)
-        // {
-        //     gameOver.p1Result = 'w';
-        //     gameOver.p2Result = 'l';
-        //     gameOver.p1Damage = p1Damage;
-        //     gameOver.p2Damage = p2Damage;
-        //     gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
-        //     SceneManager.LoadScene("gameOver");
-        // }
 
         if (whosTurn == 1) //if its player one's turn
         {
