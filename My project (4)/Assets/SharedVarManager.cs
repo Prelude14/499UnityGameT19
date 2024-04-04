@@ -87,11 +87,12 @@ public class SharedVarManager : NetworkBehaviour
 
     //=====================================================================  METHODS  ===============================================================================
 
-    public void DeductHealth(int playerNum, float damage)
+    public void DeductHealth(int playerNum, int damage)
     {
         if (playerNum == 1)
         {
             p1Health -= damage;
+            p1Damage += damage;
             if (p1Health <= 0)
             {
                 TriggerGameOver(1);
@@ -100,6 +101,7 @@ public class SharedVarManager : NetworkBehaviour
         else if (playerNum == 2)
         {
             p2Health -= damage;
+            p2Damage += damage;
             if (p2Health <= 0)
             {
                 TriggerGameOver(2);
