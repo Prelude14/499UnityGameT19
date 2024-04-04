@@ -549,6 +549,10 @@ MonoBehaviour:
   p2Mana: 1
   p1Health: 30
   p2Health: 30
+  p1Damage: 0
+  p2Damage: 0
+  p1Result: 0
+  p2Result: 0
 --- !u!114 &492603886
 MonoBehaviour:
   m_ObjectHideFlags: 0
