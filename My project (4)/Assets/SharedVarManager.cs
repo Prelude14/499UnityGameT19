@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
+using UnityEngine.SceneManagement;
 
 
 public class SharedVarManager : NetworkBehaviour
@@ -10,6 +11,8 @@ public class SharedVarManager : NetworkBehaviour
     //=====================================================================  VARIABLES  ===============================================================================
     //we will share a list of strings to use in order to create the game
     private List<string> playerColors = new List<string>();
+
+    public gameOver gameOver;
 
     //need access to player manager script that is unique to each client
     public PlayerManager PlayerManager;
@@ -61,6 +64,13 @@ public class SharedVarManager : NetworkBehaviour
 
     [SyncVar] public float p1Health = 30; //need sync var to track each player's health (start with full 30 points)
     [SyncVar] public float p2Health = 30; //need sync var to track each player's health
+
+
+    [SyncVar] public int p1Damage = 0; //need sync var to track each player's mana
+    [SyncVar] public int p2Damage = 0; //need sync var to track each player's mana
+
+    [SyncVar] public char p1Result; //need sync var to track each player's health (start with full 30 points)
+    [SyncVar] public char p2Result; //need sync var to track each player's health
 
     //==================================================================== VARIABLES FOR ABILITIES ===========================================
 
@@ -157,6 +167,7 @@ public class SharedVarManager : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdAttackOtherPlayer(int damage, NetworkIdentity networkAttackIdentity)
     {
+        GameObject turnSystem = GameObject.Find("turnSystem");
         PlayerAttackManager = networkAttackIdentity.GetComponent<PlayerManager>(); //want to track who is attacking
 
         if (whosTurn == 1) //if its player one's turn
@@ -164,7 +175,16 @@ public class SharedVarManager : NetworkBehaviour
             if (PlayerAttackManager.isPlayerOne == true && PlayerAttackManager.isPlayerTwo == false) //if player one attacked
             {
                 p2Health -= damage; //update p2 Health to equal old health minus the amount of damage that was sent by p1
-
+                p1Damage += damage; //update p1 Damage to equal old damage plus the amount of damage that was sent by p2
+                 if (p2Health <= 0)
+                    {
+                        gameOver.p1Result = 'w';
+                        gameOver.p2Result = 'l';
+                        gameOver.p1Damage = p1Damage;
+                        gameOver.p2Damage = p2Damage;
+                        gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
+                        RpcLoadGameOverScene(); // Call a ClientRpc to load the gameOver scene for all clients
+                    }
             }
             else if (PlayerAttackManager.isPlayerTwo == true && PlayerAttackManager.isPlayerOne == false) //if player 2 attacked player 1 somehow
             {
@@ -182,8 +202,25 @@ public class SharedVarManager : NetworkBehaviour
             else if (PlayerAttackManager.isPlayerTwo == true && PlayerAttackManager.isPlayerOne == false) //if player 2 attacked
             {
                 p1Health -= damage; //update p1 Health to equal old health minus the amount of damage that was sent by p2
+                p1Health -= damage; //update p1 Health to equal old health minus the amount of damage that was sent by p2
+                p2Damage += damage; // update p2 damage dealt
+                 if (p1Health <= 0)
+                    {
+                        gameOver.p1Result = 'l';
+                        gameOver.p2Result = 'w';
+                        gameOver.p1Damage = p1Damage;
+                        gameOver.p2Damage = p2Damage;
+                        gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
+                        RpcLoadGameOverScene(); // Call a ClientRpc to load the gameOver scene for all clients
+                    }
             }
         }
+    }
+
+    [ClientRpc]
+    void RpcLoadGameOverScene()
+    {
+        SceneManager.LoadScene("gameOver");
     }
 
     //command to self damage your own health
