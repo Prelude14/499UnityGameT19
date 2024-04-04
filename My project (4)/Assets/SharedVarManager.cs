@@ -9,6 +9,8 @@ public class SharedVarManager : NetworkBehaviour
     //we will share a list of strings to use in order to create the game
     private List<string> playerColors = new List<string>();
 
+    public gameOver gameOver;
+
     //need access to player manager script that is unique to each client
     public PlayerManager PlayerManager;
     public PlayerManager PlayerTurnManager; //new one for turn set up just to double check it is new playermanager connection from the Cmdgetplayercolour command
@@ -52,7 +54,6 @@ public class SharedVarManager : NetworkBehaviour
 
     [SyncVar] public char p1Result; //need sync var to track each player's health (start with full 30 points)
     [SyncVar] public char p2Result; //need sync var to track each player's health
-    public GameResultsData gameResultsData;
     //=====================================================================  METHODS  ===============================================================================
 
     public static float p1HP;
@@ -153,10 +154,10 @@ public class SharedVarManager : NetworkBehaviour
                 p1Damage += damage; //update p1 Damage to equal old damage plus the amount of damage that was sent by p2
                  if (p2Health <= 0)
                     {
-                        gameResultsData.p1Result = 'w';
-                        gameResultsData.p2Result = 'l';
-                        gameResultsData.p1Damage = p1Damage;
-                        gameResultsData.p2Damage = p2Damage;
+                        gameOver.p1Result = 'w';
+                        gameOver.p2Result = 'l';
+                        gameOver.p1Damage = p1Damage;
+                        gameOver.p2Damage = p2Damage;
                         RpcLoadGameOverScene(); // Call a ClientRpc to load the gameOver scene for all clients
                     }
             }
@@ -179,10 +180,10 @@ public class SharedVarManager : NetworkBehaviour
                 p2Damage += damage; // update p2 damage dealt
                  if (p1Health <= 0)
                     {
-                        gameResultsData.p1Result = 'l';
-                        gameResultsData.p2Result = 'w';
-                        gameResultsData.p1Damage = p1Damage;
-                        gameResultsData.p2Damage = p2Damage;
+                        gameOver.p1Result = 'l';
+                        gameOver.p2Result = 'w';
+                        gameOver.p1Damage = p1Damage;
+                        gameOver.p2Damage = p2Damage;
                         RpcLoadGameOverScene(); // Call a ClientRpc to load the gameOver scene for all clients
                     }
             }

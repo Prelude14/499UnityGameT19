@@ -8,30 +8,20 @@ using UnityEngine.SceneManagement;
 public class gameOver : MonoBehaviour
 {
     public Button main; 
-
-    public GameResultsData gameResultsData;
-
     private int myDamage; 
 
-    private char result; 
+    private char myResult; 
+
+    public static int p1Damage; // Track player 1's damage.
+    public static int p2Damage; // Track player 2's damage.
+    public static char p1Result; // Track player 1's result (win/loss).
+    public static char p2Result; // Track player 2's result (win/loss).
 
     
     // Start is called before the first frame update
     void Start()
     {
-        // main.onClick.AddListener(buttonOnclick);
-        // string username = DBManager.username;
-
-        // if (PlayerManager.isPlayerOne == true && PlayerManager.isPlayerTwo == false) //if I'm player ONE 
-        // {
-        //     int myDamage = gameResultsData.p1Damage.p1Damage;
-        //     result = gameResultsData.p1Damage.p1Result;
-        // }
-        // else if (PlayerManager.isPlayerTwo == true && PlayerManager.isPlayerOne == false) //if I'm player TWO 
-        // {
-        //     int myDamage = gameResultsData.p1Damage.p2Damage;
-        //     result = gameResultsData.p1Damage.p2Result;
-        // }
+        //SET VARIABLES - need to find way to find out which player is currently running this.
     }
 
     // Update is called once per frame
@@ -54,9 +44,9 @@ public class gameOver : MonoBehaviour
         string username = DBManager.username;
         //make Form to take the user's input 
         WWWForm formE = new WWWForm();
-        // formE.AddField("username", username);
-        // formE.AddField("result", result);
-        // formE.AddField("damageDealt", myDamage);
+        formE.AddField("username", username);
+        formE.AddField("result", myResult);
+        formE.AddField("damageDealt", myDamage);
 
         //connect to url of our database's php file, PASS FORM TO URL
         using (WWW wwwE= new WWW("http://localhost/sqlconnect/gameOver.php", formE))

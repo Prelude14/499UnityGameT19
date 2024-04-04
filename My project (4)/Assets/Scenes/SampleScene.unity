@@ -533,6 +533,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  gameOver: {fileID: 0}
   PlayerManager: {fileID: 0}
   PlayerTurnManager: {fileID: 0}
   PlayerManaManager: {fileID: 0}
