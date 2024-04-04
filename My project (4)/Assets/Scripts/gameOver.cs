@@ -43,7 +43,7 @@ public class gameOver : MonoBehaviour
 
     public void buttonOnclick(){
         SceneManager.LoadScene("MainMenu");
-        // Debug.Log("button clicked");
+        Debug.Log("button clicked");
     }
       public void updateStats()
     {
