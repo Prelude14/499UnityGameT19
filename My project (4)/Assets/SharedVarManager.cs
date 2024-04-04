@@ -89,6 +89,7 @@ public class SharedVarManager : NetworkBehaviour
 
     public void DeductHealth(int playerNum, int damage)
     {
+        Debug.Log("HEALTH DEDUCTED");
         if (playerNum == 1)
         {
             p1Health -= damage;
@@ -122,10 +123,11 @@ public class SharedVarManager : NetworkBehaviour
             gameOver.p2Result = 'l';
         }
         
+        gameOver.p1Damage = p1Damage;
+        gameOver.p2Damage = p2Damage;
         GameObject turnSystem = GameObject.Find("turnSystem");
         gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
         
-
         clientRpcLoadGameOverScene();
     }
 
@@ -302,7 +304,7 @@ public class SharedVarManager : NetworkBehaviour
             }
             else
             {
-                p1Health += 0;
+                // p1Health += 0;
             }
         }
         else
@@ -315,7 +317,7 @@ public class SharedVarManager : NetworkBehaviour
             }
             else
             {
-                p2Health += 0;
+                // p2Health += 0;
             }
         }
     }
@@ -965,6 +967,4 @@ public class SharedVarManager : NetworkBehaviour
             cardInDeck1.SetActive(false);
         }
     }
-
-
 }

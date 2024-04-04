@@ -27,6 +27,8 @@ public class gameOver : MonoBehaviour
     {
         main.onClick.AddListener(buttonOnclick);
         
+        // Debug.Log("p1damage: " + p1Damage + " p1result: " + p1Result);
+
         if (playerNumber == 1) {
             myDamage = p1Damage;
             myResult = p1Result;
