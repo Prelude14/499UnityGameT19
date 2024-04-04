@@ -62,8 +62,8 @@ public class SharedVarManager : NetworkBehaviour
     public static int p1StaticMana;
     public static int p2StaticMana;
 
-    [SyncVar] public float p1Health = 30; //need sync var to track each player's health (start with full 30 points)
-    [SyncVar] public float p2Health = 30; //need sync var to track each player's health
+    [SyncVar] public float p1Health = 5; //need sync var to track each player's health (start with full 30 points)
+    [SyncVar] public float p2Health = 5; //need sync var to track each player's health
 
 
     [SyncVar] public int p1Damage = 0; //need sync var to track each player's mana
@@ -91,6 +91,27 @@ public class SharedVarManager : NetworkBehaviour
     public void CmdUpdateWhosTurn(NetworkIdentity networkTurnIdentity)
     {
         PlayerTurnManager = networkTurnIdentity.GetComponent<PlayerManager>(); //want to track who is ending each turn
+        GameObject turnSystem = GameObject.Find("turnSystem");
+
+        if (p1Health <= 0)
+        {
+            gameOver.p1Result = 'l';
+            gameOver.p2Result = 'w';
+            gameOver.p1Damage = p1Damage;
+            gameOver.p2Damage = p2Damage;
+            gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
+            RpcLoadGameOverScene(); // Call a ClientRpc to load the gameOver scene for all clients
+        }
+
+        if (p2Health <= 0)
+        {
+            gameOver.p1Result = 'w';
+            gameOver.p2Result = 'l';
+            gameOver.p1Damage = p1Damage;
+            gameOver.p2Damage = p2Damage;
+            gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
+            RpcLoadGameOverScene(); // Call a ClientRpc to load the gameOver scene for all clients
+        }
 
         if (whosTurn == 1) //if its player one's turn
         {
@@ -167,7 +188,6 @@ public class SharedVarManager : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdAttackOtherPlayer(int damage, NetworkIdentity networkAttackIdentity)
     {
-        GameObject turnSystem = GameObject.Find("turnSystem");
         PlayerAttackManager = networkAttackIdentity.GetComponent<PlayerManager>(); //want to track who is attacking
 
         if (whosTurn == 1) //if its player one's turn
@@ -176,15 +196,6 @@ public class SharedVarManager : NetworkBehaviour
             {
                 p2Health -= damage; //update p2 Health to equal old health minus the amount of damage that was sent by p1
                 p1Damage += damage; //update p1 Damage to equal old damage plus the amount of damage that was sent by p2
-                 if (p2Health <= 0)
-                    {
-                        gameOver.p1Result = 'w';
-                        gameOver.p2Result = 'l';
-                        gameOver.p1Damage = p1Damage;
-                        gameOver.p2Damage = p2Damage;
-                        gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
-                        RpcLoadGameOverScene(); // Call a ClientRpc to load the gameOver scene for all clients
-                    }
             }
             else if (PlayerAttackManager.isPlayerTwo == true && PlayerAttackManager.isPlayerOne == false) //if player 2 attacked player 1 somehow
             {
@@ -196,23 +207,14 @@ public class SharedVarManager : NetworkBehaviour
         {
             if (PlayerAttackManager.isPlayerOne == true && PlayerAttackManager.isPlayerTwo == false) //if player one attacked player 2 somehow
             {
+                p1Health -= damage; //update p1 Health to equal old health minus the amount of damage that was sent by p2
+                p2Damage += damage; //update p2 Damage to equal old damage plus the amount of damage that was sent by p1
                 //Do NOTHING SINCE player1 should never be able to attack when whosTurn = 2
                 //Debug.log("Player 1 tried to attack p2 during player 2's turn");
             }
             else if (PlayerAttackManager.isPlayerTwo == true && PlayerAttackManager.isPlayerOne == false) //if player 2 attacked
             {
-                p1Health -= damage; //update p1 Health to equal old health minus the amount of damage that was sent by p2
-                p1Health -= damage; //update p1 Health to equal old health minus the amount of damage that was sent by p2
-                p2Damage += damage; // update p2 damage dealt
-                 if (p1Health <= 0)
-                    {
-                        gameOver.p1Result = 'l';
-                        gameOver.p2Result = 'w';
-                        gameOver.p1Damage = p1Damage;
-                        gameOver.p2Damage = p2Damage;
-                        gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
-                        RpcLoadGameOverScene(); // Call a ClientRpc to load the gameOver scene for all clients
-                    }
+               
             }
         }
     }
