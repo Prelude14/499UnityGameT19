@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class gameOver : MonoBehaviour
 {
-    public Button main; 
     private int myDamage; 
 
     private char myResult; 
@@ -25,8 +24,6 @@ public class gameOver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        main.onClick.AddListener(buttonOnclick);
-        
         // Debug.Log("p1damage: " + p1Damage + " p1result: " + p1Result);
 
         if (playerNumber == 1) {
@@ -38,7 +35,7 @@ public class gameOver : MonoBehaviour
             myResult = p2Result;
         }
 
-        // Debug.Log("damage dealt: " + myDamage + " result: " +  myResult);
+        Debug.Log("damage dealt: " + myDamage + " result: " +  myResult);
     }
 
     // Update is called once per frame
@@ -49,7 +46,7 @@ public class gameOver : MonoBehaviour
 
     public void buttonOnclick(){
         SceneManager.LoadScene("MainMenu");
-        // Debug.Log("button clicked");
+        Debug.Log("button clicked");
     }
       public void updateStats()
     {
@@ -62,11 +59,11 @@ public class gameOver : MonoBehaviour
         //make Form to take the user's input 
         WWWForm formE = new WWWForm();
 
-        if (username != ""){
+        // if (username != ""){
             formE.AddField("username", username);
             formE.AddField("result", myResult);
-            formE.AddField("damageDealt", myDamage);
-            // Debug.Log("data sent to db (username: " + username + " result: " + myResult + " damage: " + myDamage + ")");
+            formE.AddField("damage", myDamage);
+            Debug.Log("data sent to db (username: " + username + " result: " + myResult + " damage: " + myDamage + ")");
 
             //connect to url of our database's php file, PASS FORM TO URL
             using (WWW wwwE= new WWW("http://localhost/sqlconnect/gameOver.php", formE))
@@ -86,7 +83,7 @@ public class gameOver : MonoBehaviour
                     }
                 }
             }
-        }
+        // }
     }
 
 }
