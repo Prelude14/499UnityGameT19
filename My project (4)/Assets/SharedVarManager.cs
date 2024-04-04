@@ -224,7 +224,6 @@ public class SharedVarManager : NetworkBehaviour
             if (PlayerAttackManager.isPlayerOne == true && PlayerAttackManager.isPlayerTwo == false) //if player one attacked
             {
                 DeductHealth(2,damage); //update p2 Health to equal old health minus the amount of damage that was sent by p1
-                p1Damage += damage; //update p1 Damage to equal old damage plus the amount of damage that was sent by p2
             }
             else if (PlayerAttackManager.isPlayerTwo == true && PlayerAttackManager.isPlayerOne == false) //if player 2 attacked player 1 somehow
             {
@@ -236,14 +235,13 @@ public class SharedVarManager : NetworkBehaviour
         {
             if (PlayerAttackManager.isPlayerOne == true && PlayerAttackManager.isPlayerTwo == false) //if player one attacked player 2 somehow
             {
-                DeductHealth(1,damage); //update p1 Health to equal old health minus the amount of damage that was sent by p2
-                p2Damage += damage; //update p2 Damage to equal old damage plus the amount of damage that was sent by p1
+                //update p1 Health to equal old health minus the amount of damage that was sent by p2
                 //Do NOTHING SINCE player1 should never be able to attack when whosTurn = 2
                 //Debug.log("Player 1 tried to attack p2 during player 2's turn");
             }
             else if (PlayerAttackManager.isPlayerTwo == true && PlayerAttackManager.isPlayerOne == false) //if player 2 attacked
             {
-               
+               DeductHealth(1,damage); 
             }
         }
     }
