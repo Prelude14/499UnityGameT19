@@ -6,6 +6,11 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
+
+    void start(){
+        ActiveMainMenu();
+    }
+
     //need public variable that will track if the user logged in or not
     public GameObject guestbackground;
     public GameObject usersMMbackground;
