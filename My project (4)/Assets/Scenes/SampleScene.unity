@@ -533,6 +533,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  gameOver: {fileID: 0}
   PlayerManager: {fileID: 0}
   PlayerTurnManager: {fileID: 0}
   PlayerManaManager: {fileID: 0}
@@ -557,6 +558,10 @@ MonoBehaviour:
   p2Mana: 1
   p1Health: 30
   p2Health: 30
+  p1Damage: 0
+  p2Damage: 0
+  p1Result: 0
+  p2Result: 0
 --- !u!114 &492603886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1951,6 +1956,8 @@ GameObject:
   - component: {fileID: 1467059167}
   - component: {fileID: 1467059166}
   - component: {fileID: 1467059165}
+  - component: {fileID: 1467059170}
+  - component: {fileID: 1467059169}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2055,6 +2062,44 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1467059169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467059164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 25f4768dde303442dbbe9fcdd13744cc, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1467059170
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467059164}
+  m_CullTransparentMesh: 1
 --- !u!1 &1467944564
 GameObject:
   m_ObjectHideFlags: 0
@@ -2399,6 +2444,7 @@ MonoBehaviour:
   playArrows: {fileID: 1399001304}
   attackArrows: {fileID: 870753354}
   PlayerManager: {fileID: 0}
+  playerNumber: 0
 --- !u!4 &1811560973
 Transform:
   m_ObjectHideFlags: 0
