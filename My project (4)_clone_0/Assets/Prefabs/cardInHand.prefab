@@ -1498,6 +1498,7 @@ MonoBehaviour:
   color: 0
   id: 0
   triggered: 0
+  PlayerManager: {fileID: 0}
 --- !u!114 &467141001557397880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1557,8 +1558,12 @@ MonoBehaviour:
   Image: {fileID: 6525077667775594899}
   playableBorder: {fileID: 4347753901248604206}
   unplayableBorder: {fileID: 7870417631566192203}
+  attackCount: 0
   Canvas: {fileID: 0}
   ZoomCard: {fileID: 7236696608810499412, guid: ef4645fa71a0a48419a9c7ce7109a30d, type: 3}
+  lastTurn: 0
+  currentTurn: 0
+  PlayerManager: {fileID: 0}
 --- !u!114 &8507879098216517373
 MonoBehaviour:
   m_ObjectHideFlags: 0

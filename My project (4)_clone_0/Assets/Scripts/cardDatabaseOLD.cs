@@ -5,14 +5,10 @@ using UnityEngine;
 public class cardDatabase : MonoBehaviour
 {
     //public static List<Card1> cardList = new List<Card1>(); //this is the old placeholder dummy deck of cards
-    public static List<Card1> neutralCardList = new List<Card1>();
-    public static List<Card1> blackCardList = new List<Card1>();
 
     void Awake(){
     //insert card using format: Card(int id, string cardName, int cost, int pow, int hp, string txt)
         //populateList(); //old list
-
-        //we've got 8 NEUTRAL cards that will be mixed in to every other deck
         populateNeutralList();
         populateBlackList();
         populateRedList();
@@ -45,11 +41,15 @@ public class cardDatabase : MonoBehaviour
    }//old deck  ============================================================
    */
 
+
+   //we've got 8 NEUTRAL cards that will be mixed in to every other deck
+   public static List<Card1> neutralCardList = new List<Card1>();
+
    public void populateNeutralList(){ //colour 5 is for neutral since 0 is the old deck and 1-4 are the colours
         
-                                    //colour,  id,  name,  cost, pow,  hp,  description
+                             //colour,  id,  name,  cost, pow,  hp,  description
         neutralCardList.Add(new Card1(5, 0, "Stick Man", 1, 2, 3, " "));
-        neutralCardList.Add(new Card1(5, 1, "Stick Man", 1, 2, 3, "No abilities. Just a Dude."));
+        neutralCardList.Add(new Card1(5, 1, "Stick Man", 1, 2, 3, " "));
         neutralCardList.Add(new Card1(5, 2, "PickPocket", 2, 1, 3, "Draw a card"));
         neutralCardList.Add(new Card1(5, 3, "PickPocket", 2, 1, 3, "Draw a card"));
         neutralCardList.Add(new Card1(5, 4, "ToyPistol", 5, 3, 4, "Deal 3 damage to the enemy"));
@@ -60,10 +60,11 @@ public class cardDatabase : MonoBehaviour
    } // end NEUTRAL deck ============================================================
 
    //this will be the BLACK deck of cards. Its made up of 12 cards that specialize in high risk high reward play styles. 
+   public static List<Card1> blackCardList = new List<Card1>();
 
    public void populateBlackList(){ //colour 1 is for black cards
 
-                                   //colour,  id,  name,  cost, pow,  hp,  description
+                                  //colour,  id,  name,  cost, pow,  hp,  description
         blackCardList.Add(new Card1(1, 0, "Curse Gamble", 1, 3, 3, "Deal 2 damage to yourself"));
         blackCardList.Add(new Card1(1, 1, "Curse Gamble", 1, 3, 3, "Deal 2 damage to yourself"));
 
@@ -90,7 +91,7 @@ public class cardDatabase : MonoBehaviour
 
    public void populateRedList(){ //colour 2 is for red cards
 
-                               //colour,  id,  name,  cost, pow,  hp,  description
+                                 //colour,  id,  name,  cost, pow,  hp,  description
         redCardList.Add(new Card1(2, 0, "Toxic Blade", 1, 2, 1, "If this creature attacks an enemy, deal another 2 damage"));
         redCardList.Add(new Card1(2, 1, "Toxic Blade", 1, 2, 1, "If this creature attacks an enemy, deal another 2 damage"));
 
@@ -130,11 +131,11 @@ public class cardDatabase : MonoBehaviour
         whiteCardList.Add(new Card1(3, 6, "Field Medic", 3, 2, 4, "Heal 3 damage, destroy a random enemy minion"));
         whiteCardList.Add(new Card1(3, 7, "Field Medic", 3, 2, 4, "Heal 3 damage, destroy a random enemy minion"));
 
-        whiteCardList.Add(new Card1(3, 8, "Surprise Gift", 8, 3, 2, ""));
-        whiteCardList.Add(new Card1(3, 9, "Surprise Gift", 8, 3, 2, ""));
+        whiteCardList.Add(new Card1(3, 8, "Surprise Gift", 8, 3, 2, "Heal back to full health"));
+        whiteCardList.Add(new Card1(3, 9, "Surprise Gift", 8, 3, 2, "Heal back to full health"));
 
-        whiteCardList.Add(new Card1(3, 10, "Karma Heal", 6, 5, 5, "Deal an amount of damage equal to the amount you have healed this game to the enemy."));
-        whiteCardList.Add(new Card1(3, 11, "Karma Heal", 6, 5, 5, "Deal an amount of damage equal to the amount you have healed this game to the enemy."));
+        whiteCardList.Add(new Card1(3, 10, "Karma Heal", 10, 5, 5, "Deal an amount of damage equal to the amount you have healed this game to the enemy"));
+        whiteCardList.Add(new Card1(3, 11, "Karma Heal", 10, 5, 5, "Deal an amount of damage equal to the amount you have healed this game to the enemy"));
     
    } //end WHITE deck  =============================================================
 
@@ -145,23 +146,23 @@ public class cardDatabase : MonoBehaviour
    public void populateBlueList(){ //colour 4 is for blue cards
 
                                //colour,  id,  name,  cost, pow,  hp,  description
-        blueCardList.Add(new Card1(4, 0, "Damage Dealer", 2, 1, 1, "Deal damage equal to the amount of cards you've drawn this turn to one enemy minion."));
-        blueCardList.Add(new Card1(4, 1, "Damage Dealer", 2, 1, 1, "Deal damage equal to the amount of cards you've drawn this turn to one enemy minion."));
+        blueCardList.Add(new Card1(4, 0, "Damage Dealer", 2, 1, 1, "Draw 1"));
+        blueCardList.Add(new Card1(4, 1, "Damage Dealer", 2, 1, 1, "Draw 1"));
 
-        blueCardList.Add(new Card1(4, 2, "Minion Hunter", 4, 2, 2, "Destroy one enemy minion."));
-        blueCardList.Add(new Card1(4, 3, "Minion Hunter", 4, 2, 2, "Destroy one enemy minion."));
+        blueCardList.Add(new Card1(4, 2, "Minion Hunter", 4, 2, 2, "Destroy a random enemy minion and draw 1"));
+        blueCardList.Add(new Card1(4, 3, "Minion Hunter", 4, 2, 2, "Destroy a random enemy minion and draw 1"));
 
-        blueCardList.Add(new Card1(4, 4, "Firesale Shuffle", 2, 1, 2, "Draw a new card, and reduce its cost by 1."));
-        blueCardList.Add(new Card1(4, 5, "Firesale Shuffle", 2, 1, 2, "Draw a new card, and reduce its cost by 1."));
+        blueCardList.Add(new Card1(4, 4, "Firesale Shuffle", 3, 1, 2, "Draw 2 and deal 1"));
+        blueCardList.Add(new Card1(4, 5, "Firesale Shuffle", 3, 1, 2, "Draw 2 and deal 1"));
 
-        blueCardList.Add(new Card1(4, 6, "Balance the Scales", 5, 3, 5, "Draw new cards until you have the same amount of cards in your hand as your opponent."));
-        blueCardList.Add(new Card1(4, 7, "Balance the Scales", 5, 3, 5, "Draw new cards until you have the same amount of cards in your hand as your opponent."));
+        blueCardList.Add(new Card1(4, 6, "Balance the Scales", 5, 3, 5, "Draw cards until you have the same amount of cards in your hand as your opponent"));
+        blueCardList.Add(new Card1(4, 7, "Balance the Scales", 5, 3, 5, "Draw cards until you have the same amount of cards in your hand as your opponent"));
 
-        blueCardList.Add(new Card1(4, 8, "Clean Slate", 4, 3, 2, "You and your opponent both discard your entire hands. You then draw the same amount that you discarded plus 1 extra card."));
-        blueCardList.Add(new Card1(4, 9, "Clean Slate", 4, 3, 2, "You and your opponent both discard your entire hands. You then draw the same amount that you discarded plus 1 extra card."));
+        blueCardList.Add(new Card1(4, 8, "Clean Slate", 4, 3, 2, "Discard your hand, draw that many cards plus 1"));
+        blueCardList.Add(new Card1(4, 9, "Clean Slate", 4, 3, 2, "Discard your hand, draw that many cards plus 1"));
 
-        blueCardList.Add(new Card1(4, 10, "The House Always Wins", 6, 2, 2, "Deal 2 damage to a random enemy for every card you have drawn this game."));
-        blueCardList.Add(new Card1(4, 11, "The House Always Wins", 6, 2, 2, "Deal 2 damage to a random enemy for every card you have drawn this game."));
+        blueCardList.Add(new Card1(4, 10, "The House Always Wins", 6, 2, 2, "Deal 2 damage to a random enemy for every card you have drawn this game"));
+        blueCardList.Add(new Card1(4, 11, "The House Always Wins", 6, 2, 2, "Deal 2 damage to a random enemy for every card you have drawn this game"));
     
    } //end BLUE deck  =============================================================
 

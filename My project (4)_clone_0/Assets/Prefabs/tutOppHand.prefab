@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2343509547521651325}
   - component: {fileID: 2343509547521651326}
   - component: {fileID: 2343509547521651327}
-  - component: {fileID: 2343509547521651312}
+  - component: {fileID: 6755907388190957106}
   m_Layer: 5
   m_Name: tutOppHand
   m_TagString: Untagged
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
---- !u!114 &2343509547521651312
+--- !u!114 &6755907388190957106
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,8 +113,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 2343509547521651314}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 334b43863772dd849b133f7a79707fac, type: 3}
+  m_Script: {fileID: 11500000, guid: 95e6643dc38d4c141a3a1d48fdd8718f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hand: {fileID: 2343509547521651314}
-  handCard: {fileID: 7236696608810499412, guid: bb6f8b4d47ed90a418b3e9b36dbd9aef, type: 3}
+  tuthand: {fileID: 2343509547521651314}
+  tuthandCard: {fileID: 7236696608810499412, guid: 8cb512a3dca56be45acb5705652545b2, type: 3}

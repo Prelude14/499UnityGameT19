@@ -52,8 +52,8 @@ public class cardDatabase : MonoBehaviour
         neutralCardList.Add(new Card1(5, 1, "Stick Man", 1, 2, 3, " "));
         neutralCardList.Add(new Card1(5, 2, "PickPocket", 2, 1, 3, "Draw a card"));
         neutralCardList.Add(new Card1(5, 3, "PickPocket", 2, 1, 3, "Draw a card"));
-        neutralCardList.Add(new Card1(5, 4, "ToyPistol", 5, 3, 4, "Deal 3 damage to the enemy"));
-        neutralCardList.Add(new Card1(5, 5, "ToyPistol", 5, 3, 4, "Deal 3 damage to the enemy"));
+        neutralCardList.Add(new Card1(5, 4, "Toy Pistol", 5, 3, 4, "Deal 3 damage to the enemy"));
+        neutralCardList.Add(new Card1(5, 5, "Toy Pistol", 5, 3, 4, "Deal 3 damage to the enemy"));
         neutralCardList.Add(new Card1(5, 6, "Toy Bomb", 7, 3, 3, "Destroy all creatures currently in play, including this one!"));
         neutralCardList.Add(new Card1(5, 7, "Toy Bomb", 7, 3, 3, "Destroy all creatures currently in play, including this one!"));
 

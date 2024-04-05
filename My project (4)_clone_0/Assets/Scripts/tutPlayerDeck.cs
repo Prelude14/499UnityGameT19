@@ -9,7 +9,7 @@ public class tutPlayerDeck : MonoBehaviour
     public List<Card1> container = new List<Card1>();
     public int deckSize;
     public int handSize = 0;
-    public List<Card1> deck = new List<Card1>();
+    public List<Card1> tutDeck = new List<Card1>();
     public List<Card1> staticDeck = new List<Card1>();
     public int x;
     public static int staticAmount;
@@ -24,7 +24,7 @@ public class tutPlayerDeck : MonoBehaviour
 
     public GameObject[] clones;
     public GameObject hand;
-    public GameObject cardInHand;
+    public GameObject tutCardInHand;
     public Text deckCountText;
 
     public static int playerColour;
@@ -34,10 +34,10 @@ public class tutPlayerDeck : MonoBehaviour
     {
 
         x = 0;
-        deckSize = 20;
+        deckSize = 8;
 
         //populate card list depending on decks selected. Done inside the function
-        populateDeck();
+        populateTutDeck();
 
         shuffle();
         StartCoroutine(StartGame());
@@ -53,7 +53,7 @@ public class tutPlayerDeck : MonoBehaviour
             StartCoroutine(Draw(staticAmount));
             drawStatic = false;
         }
-        staticDeck = deck;
+        staticDeck = tutDeck;
 
         changeSize();
 
@@ -69,12 +69,12 @@ public class tutPlayerDeck : MonoBehaviour
     {
         //coroutine: way to count down
         //initial draw
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 4; i++)
         { // number of starting hand
             yield return new WaitForSeconds(.15f);
             //each second it draws a card
             //spawns new object using instantiate duplicating it as a clone of cardInHand
-            GameObject card = Instantiate(cardInHand, new Vector2(0, 0), Quaternion.identity);
+            GameObject card = Instantiate(tutCardInHand, new Vector2(0, 0), Quaternion.identity);
 
             //renderCardColour(card);
         }
@@ -113,10 +113,11 @@ public class tutPlayerDeck : MonoBehaviour
     {
         for (int i = 0; i < deckSize; i++)
         {
-            container[0] = deck[i];
+            container.Add(tutDeck[i]); //always store current combinedDeck value in first slot of container's list
             int randomIndex = Random.Range(i, deckSize);
-            deck[i] = deck[randomIndex];
-            deck[randomIndex] = container[0];
+            tutDeck[i] = tutDeck[randomIndex];
+            tutDeck[randomIndex] = container[0];
+            container.RemoveAt(0); //delete container's first value after use, so next card is shuffled properly
         }
         //container should show 
         // string result = "";
@@ -136,7 +137,7 @@ public class tutPlayerDeck : MonoBehaviour
                 //slow down code so we don't draw too fast
                 yield return new WaitForSeconds(.15F);
                 //Instantiate(cardInHand, transform.position, transform.rotation);
-                GameObject card = Instantiate(cardInHand, new Vector2(0, 0), Quaternion.identity);
+                GameObject card = Instantiate(tutCardInHand, new Vector2(0, 0), Quaternion.identity);
 
                 //renderCardColour(card);
             }
@@ -153,53 +154,36 @@ public class tutPlayerDeck : MonoBehaviour
     }
 
     //add 20 cards from the cardDatabase using a neutral deck plus one colour (which gets selected by player)
-    public void populateDeck()
+    public void populateTutDeck()
     {
+        populateTutorialList(); //generate list of playing cards cutom for tutorial
         //every deck gets the same 8 neutral cards added to it first
         for (int i = 0; i < 8; i++)
         {
-            deck[i] = cardDatabase.neutralCardList[i];
-        } //ADD 8 Neutral cards first
+            tutDeck.Add(tutorialCardList[i]);
+        } //all 8 cards from tutorial deck to player deck
 
-        int j = 8;//start adding the other 12 cards from each deck at index 8 because of neutral cards
-        if (playerColour == 1)          // 1 == BLACK DECK
-        {
-            for (int i = 0; i < 12; i++)                //ADD 12 BLACK cards after first 8
-            {
-                deck[j] = cardDatabase.blackCardList[i];
-                j++;
-            }
-            j = 8; //reset j to 8 after loop is done
-        }
-        else if (playerColour == 2)          // 2 == RED DECK
-        {
-            for (int i = 0; i < 12; i++)                //ADD 12 RED cards after first 8
-            {
-                deck[j] = cardDatabase.redCardList[i];
-                j++;
-            }
-            //reset j to 8 after loop is done
-        }
-        else if (playerColour == 3)          // 3 == WHITE DECK
-        {
-            for (int i = 0; i < 12; i++)                //ADD 12 WHITE cards after first 8
-            {
-                deck[j] = cardDatabase.whiteCardList[i];
-                j++;
-            }
-            //reset j to 8 after loop is done
-        }
-        else if (playerColour == 4)          // 4 == BLUE DECK
-        {
-            for (int i = 0; i < 12; i++)                //ADD 12 BLUE cards after first 8
-            {
-                deck[j] = cardDatabase.blueCardList[i];
-                j++;
-            }
-            //reset j to 8 after loop is done
-        }
+       
 
     }
+
+    //we've got 8 NEUTRAL cards that will be mixed in to every other deck
+    public static List<Card1> tutorialCardList = new List<Card1>();
+
+    public void populateTutorialList()
+    { //colour 5 is for neutral since 0 is the old deck and 1-4 are the colours
+
+        //colour,  id,  name,  cost, pow,  hp,  description
+        tutorialCardList.Add(new Card1(5, 0, "Stick Man", 1, 2, 3, "Just a dude. No abilities.")); //low cost neutral
+        tutorialCardList.Add(new Card1(5, 1, "Stick Man", 1, 2, 3, "Just a dude. No abilities.")); //low cost neutral
+        tutorialCardList.Add(new Card1(5, 2, "PickPocket", 2, 1, 3, "Draw a card")); //low cost neutral
+        tutorialCardList.Add(new Card1(1, 3, "Eye for an Eye", 3, 1, 2, "Destroy a random minion, deal 5 damage to yourself")); //interesting black card
+        tutorialCardList.Add(new Card1(1, 4, "Curse Gamble", 1, 3, 3, "Deal 2 damage to yourself")); //cheap black card
+        tutorialCardList.Add(new Card1(2, 5, "Toxic Blade", 1, 2, 1, "If this creature attacks an enemy, deal another 2 damage")); //interesting red card
+        tutorialCardList.Add(new Card1(3, 6, "Healer", 1, 1, 1, "Heal 2 damage")); //cheap white
+        tutorialCardList.Add(new Card1(4, 7, "Damage Dealer", 2, 1, 1, "Draw 1")); //cheapest blue
+
+    } // end NEUTRAL deck ============================================================
 
 
     public int getDeckSize()
@@ -208,7 +192,7 @@ public class tutPlayerDeck : MonoBehaviour
     }
     public string getDeckTop()
     {
-        return deck[0].ToString();
+        return tutDeck[0].ToString();
     }
 
 }

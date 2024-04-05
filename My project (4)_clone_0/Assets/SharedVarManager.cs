@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
+using UnityEngine.SceneManagement;
 
 
 public class SharedVarManager : NetworkBehaviour
@@ -10,6 +11,8 @@ public class SharedVarManager : NetworkBehaviour
     //=====================================================================  VARIABLES  ===============================================================================
     //we will share a list of strings to use in order to create the game
     private List<string> playerColors = new List<string>();
+
+    public gameOver gameOver;
 
     //need access to player manager script that is unique to each client
     public PlayerManager PlayerManager;
@@ -62,6 +65,13 @@ public class SharedVarManager : NetworkBehaviour
     [SyncVar] public float p1Health = 30; //need sync var to track each player's health (start with full 30 points)
     [SyncVar] public float p2Health = 30; //need sync var to track each player's health
 
+
+    [SyncVar] public int p1Damage = 0; //need sync var to track each player's mana
+    [SyncVar] public int p2Damage = 0; //need sync var to track each player's mana
+
+    [SyncVar] public char p1Result; //need sync var to track each player's health (start with full 30 points)
+    [SyncVar] public char p2Result; //need sync var to track each player's health
+
     //==================================================================== VARIABLES FOR ABILITIES ===========================================
 
     public static float p1HP;
@@ -76,6 +86,59 @@ public class SharedVarManager : NetworkBehaviour
 
 
     //=====================================================================  METHODS  ===============================================================================
+
+    [Server]
+    public void DeductHealth(int playerNum, int damage)
+    {
+        Debug.Log("HEALTH DEDUCTED");
+        if (playerNum == 1)
+        {
+            p1Health -= damage;
+            p2Damage += damage;
+            if (p1Health <= 0)
+            {
+                TriggerGameOver(1);
+            }
+        }
+        else if (playerNum == 2)
+        {
+            p2Health -= damage;
+            p1Damage += damage;
+            if (p2Health <= 0)
+            {
+                TriggerGameOver(2);
+            }
+        }
+    }
+
+    [Server]
+    public void TriggerGameOver(int losingPlayerNumber)
+    {
+        if (losingPlayerNumber == 1)
+        {
+            gameOver.p1Result = 'l';
+            gameOver.p2Result = 'w';
+        }
+        else if (losingPlayerNumber == 2)
+        {
+            gameOver.p1Result = 'w';
+            gameOver.p2Result = 'l';
+        }
+        
+        gameOver.p1Damage = p1Damage;
+        gameOver.p2Damage = p2Damage;
+        GameObject turnSystem = GameObject.Find("turnSystem");
+        gameOver.playerNumber = turnSystem.GetComponent<turnScript>().playerNumber;
+        
+        clientRpcLoadGameOverScene();
+    }
+
+    [Server]
+    public void clientRpcLoadGameOverScene()
+    {
+        SceneManager.LoadScene("gameOver");
+    }
+
     //command when turn is ended on client side (they press end turn button and call this command in turnscript)
     [Command(requiresAuthority = false)]
     public void CmdUpdateWhosTurn(NetworkIdentity networkTurnIdentity)
@@ -117,6 +180,7 @@ public class SharedVarManager : NetworkBehaviour
             }
         }
     }
+
     //command when client plays a card and needs to update their mana count
     [Command(requiresAuthority = false)]
     public void CmdUpdateManaCount(int manaCost, NetworkIdentity networkManaIdentity)
@@ -163,8 +227,7 @@ public class SharedVarManager : NetworkBehaviour
         {
             if (PlayerAttackManager.isPlayerOne == true && PlayerAttackManager.isPlayerTwo == false) //if player one attacked
             {
-                p2Health -= damage; //update p2 Health to equal old health minus the amount of damage that was sent by p1
-
+                DeductHealth(2,damage); //update p2 Health to equal old health minus the amount of damage that was sent by p1
             }
             else if (PlayerAttackManager.isPlayerTwo == true && PlayerAttackManager.isPlayerOne == false) //if player 2 attacked player 1 somehow
             {
@@ -176,12 +239,13 @@ public class SharedVarManager : NetworkBehaviour
         {
             if (PlayerAttackManager.isPlayerOne == true && PlayerAttackManager.isPlayerTwo == false) //if player one attacked player 2 somehow
             {
+                //update p1 Health to equal old health minus the amount of damage that was sent by p2
                 //Do NOTHING SINCE player1 should never be able to attack when whosTurn = 2
                 //Debug.log("Player 1 tried to attack p2 during player 2's turn");
             }
             else if (PlayerAttackManager.isPlayerTwo == true && PlayerAttackManager.isPlayerOne == false) //if player 2 attacked
             {
-                p1Health -= damage; //update p1 Health to equal old health minus the amount of damage that was sent by p2
+               DeductHealth(1,damage); 
             }
         }
     }
@@ -192,11 +256,11 @@ public class SharedVarManager : NetworkBehaviour
     {
         if (whosTurn == 1)
         { //if player one played this
-            p1Health -= damage;
+            DeductHealth(1,damage);
         }
         else
         {
-            p2Health -= damage;
+            DeductHealth(2,damage);
         }
     }
 
@@ -206,11 +270,11 @@ public class SharedVarManager : NetworkBehaviour
     {
         if (whosTurn == 1)
         { //if player one played this
-            p2Health -= damage;
+            DeductHealth(2,damage);
         }
         else
         {
-            p1Health -= damage;
+            DeductHealth(1,damage);
         }
     }
     [Command(requiresAuthority = false)]
@@ -242,7 +306,7 @@ public class SharedVarManager : NetworkBehaviour
             }
             else
             {
-                p1Health += 0;
+                // p1Health += 0;
             }
         }
         else
@@ -255,7 +319,7 @@ public class SharedVarManager : NetworkBehaviour
             }
             else
             {
-                p2Health += 0;
+                // p2Health += 0;
             }
         }
     }
@@ -905,6 +969,4 @@ public class SharedVarManager : NetworkBehaviour
             cardInDeck1.SetActive(false);
         }
     }
-
-
 }

@@ -30,6 +30,8 @@ public class turnScript : NetworkBehaviour
     //need access to player manager script that is unique to each client
     public PlayerManager PlayerManager;
 
+    public int playerNumber;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,8 +44,6 @@ public class turnScript : NetworkBehaviour
         currentMana = 1;
         turnStart = false;
         disable = false;
-
-
     }
 
     public void SetUpTurns()
@@ -67,12 +67,15 @@ public class turnScript : NetworkBehaviour
             NetworkIdentity networkIdentity = NetworkClient.connection.identity;
             PlayerManager = networkIdentity.GetComponent<PlayerManager>();
 
+            //set player number locally
+            if(PlayerManager.isPlayerOne){playerNumber=1;}else if(PlayerManager.isPlayerTwo){playerNumber=2;}
+
             if (PlayerManager.isPlayerOne == true && PlayerManager.isPlayerTwo == false) //if I'm player ONE and its PLAYER ONE'S Turn, then it is my turn
             {
                 isMyTurn = true;
                 myTurn = 1;
                 isTheirTurn = 0;
-                maxMana = SharedVarManager.p1MaxMana; //set max to equal shared var manager's current count
+                 maxMana = SharedVarManager.p1MaxMana; //set max to equal shared var manager's current count
                 currentMana = SharedVarManager.p1StaticMana; //update current mana to match full mana (instead of incrementing it? *********************)
             }
             else if (PlayerManager.isPlayerTwo == true && PlayerManager.isPlayerOne == false) //if I'm player TWO and its PLAYER ONE'S Turn, then it is not my turn
@@ -96,14 +99,14 @@ public class turnScript : NetworkBehaviour
                 isMyTurn = false;
                 myTurn = 0;
                 isTheirTurn = 1;
-                maxMana = SharedVarManager.p1StaticMana; //set max to equal shared var manager's current count
+                 maxMana = SharedVarManager.p1StaticMana; //set max to equal shared var manager's current count
             }
             else if (PlayerManager.isPlayerTwo == true && PlayerManager.isPlayerOne == false) //if I'm player TWO and its PLAYER TWO'S Turn, then it IS my turn
             {
                 isMyTurn = true;
                 myTurn = 1;
                 isTheirTurn = 0;
-                maxMana = SharedVarManager.p2MaxMana; //set max to equal shared var manager's current count
+                    maxMana = SharedVarManager.p2MaxMana; //set max to equal shared var manager's current count
                 currentMana = SharedVarManager.p2StaticMana; //update current mana to match full mana (instead of incrementing it? *********************)
             }
         }
@@ -113,6 +116,7 @@ public class turnScript : NetworkBehaviour
     void Update()
     {
         SetUpTurns(); //find out if its my turn or not
+
         if (isMyTurn == true)
         {
             turnText.text = "Your turn";
@@ -169,6 +173,7 @@ public class turnScript : NetworkBehaviour
             playArrows.SetActive(false);
             attackArrows.SetActive(false);
             disable = true;
+
             //turnCount++;
             updateTurnCount();
             //redundantly locate the PlayerManager in the Client, need to call our specific version of playermanager's CmdDraw

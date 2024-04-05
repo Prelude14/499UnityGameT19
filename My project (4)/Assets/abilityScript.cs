@@ -36,7 +36,7 @@ public class abilityScript : MonoBehaviour
                     abilityListWhite(id);
                     break;
                 case 4:
-                    abilityListBlack(id);
+                    abilityListBlue(id);
                     break;
                 case 5:
                     abilityListColorless(id);
@@ -69,9 +69,9 @@ public class abilityScript : MonoBehaviour
             case 2:
             case 3:
                 //destroy enemy mpinion
-                int childCount = enemyZone.transform.childCount;
+                int childCount = enemyZone.transform.childCount -1;
                 int randomChild = Random.Range(0, childCount);
-                NetworkServer.Destroy(transform.GetChild(randomChild).gameObject);
+                NetworkServer.Destroy(enemyZone.transform.GetChild(randomChild).gameObject);
 
                 //deal 5 to self
                  damage = 5; 
@@ -184,9 +184,9 @@ public class abilityScript : MonoBehaviour
             //Heal 3 destroy enemy minion
             healed = 3; 
             PlayerManager.CmdSendHealing(healed, networkAttackIdentity);
-            int childCount = enemyZone.transform.childCount;
+            int childCount = enemyZone.transform.childCount - 1;
             int randomChild = Random.Range(0, childCount);
-            NetworkServer.Destroy(transform.GetChild(randomChild).gameObject);
+             NetworkServer.Destroy(enemyZone.transform.GetChild(randomChild).gameObject);
             break;
         case 8:
         case 9:
@@ -219,6 +219,7 @@ public class abilityScript : MonoBehaviour
     public void abilityListBlue(int id)
     {
         // case 0:
+           Debug.Log("TRIGGER blue ABILTIY " + id);
         //ability 0: deal 2 damage to yourself
          NetworkIdentity networkAttackIdentity = NetworkClient.connection.identity;
         PlayerManager = networkAttackIdentity.GetComponent<PlayerManager>();
@@ -237,9 +238,9 @@ public class abilityScript : MonoBehaviour
         case 3:
             //
             //destroy random enemy draw 1
-            int childCount = enemyZone.transform.childCount;
+            int childCount = enemyZone.transform.childCount -1;
             int randomChild = Random.Range(0, childCount);
-            NetworkServer.Destroy(transform.GetChild(randomChild).gameObject);
+           NetworkServer.Destroy(enemyZone.transform.GetChild(randomChild).gameObject);
             PlayerManager.CmdDraw(1, PlayerManager.clientDecks);
             break;
         case 4:
@@ -289,7 +290,7 @@ public class abilityScript : MonoBehaviour
     }
     public void abilityListRed(int id)
     {
-
+             Debug.Log("TRIGGER RED ABILTIY " + id);
         NetworkIdentity networkAttackIdentity = NetworkClient.connection.identity;
         PlayerManager = networkAttackIdentity.GetComponent<PlayerManager>();
        GameObject playPanel = GameObject.Find("playPanel");
