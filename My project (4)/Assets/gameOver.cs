@@ -20,10 +20,16 @@ public class gameOver : MonoBehaviour
 
     public static int playerNumber; 
 
+    public TMPro.TextMeshProUGUI title;
+
+    public Image clickImg;
+
     
     // Start is called before the first frame update
     void Start()
     {
+        clickImg.gameObject.SetActive(false);
+
         // Debug.Log("p1damage: " + p1Damage + " p1result: " + p1Result);
 
         if (playerNumber == 1) {
@@ -36,21 +42,51 @@ public class gameOver : MonoBehaviour
         }
 
         Debug.Log("damage dealt: " + myDamage + " result: " +  myResult);
+
+        if (myResult == 'w'){
+            title.text = "You Won!";
+        } else if (myResult == 'l'){
+            title.text = "You Lost!";
+        }
+
+        StartCoroutine(DelayedAction());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
-
     public void buttonOnclick(){
         SceneManager.LoadScene("MainMenu");
-        Debug.Log("button clicked");
+        // StartCoroutine(LoadMainMenu());
     }
+
+    // private IEnumerator LoadMainMenu()
+    // {
+    //     yield return new WaitUntil(() => SceneManager.GetSceneByName("MainMenu").isLoaded);
+
+    //     Debug.Log("Scene is loaded!");
+
+    //     GameObject canvas = GameObject.Find("Canvas");
+    //     if (canvas != null)
+    //     {
+    //         MainMenu mainMenuScript = canvas.GetComponent<MainMenu>();
+    //         if (mainMenuScript != null)
+    //         {
+    //             mainMenuScript.ActiveMainMenu();
+    //         }
+    //     }
+    // }
+    
       public void updateStats()
     {
         StartCoroutine(gameEnd());
+    }
+
+     IEnumerator DelayedAction()
+    {
+        yield return new WaitForSeconds(8);
+        clickImg.gameObject.SetActive(true);
     }
 
     IEnumerator gameEnd()
@@ -63,7 +99,7 @@ public class gameOver : MonoBehaviour
             formE.AddField("username", username);
             formE.AddField("result", myResult);
             formE.AddField("damage", myDamage);
-            Debug.Log("data sent to db (username: " + username + " result: " + myResult + " damage: " + myDamage + ")");
+            // Debug.Log("data sent to db (username: " + username + " result: " + myResult + " damage: " + myDamage + ")");
 
             //connect to url of our database's php file, PASS FORM TO URL
             using (WWW wwwE= new WWW("http://localhost/sqlconnect/gameOver.php", formE))
