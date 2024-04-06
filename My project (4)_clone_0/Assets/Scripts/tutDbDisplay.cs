@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems; //important --> use this for db method;
+using TMPro;
 
 public class tutDbDisplay : MonoBehaviour
 {
@@ -18,19 +19,19 @@ public class tutDbDisplay : MonoBehaviour
     public string cardName;
     public string txt;
 
-    public Text nameText;
-    public Text descriptionText;
+    public TMPro.TMP_Text nameText;
+    public TMPro.TMP_Text descriptionText;
     public Image artworkImage;
 
-    public Text costText;
-    public Text powText;
-    public Text hpText;
+    public TMPro.TMP_Text costText;
+    public TMPro.TMP_Text powText;
+    public TMPro.TMP_Text hpText;
 
 
     public bool cardBack;
     public static bool staticCardBack;
 
-    public GameObject cardInHand;
+    public GameObject tutCardInHand;
     public GameObject hand;
     public GameObject playZone;
     public GameObject currentZone;
@@ -80,11 +81,11 @@ public class tutDbDisplay : MonoBehaviour
         playerDeck = playerDeckObj.GetComponent<tutPlayerDeck>();
 
         deckCount = playerDeck.deckSize;
-        displayList[0] = cardDatabase.neutralCardList[displayId];
+        displayList[0] = new Card1(5, 0, "Stick Man", 1, 2, 3, "Just a dude. No abilities.");
         this.id = displayList[0].id;
 
         isSummoned = false;
-        Enemy = GameObject.Find("enemyHealth");
+        Enemy = GameObject.Find("tutEnemyHealth");
         canAttack = false;
         targeting = false;
         targetingEnemy = false;
@@ -141,7 +142,7 @@ public class tutDbDisplay : MonoBehaviour
         staticSummoned = isSummoned;
         // Debug.Log(staticSummoned + " " + cardName);
         displayCard();
-        hand = GameObject.Find("hand");
+        hand = GameObject.Find("tutHand");
         //if this parent is the same as the hands parent 
         if (this.transform.parent == hand.transform.parent)
         {
@@ -150,17 +151,26 @@ public class tutDbDisplay : MonoBehaviour
         staticCardBack = cardBack;
         cloneDraw();
 
-        playZone = GameObject.Find("playPanel");
-        currentZone = this.transform.parent.gameObject;
+        playZone = GameObject.Find("tutPlayPanel");
+
+        if (this.transform.parent != null)
+        {
+            currentZone = this.transform.parent.gameObject;// had this from multplay but changed to fix merge conflicts this.transform.parent.gameObject;
+        }
+        else
+        {
+            Debug.Log("Parent transform is null for object: " + this.name);
+        }
+
         currentLoc = currentZone;
         pz = playZone;
         //summoning logic and cost logic
 
         // Debug.Log(cardName + " Is summoned false");
-        if (this.cost <= tutTurnScript.currentMana && isSummoned == false && tutTurnScript.actionPoints >= 1)
+        if (this.cost <= tutTurnScript.currentMana && isSummoned == false )
         {
             canBeSummoned = true;
-            // Debug.Log(cardName + " Is now playable");
+            Debug.Log(cardName + " Is now playable");
             if (currentZone == hand)
             {
                 // Debug.Log(cardName + " Is now playable");
@@ -185,13 +195,13 @@ public class tutDbDisplay : MonoBehaviour
 
         GameObject startParent = transform.parent.gameObject;
 
-        if (isSummoned == false && currentZone == playZone)
+        if (isSummoned == false && currentZone == playZone) // if summoned and placed in playPanel
         {
             unplayableBorder.SetActive(false);
             playableBorder.SetActive(false);
             if (this.cost > tutTurnScript.currentMana)
             {
-                transform.SetParent(GameObject.Find("hand").transform, true);
+                transform.SetParent(GameObject.Find("tutHand").transform, true);
                 return;
             }
             isSummoned = true;
@@ -208,7 +218,7 @@ public class tutDbDisplay : MonoBehaviour
         currentlyDraggable = tutDragScript.isDraggable;
 
         //decide attackers
-        if (tutTurnScript.isMyTurn == true && isSummoned == true && hasAttacked == false && currentZone == playZone && tutTurnScript.actionPoints >= 1)
+        if (tutTurnScript.isMyTurn == true && isSummoned == true && hasAttacked == false && currentZone == playZone)
         {
             cantAttack = false;
             // Debug.Log(cardName + " ready to attack");
@@ -216,7 +226,7 @@ public class tutDbDisplay : MonoBehaviour
             playableBorder.SetActive(false);
         }
 
-        if (tutTurnScript.isMyTurn == true && cantAttack == false && tutTurnScript.actionPoints >= 1)
+        if (tutTurnScript.isMyTurn == true && cantAttack == false)
         {
             canAttack = true;
 
@@ -258,7 +268,7 @@ public class tutDbDisplay : MonoBehaviour
 
     private void Attack()
     {
-        if (canAttack == true && isSummoned && tutTurnScript.actionPoints >= 1)
+        if (canAttack == true && isSummoned )
         {
 
             if (Target != null)
@@ -281,7 +291,7 @@ public class tutDbDisplay : MonoBehaviour
                     }
                 }
 
-                if (Target.name == "cardInHand(Clone)")
+                if (Target.name == "tutCardInHand(Clone)") //check this line
                 {
                     canAttack = true;
                 }

@@ -127,7 +127,9 @@ public class dbDisplay : NetworkBehaviour
             hasAttacked = false;
             lastTurn = currentTurn;
         }
-        staticColour = colour;
+        staticID = this.id;
+        Debug.Log(id +" <id color> "+ colour);
+        staticColour = this.colour;
 
         staticAttackBorder = false;
         staticCost = cost;
@@ -375,6 +377,7 @@ public class dbDisplay : NetworkBehaviour
         powText.text = " " + this.pow.ToString();
         hpText.text = " " + this.hp.ToString();
 
+       
         //trying to get the border of the card drwan to change colour to match the card's colour int
         Color border = renderCardColour(colour);//get what colour the border should be
         Image.GetComponent<Image>().color = border; //then render the correct colour

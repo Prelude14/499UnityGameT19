@@ -13,10 +13,11 @@ public class tutDragScript : MonoBehaviour
     private bool isDragging = false;
     public static bool isDraggable = true;
     public GameObject placeholder = null;
+
     void Start()
     {
         Canvas = GameObject.Find("Canvas");
-        DropZone = GameObject.Find("playPanel");
+        DropZone = GameObject.Find("tutPlayPanel");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -38,6 +39,7 @@ public class tutDragScript : MonoBehaviour
 
         if (!isDraggable)
         {
+            Debug.Log("not draggable");
             return;
         }
         startParent = transform.parent.gameObject; //find the parent of this transform and find that game object so it should be hand
@@ -73,7 +75,6 @@ public class tutDragScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
 
         if (isDragging)
         {

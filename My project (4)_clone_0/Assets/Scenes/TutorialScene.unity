@@ -1553,7 +1553,7 @@ Canvas:
   m_GameObject: {fileID: 364541356}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -2043,8 +2043,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000045776, y: -328}
-  m_SizeDelta: {x: 2698.2974, y: 1791.2344}
+  m_AnchoredPosition: {x: 1399.9497, y: -1108.6656}
+  m_SizeDelta: {x: 4783.396, y: 3669.689}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &515553790
 MonoBehaviour:
@@ -2059,7 +2059,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8156863}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2137,7 +2137,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 337.31134
+  orthographic size: 305.91168
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2161,7 +2161,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 546, y: 287, z: -10}
+  m_LocalPosition: {x: 584, y: 309, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2829,25 +2829,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: tutTurnScript, Scripts
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1196352567}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: tutTurnScript, Scripts
-        m_MethodName: 
+      - m_Target: {fileID: 364541357}
+        m_TargetAssemblyTypeName: GameTutorial, Scripts
+        m_MethodName: StartSequence2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3448,8 +3448,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 129, y: -231.05063}
-  m_SizeDelta: {x: 3390.3848, y: 3836.4062}
+  m_AnchoredPosition: {x: 100.48, y: -212.0395}
+  m_SizeDelta: {x: 3333.4, y: 4742.5938}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &746737193
 MonoBehaviour:
@@ -3464,7 +3464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8352941}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5284,7 +5284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.54901963, g: 0.8196079, b: 0.5137255, a: 1}
+  m_Color: {r: 0.54901963, g: 0.8196079, b: 0.5137255, a: 0.45490196}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5420,8 +5420,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 169.44984, y: 56.646}
-  m_SizeDelta: {x: 1710.7104, y: 807.7563}
+  m_AnchoredPosition: {x: 168, y: -0.000030518}
+  m_SizeDelta: {x: 1710.71, y: 868.3151}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1117874107
 MonoBehaviour:
@@ -5436,7 +5436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.80784315}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5931,7 +5931,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1196352568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6006,7 +6006,7 @@ MonoBehaviour:
     OnBlockStartEvent:
       m_PersistentCalls:
         m_Calls: []
-  - dialogue: At start you will have 3 cards in your hand.
+  - dialogue: At the start, you will have 3 cards in your hand.
     ObjectsToEnable:
     - {fileID: 940994602}
     - {fileID: 515553788}
@@ -6236,13 +6236,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: tutTurnScript, Scripts
-        m_MethodName: 
+      - m_Target: {fileID: 364541357}
+        m_TargetAssemblyTypeName: GameTutorial, Scripts
+        m_MethodName: StartSequence3
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7301,7 +7301,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1000, y: 850}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0.338
+  m_MatchWidthOrHeight: 0.475
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -7630,7 +7630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8235294}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8387,13 +8387,13 @@ MonoBehaviour:
   onEnableEvents:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1196352569}
+        m_TargetAssemblyTypeName: DialogueSystem, Assembly-CSharp
+        m_MethodName: StartDialogue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10108,7 +10108,7 @@ MonoBehaviour:
   container: []
   deckSize: 0
   handSize: 0
-  deck: []
+  tutDeck: []
   staticDeck: []
   x: 0
   cardInDeck1: {fileID: 7683230165028922799}
@@ -10120,7 +10120,7 @@ MonoBehaviour:
   cardInDeck6: {fileID: 7683230165028922794}
   clones: []
   hand: {fileID: 1501956352}
-  cardInHand: {fileID: 7236696608810499412, guid: bb6f8b4d47ed90a418b3e9b36dbd9aef, type: 3}
+  tutCardInHand: {fileID: 7236696608810499412, guid: 8cb512a3dca56be45acb5705652545b2, type: 3}
   deckCountText: {fileID: 348922827}
 --- !u!1 &1991913851
 GameObject:
@@ -10717,7 +10717,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2145378242
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10736,7 +10736,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 76.076996, y: -34.44991}
+  m_AnchoredPosition: {x: 76.07703, y: -34.449768}
   m_SizeDelta: {x: 152.1541, y: 68.8999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2145378243
@@ -11087,6 +11087,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1467059168}
     m_Modifications:
+    - target: {fileID: 5105542515119718895, guid: 9d4b5aa84b0150142945e8a8b805e1e9, type: 3}
+      propertyPath: tuthand
+      value: 
+      objectReference: {fileID: 1501956352}
+    - target: {fileID: 5105542515119718895, guid: 9d4b5aa84b0150142945e8a8b805e1e9, type: 3}
+      propertyPath: tuthandCard
+      value: 
+      objectReference: {fileID: 7236696608810499412, guid: 8cb512a3dca56be45acb5705652545b2, type: 3}
     - target: {fileID: 6058983416503156518, guid: 9d4b5aa84b0150142945e8a8b805e1e9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
