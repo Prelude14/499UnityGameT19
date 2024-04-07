@@ -85,7 +85,7 @@ public class gameOver : MonoBehaviour
 
      IEnumerator DelayedAction()
     {
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(3);
         clickImg.gameObject.SetActive(true);
     }
 
