@@ -881,7 +881,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   title: {fileID: 1434955493}
-  clickImg: {fileID: 889170463}
+  clickImg: {fileID: 1668017606}
 --- !u!1 &2119453926
 GameObject:
   m_ObjectHideFlags: 0

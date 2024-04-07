@@ -22,7 +22,7 @@ public class gameOver : MonoBehaviour
 
     public TMPro.TextMeshProUGUI title;
 
-    public Image clickImg;
+    public TMPro.TextMeshProUGUI clickImg;
 
     
     // Start is called before the first frame update
