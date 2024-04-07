@@ -576,8 +576,8 @@ public class SharedVarManager : NetworkBehaviour
     { //colour 5 is for neutral since 0 is the old deck and 1-4 are the colours
 
         //colour,  id,  name,  cost, pow,  hp,  description
-           neutralCardList.Add(new Card1(5, 0, "Stick Man", 1, 2, 3, " "));
-        neutralCardList.Add(new Card1(5, 1, "Stick Man", 1, 2, 3, " "));
+        neutralCardList.Add(new Card1(5, 0, "Stick Man", 1, 2, 3, "Just a dude. No abilities"));
+        neutralCardList.Add(new Card1(5, 1, "Stick Man", 1, 2, 3, "Just a dude. No abilities "));
         neutralCardList.Add(new Card1(5, 2, "PickPocket", 2, 1, 3, "Draw a card"));
         neutralCardList.Add(new Card1(5, 3, "PickPocket", 2, 1, 3, "Draw a card"));
         neutralCardList.Add(new Card1(5, 4, "Toy Pistol", 5, 3, 4, "Deal 3 damage to the enemy"));
@@ -594,7 +594,7 @@ public class SharedVarManager : NetworkBehaviour
     { //colour 1 is for black cards
 
         //colour,  id,  name,  cost, pow,  hp,  description
-             blackCardList.Add(new Card1(1, 0, "Curse Gamble", 1, 3, 3, "Deal 2 damage to yourself"));
+        blackCardList.Add(new Card1(1, 0, "Curse Gamble", 1, 3, 3, "Deal 2 damage to yourself"));
         blackCardList.Add(new Card1(1, 1, "Curse Gamble", 1, 3, 3, "Deal 2 damage to yourself"));
 
         blackCardList.Add(new Card1(1, 2, "Eye for an Eye", 3, 1, 2, "Destroy a random minion, deal 5 damage to yourself"));
@@ -622,11 +622,11 @@ public class SharedVarManager : NetworkBehaviour
     { //colour 2 is for red cards
 
         //colour,  id,  name,  cost, pow,  hp,  description
-             redCardList.Add(new Card1(2, 0, "Toxic Blade", 1, 2, 1, "If this creature attacks an enemy, deal another 2 damage"));
+        redCardList.Add(new Card1(2, 0, "Toxic Blade", 1, 2, 1, "If this creature attacks an enemy, deal another 2 damage"));
         redCardList.Add(new Card1(2, 1, "Toxic Blade", 1, 2, 1, "If this creature attacks an enemy, deal another 2 damage"));
 
-        redCardList.Add(new Card1(2, 2, "Beserker", 3, 5, 1, " "));
-        redCardList.Add(new Card1(2, 3, "Beserker", 3, 5, 1, " "));
+        redCardList.Add(new Card1(2, 2, "Beserker", 3, 5, 1, "Go crazy!"));
+        redCardList.Add(new Card1(2, 3, "Beserker", 3, 5, 1, "Go crazy!"));
 
         redCardList.Add(new Card1(2, 4, "Summoner", 4, 2, 3, "Draw a new card for each creature you currently control"));
         redCardList.Add(new Card1(2, 5, "Summoner", 4, 2, 3, "Draw a new card for each creature you currently control"));

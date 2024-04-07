@@ -102,6 +102,16 @@ public class MainMenu : MonoBehaviour
 
     }
 
+    public void LoadTutorialScene()
+    {
+        SceneManager.LoadScene("TutorialScene"); // Make sure the scene name matches exactly
+    }
+
+    public void LoadBackToMainMenuScene()
+    {
+        SceneManager.LoadScene("MainMenu"); // Make sure the scene name matches exactly
+    }
+
 
     // login menu background or the create user and login menu background calls this to display the user menu background and minimize the guest menu background when the user clicks login or create
     public void ActiveMainMenu()
