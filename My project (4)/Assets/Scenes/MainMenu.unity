@@ -6493,28 +6493,9 @@ MonoBehaviour:
   username_email: {fileID: 1182782181}
   user_pass: {fileID: 670441427}
   loginButton: {fileID: 64375876}
-  loginsButton: {fileID: 1669145839}
-  confirmLogin: {fileID: 4645921}
-  createsButton: {fileID: 695478532}
-  confirmCreate: {fileID: 1370399744}
-  createFailed: {fileID: 1727091223}
-  email: {fileID: 1595788784}
-  pass: {fileID: 1215052753}
-  loginText: {fileID: 1872686016}
   c_username_email: {fileID: 1914520949}
   c_user_pass: {fileID: 279433076}
   c_user_pass2: {fileID: 334969432}
-  create_email_text: {fileID: 488128384}
-  create_pass_text: {fileID: 1877017283}
-  create_pass2_text: {fileID: 1092598774}
-  create_errorMessage: {fileID: 1042760957}
-  create_errorMessag_GO: {fileID: 1042760954}
-  cross: {fileID: 1884574226}
-  cross1: {fileID: 2137213370}
-  cross2: {fileID: 748022896}
-  check: {fileID: 1456676295}
-  check1: {fileID: 1415277672}
-  check2: {fileID: 214695373}
   createButton: {fileID: 734640448}
 --- !u!1 &366408839
 GameObject:
@@ -9284,11 +9265,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 3f2b2d06427b743b68defeac724efe74, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 98c8f90d02a5cc34c92210fdc0d67ba9, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.066
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
